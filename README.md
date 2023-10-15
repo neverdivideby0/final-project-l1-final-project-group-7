@@ -1,3 +1,35 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/WcPKYd5y)
+# GetFitt - A Revolutionary Fitness Platform
 
-Hello
+## Executive Summary
+
+GetFitt is a web application designed to transform the personal fitness landscape in Singapore, serving as a comprehensive solution for fitness enthusiasts and business owners in the fitness industry. Powered by Vue.js and Firebase, our platform empowers users to make informed decisions and provides a central marketplace for fitness-related products and services.
+
+## Recommended IDE Setup
+
+- [VSCode](https://code.visualstudio.com/)
+- [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur)
+- [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin)
+
+## Customize Configuration
+
+For customization options, please refer to the [Vite Configuration Reference](https://vitejs.dev/config/).
+
+## Project Setup
+To get started with the project, follow these steps:
+```sh
+npm install
+```
+
+## Development
+For development with compile and hot-reload, run:
+```sh
+npm run dev
+```
+
+## Production
+For production-ready code, use the following command:
+```sh
+npm run build
+```
+
+For detailed documentation and additional information, please refer to the full project report.
