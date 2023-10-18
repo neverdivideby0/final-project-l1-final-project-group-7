@@ -33,3 +33,5 @@ npm run build
 ```
 
 For detailed documentation and additional information, please refer to the full project report.
+
+This project was made by BT3103 Group 7 
