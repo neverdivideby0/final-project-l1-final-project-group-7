@@ -34,6 +34,12 @@ npm run build
 
 For detailed documentation and additional information, please refer to the full project report.
 
+Had to npm install debug and socks-proxy-agent
 This project was made by BT3103 Group 7
 
 BT was here! - test commit
+
+This project was made by BT3103 Group 7
+
+BT was here! - test commit
+Had to npm install debug and socks-proxy-agent
