@@ -14,28 +14,59 @@
         </div>
         <button type="submit">Log In</button>
       </form>
+      <p v-if="errMsg"> {{ errMsg }}</p>
       <button @click="signup">Sign Up</button>
       <button @click="resetPassword">Reset Password</button>
     </div>
   </template>
   
   <script>
+   import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'; // Import auth and createUserWithEmailAndPassword from Firebase
+
   export default {
     data() {
       return {
         email: '',
-        password: ''
+        password: '',
+        errMsg: '',
       };
     },
     methods: {
       login() {
         // Add your login logic here
         console.log('Logging in with email:', this.email, 'and password:', this.password);
-        // You can use Firebase, Axios, or any other authentication method for the actual login process.
-      },
+        const auth = getAuth(); // Initialize the auth module
+        signInWithEmailAndPassword(auth, this.email, this.password)
+        .then((userCredential) => {
+          // User registration was successful
+          const user = userCredential.user;
+          console.log("User Successfully signed in:", user);
+          this.$router.push({ name: 'HomePage' });
+        })
+        .catch((error) => {
+          // Handle registration errors
+          console.error("Error signing in user:", error.message);
+          switch (error.code){
+            case "auth/invalid-email":
+                this.errMsg.value = "Invalid email"
+                break;
+                case "auth/user-not-found":
+                    this.errMsg.value = "No account with that email was found";
+                    break;
+                    case "auth/wrong-password":
+                        this.errMsg.value = "Incorrect password";
+                        break;
+                        default:
+                            this.errMsg.value = "Email or password was incorrect";
+                            break;
+            }
+        });
+    },
+
       signup() {
         // Add your sign-up logic here
         console.log('Redirecting to sign-up page');
+        //this is to route to the next page
         this.$router.push({ name: 'SignUpPage' });
       },
       resetPassword() {
