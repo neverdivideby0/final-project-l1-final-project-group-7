@@ -1,4 +1,5 @@
 <template>
+    <Header/>
     <WelcomeCpp/>
     <AddCoin @added="change" />
     <ProfitDisplay :key="refreshComp"/>
@@ -6,6 +7,7 @@
 </template>
 
 <script>
+import Header from '@/components/Header.vue'
 import WelcomeCpp from '@/components/WelcomeCpp.vue'
 import AddCoin from '@/components/AddCoin.vue'
 import ProfitDisplay from '@/components/ProfitDisplay.vue'
