@@ -2,7 +2,7 @@
   <header class="header">
     <div class="header-content">
       <h1>GetFitt</h1>
-      <p>Welcome, {{ businessName }}</p>
+      <p>{{ businessName }}</p>
     </div>
 
     <button class="sign-out-button" @click="signOut">Sign Out</button>
@@ -10,11 +10,11 @@
 </template>
 
 <script>
-import firebaseApp from "../firebase.js";
-import 'firebase/auth';
-import 'firebase/database';
+import firebase from "../firebase.js";
+import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
+import { getFirestore, doc, getDoc } from 'firebase/firestore';
 
-export default {
+export default {    
     data() {
         return {
             user: null, // Initialize merchant data
@@ -23,7 +23,8 @@ export default {
     },
     created() {
     // Check if the merchant is signed in
-        firebase.auth().onAuthStateChanged((user) => {
+        const auth = getAuth(firebase);
+        onAuthStateChanged(auth, (user) => {
             if (user) {
                 this.user = user;
                 this.fetchUserName(user.uid); 
@@ -32,28 +33,30 @@ export default {
     },
     methods: {
         fetchUserName(userid) {
-            const db = firebase.database();
-            const userRef = db.ref('businessUsers/' + userId);
-            userRef.once('value')
-            .then((snapshot) => {
-                const userData = snapshot.val();
-                if (userData && userData.name) {
-                    this.businessName = userData.name;
+            const db = getFirestore(firebase);
+            const userRef = doc(db, 'businessUsers', userid)
+            getDoc(userRef)
+            .then((docSnapshot) => {
+                if (docSnapshot.exists()) {
+                    const userData = docSnapshot.data();
+                    this.businessName = userData.businessName;
                 }
             })
             .catch((error) => {
-                console.error('Error fetching user name', error);
+                console.error('Error fetching username', error);
             });
         },
 
-        signOut() {
-            firebase.auth().signOut()
-            .then(() => {
-            })
-            .catch(error => {
+        async signOut() {
+            const auth = getAuth(firebase);
+            
+            try {
+            await signOut(auth);
+            this.$router.push({ name: 'LandingPage' });
+            } catch(error) {
                 console.error('Error signing out', error);
-            });
-        },
+            }
+        }
     }
 };
 </script>
