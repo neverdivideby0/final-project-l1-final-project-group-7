@@ -1,19 +1,27 @@
 <template>
-    <h1>Welcome to the CPP</h1>
-  </template>
+    <Header/>
+    <DashboardNav/>
+</template>
   
-  <script>
-  export default {
-  
-  }
-  </script>
-  
-  <style scoped>
-  h1{
+<script>
+import Header from '@/components/Header.vue';
+import DashboardNav from '@/components/DashboardNav.vue';
+
+export default {
+    name: 'HomePage',
+    components: {
+        Header,
+        DashboardNav
+    }
+}
+</script>
+
+<style scoped>
+h1 {
     background-color: rgb(129, 184, 99);
     text-align: center;
-  }
-  </style>
+}
+</style>
   
   
   
