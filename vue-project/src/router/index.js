@@ -7,6 +7,8 @@ import ProfileSetupPageCustomer from "@/views/Customer/ProfileSetupPageCustomer.
 import ProfileSetupPageBusiness from "@/views/Business/ProfileSetupPageBusiness.vue";
 import CustomerHomePage from '@/views/Customer/CustomerHomePage.vue'
 
+import CompanyProfile from '@/views/CompanyProfile.vue'
+import EditCompanyProfile from '@/views/EditCompanyProfile.vue'
 
 const routes = [
   {
@@ -43,6 +45,16 @@ const routes = [
     path: '/CustomerHomePage',
     name: 'CustomerHomePage',
     component: CustomerHomePage
+  },
+  {
+    path: '/CompanyProfile',
+    name: 'CompanyProfile',
+    component: CompanyProfile
+  },
+  {
+    path: '/EditCompanyProfile',
+    name: 'EditCompanyProfile',
+    component: EditCompanyProfile
   }
 ]
 const router = createRouter({
