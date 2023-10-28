@@ -21,61 +21,70 @@
   </template>
   
   <script>
-   import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'; // Import auth and createUserWithEmailAndPassword from Firebase
-
+  import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth'; // Import auth and createUserWithEmailAndPassword from Firebase
+  
   export default {
     data() {
       return {
         email: '',
         password: '',
-        errMsg: '',
+        errMsg: '', // Initialize errMsg as an empty string
       };
     },
     methods: {
       login() {
-        // Add your login logic here
         console.log('Logging in with email:', this.email, 'and password:', this.password);
         const auth = getAuth(); // Initialize the auth module
         signInWithEmailAndPassword(auth, this.email, this.password)
-        .then((userCredential) => {
-          // User registration was successful
-          const user = userCredential.user;
-          console.log("User Successfully signed in:", user);
-          this.$router.push({ name: 'HomePage' });
-        })
-        .catch((error) => {
-          // Handle registration errors
-          console.error("Error signing in user:", error.message);
-          switch (error.code){
-            case "auth/invalid-email":
-                this.errMsg.value = "Invalid email"
+          .then((userCredential) => {
+            // User login was successful
+            const user = userCredential.user;
+            console.log("User Successfully signed in:", user);
+            this.$router.push({ name: 'HomePage' });
+          })
+          .catch((error) => {
+            // Handle login errors
+            console.error("Error signing in user:", error.code);
+            switch (error.code) {
+              case "auth/invalid-email":
+                this.errMsg = "Invalid email";
                 break;
-                case "auth/user-not-found":
-                    this.errMsg.value = "No account with that email was found";
-                    break;
-                    case "auth/wrong-password":
-                        this.errMsg.value = "Incorrect password";
-                        break;
-                        default:
-                            this.errMsg.value = "Email or password was incorrect";
-                            break;
+              case "auth/user-not-found":
+                this.errMsg = "No account with that email was found";
+                break;
+              case "auth/wrong-password":
+                this.errMsg = "Incorrect password";
+                break;
+              default:
+                this.errMsg = "Email or password was incorrect";
+                break;
             }
-        });
-    },
-
+          });
+      },
       signup() {
-        // Add your sign-up logic here
         console.log('Redirecting to sign-up page');
-        //this is to route to the next page
         this.$router.push({ name: 'SignUpPage' });
       },
       resetPassword() {
-        // Add your reset password logic here
-        console.log('Redirecting to reset password page');
-      }
+      const auth = getAuth(); // Initialize the auth module
+
+      sendPasswordResetEmail(auth, this.email)
+        .then(() => {
+          // Password reset email sent successfully
+          alert('Password reset email sent to', this.email)
+          console.log('Password reset email sent to', this.email);
+          // You can also redirect to a confirmation page or display a success message
+        })
+        .catch((error) => {
+            alert('Error sending password reset email:', error)
+          console.error('Error sending password reset email:', error);
+          // Display an error message to the user
+        });
     }
-  };
+  }
+}
   </script>
+  
   
   <style scoped>
   .landing-page {
