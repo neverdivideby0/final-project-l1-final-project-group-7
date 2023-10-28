@@ -1,11 +1,12 @@
 import { createRouter, createWebHistory } from "vue-router";
-import LandingPage from '@/views/LandingPage.vue'
-import SignUpPage from '@/views/SignUpPage.vue'
-import EmailVerificationPage from '@/views/EmailVerificationPage.vue'
-import EmailConfirmationPage from "@/views/EmailConfirmationPage.vue";
+import LandingPage from '@/views/Auth/LandingPage.vue'
+import SignUpPage from '@/views/Auth/SignUpPage.vue'
+import EmailVerificationPage from '@/views/Auth/EmailVerificationPage.vue'
+import EmailConfirmationPage from "@/views/Auth/EmailConfirmationPage.vue";
 import ProfileSetupPageCustomer from "@/views/Customer/ProfileSetupPageCustomer.vue";
 import ProfileSetupPageBusiness from "@/views/Business/ProfileSetupPageBusiness.vue";
 import CustomerHomePage from '@/views/Customer/CustomerHomePage.vue'
+import BusinessHomePage from '@/views/Business/BusinessHomePage.vue'
 
 import CompanyProfile from '@/views/CompanyProfile.vue'
 import EditCompanyProfile from '@/views/EditCompanyProfile.vue'
@@ -45,6 +46,11 @@ const routes = [
     path: '/CustomerHomePage',
     name: 'CustomerHomePage',
     component: CustomerHomePage
+  },
+  {
+    path: '/BusinessHomePage',
+    name: 'BusinessHomePage',
+    component: BusinessHomePage
   },
   {
     path: '/CompanyProfile',
