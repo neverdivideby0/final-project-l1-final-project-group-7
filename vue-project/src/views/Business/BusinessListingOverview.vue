@@ -1,0 +1,131 @@
+<template>
+    <div class="product-list">
+      <h2>Product Listings</h2>
+      <ul>
+        <li v-for="(product, index) in filteredProducts" :key="index">
+          <h3>{{ product.productName }}</h3>
+          <p><strong>Description:</strong> {{ product.description }}</p>
+          <p><strong>Category:</strong> {{ product.category }}</p>
+          <p><strong>Price:</strong> ${{ product.price.toFixed(2) }}</p>
+          <p><strong>Business ID:</strong> {{ product.businessId }}</p>
+          <p><strong>Email:</strong> {{ product.email }}</p>
+          <p><strong>Image URLs:</strong></p>
+          <ul>
+            <li v-for="(imageUrl, i) in product.imageUrls" :key="i">
+              <img :src="imageUrl" alt="Product Image" />
+            </li>
+          </ul>
+          <p><strong>Uploaded Image URLs:</strong></p>
+          <ul>
+            <li v-for="(uploadedImageUrl, i) in product.uploadedImageUrls" :key="i">
+              <img :src="uploadedImageUrl" alt="Uploaded Product Image" />
+            </li>
+          </ul>
+          <button @click="confirmDelete(product)">Delete</button>
+        </li>
+      </ul>
+    </div>
+  </template>
+  
+  <script>
+  import { getFirestore, collection, getDocs, deleteDoc, doc } from 'firebase/firestore';
+  import { getAuth, onAuthStateChanged } from "firebase/auth";
+  import { getStorage, ref, deleteObject } from 'firebase/storage';
+
+  export default {
+    name: 'ProductList',
+    data() {
+      return {
+        products: [],
+        user: null,
+      };
+    },
+    created() {
+      // Fetch and display the user's email
+      const auth = getAuth();
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          this.user = user;
+          this.email = user.email;
+          this.fetchProducts(); // Fetch products after the user is authenticated
+        }
+      });
+    },
+    methods: {
+      async fetchProducts() {
+        if (this.user) {
+          const db = getFirestore();
+          const productsCollection = collection(db, 'products');
+    
+          try {
+            const querySnapshot = await getDocs(productsCollection);
+            querySnapshot.forEach((doc) => {
+              const productData = doc.data();
+              productData.id = doc.id; // Store the document ID for later reference
+              this.products.push(productData);
+            });
+          } catch (error) {
+            console.error('Error fetching products:', error);
+          }
+        }
+      },
+      confirmDelete(product) {
+        if (window.confirm('Are you sure you want to delete this product?')) {
+          this.deleteProduct(product);
+        }
+      },
+      async deleteProduct(product) {
+      if (product && product.id) {
+        const db = getFirestore();
+        const productDoc = doc(db, 'products', product.id);
+        try {
+          // Delete the document from Firestore
+          await deleteDoc(productDoc);
+
+          // Remove the deleted product from the products array
+          const index = this.products.findIndex((p) => p.id === product.id);
+          if (index !== -1) {
+            this.products.splice(index, 1);
+          }
+
+          // Delete associated files in Firebase Storage
+          const storage = getStorage();
+          for (const uploadedImageUrl of product.uploadedImageUrls) {
+            const uploadedImageRef = ref(storage, uploadedImageUrl);
+            await deleteObject(uploadedImageRef);
+          }
+        } catch (error) {
+          console.error('Error deleting product:', error);
+        }
+        }
+      },
+    },
+    computed: {
+      filteredProducts() {
+        if (this.user) {
+          return this.products.filter((product) => product.businessId === this.user.uid);
+        }
+        return [];
+      },
+    },
+  };
+  </script>
+  
+  <style scoped>
+  .product-list {
+    text-align: center;
+    margin: 20px;
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  li {
+    border: 1px solid #ddd;
+    margin: 10px;
+    padding: 10px;
+  }
+  </style>
+  

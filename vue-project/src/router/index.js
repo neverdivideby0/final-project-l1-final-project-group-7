@@ -7,9 +7,26 @@ import ProfileSetupPageCustomer from "@/views/Customer/ProfileSetupPageCustomer.
 import ProfileSetupPageBusiness from "@/views/Business/ProfileSetupPageBusiness.vue";
 import CustomerHomePage from '@/views/Customer/CustomerHomePage.vue'
 import BusinessHomePage from '@/views/Business/BusinessHomePage.vue'
-
+import BusinessProductListing from '@/views/Business/BusinessProductListing.vue'
+import BusinessListingOverview from '@/views/Business/BusinessListingOverview.vue'
 import CompanyProfile from '@/views/CompanyProfile.vue'
 import EditCompanyProfile from '@/views/EditCompanyProfile.vue'
+import HomePage from '@/views/HomePage.vue'
+import NotFound from '@/views/NotFound.vue'
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+
+const requireAuth = (to, from, next) => {
+  const auth = getAuth(); // Initialize Firebase Auth
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      // User is authenticated, allow access to the route
+      next();
+    } else {
+      // User is not authenticated, redirect to the landing page or any other route
+      next({ name: 'LandingPage' });
+    }
+  });
+};
 
 const routes = [
   {
@@ -36,35 +53,65 @@ const routes = [
     path: "/ProfileSetupPageCustomer",
     name: "ProfileSetupPageCustomer",
     component: ProfileSetupPageCustomer,
+    beforeEnter: requireAuth, // Requires authentication
   },
   {
     path: "/ProfileSetupPageBusiness",
     name: "ProfileSetupPageBusiness",
     component: ProfileSetupPageBusiness,
+    beforeEnter: requireAuth, // Requires authentication
   },
   {
     path: '/CustomerHomePage',
     name: 'CustomerHomePage',
-    component: CustomerHomePage
+    component: CustomerHomePage,
+    beforeEnter: requireAuth, // Requires authentication
   },
   {
     path: '/BusinessHomePage',
     name: 'BusinessHomePage',
-    component: BusinessHomePage
+    component: BusinessHomePage,
+    beforeEnter: requireAuth, // Requires authentication
   },
   {
     path: '/CompanyProfile',
     name: 'CompanyProfile',
-    component: CompanyProfile
+    component: CompanyProfile,
+    beforeEnter: requireAuth, // Requires authentication
   },
   {
     path: '/EditCompanyProfile',
     name: 'EditCompanyProfile',
-    component: EditCompanyProfile
-  }
-]
+    component: EditCompanyProfile,
+    beforeEnter: requireAuth, // Requires authentication
+  },
+  {
+    path: '/HomePage',
+    name: 'HomePage',
+    component: HomePage,
+  },
+  {
+    path: '/BusinessProductListing',
+    name: 'BusinessProductListing',
+    component: BusinessProductListing,
+    beforeEnter: requireAuth, // Requires authentication
+  },
+  {
+    path: '/BusinessListingOverview',
+    name: 'BusinessListingOverview',
+    component: BusinessListingOverview,
+    beforeEnter: requireAuth, // Requires authentication
+  },
+  {
+    path: '/:catchAll(.*)',
+    name: 'NotFound',
+    component: NotFound,
+  },
+];
+
 const router = createRouter({
   history: createWebHistory(),
   routes,
 });
+
 export default router;
