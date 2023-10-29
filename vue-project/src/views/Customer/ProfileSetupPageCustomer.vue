@@ -35,37 +35,40 @@ export default {
       fullName: '',
       mobileNumber: '',
       deliveryAddress: '',
-      profilePictureFile: null, // Store the selected profile picture file
+      email: '', // Add a data property for the email
+      profilePictureFile: null,
     };
+  },
+  created() {
+    // Fetch and display the user's email
+    const auth = getAuth();
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        this.email = user.email;
+      }
+    });
   },
   methods: {
     saveProfile() {
-      // Get the authenticated user
       const auth = getAuth();
       onAuthStateChanged(auth, (user) => {
         if (user) {
-          // Get the Firestore instance
           const db = getFirestore();
-
-          // Create a reference to the user's document in Firestore (you may need to adjust this path)
           const userDocRef = doc(db, 'users', user.uid);
 
-          // Create the user's profile data
           const userProfile = {
             fullName: this.fullName,
             mobileNumber: this.mobileNumber,
             deliveryAddress: this.deliveryAddress,
             accountCreatedDateTime: new Date(),
+            email: this.email, // Include the email in the user profile data
           };
 
-          // Set the user's profile data in Firestore
           setDoc(userDocRef, userProfile)
             .then(() => {
-              // Save the profile picture if a file is selected
               if (this.profilePictureFile) {
                 this.uploadProfilePicture(user.uid);
               } else {
-                // Profile data saved successfully
                 alert('Profile data saved successfully.');
                 this.$router.push({ name: 'CustomerHomePage' });
               }

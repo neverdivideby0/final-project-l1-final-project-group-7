@@ -31,7 +31,13 @@ export default {
     signOut() {
       const auth = getAuth();
       const user = auth.currentUser;
-      signOut(auth, user);
+      if (user) {
+        // Check if the user is authenticated before signing out
+        signOut(auth, user);
+        console.log("User signed out");
+      } else {
+        console.log("User is not authenticated. No need to sign out.");
+      }
       this.$router.push({ name: "LandingPage" });
     },
     routeToLandingPage() {
@@ -41,6 +47,7 @@ export default {
   },
 };
 </script>
+
 
 <style scoped>
 #btn {

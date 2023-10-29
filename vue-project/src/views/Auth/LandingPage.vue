@@ -40,6 +40,7 @@ export default {
         const auth = getAuth();
         signInWithEmailAndPassword(auth, this.email, this.password)
           .then(() => {
+            console.log('Customer authenticated.'); // Add this line
             this.$router.push({ name: 'CustomerHomePage' });
           })
           .catch((error) => {
@@ -51,6 +52,7 @@ export default {
         const auth = getAuth();
         signInWithEmailAndPassword(auth, this.email, this.password)
           .then(() => {
+            console.log('Business authenticated.'); // Add this line
             this.$router.push({ name: 'BusinessHomePage' });
           })
           .catch((error) => {

@@ -41,37 +41,39 @@ export default {
       businessNumber: '',
       businessAddress: '',
       acraIdNumber: '',
-      profilePictureFile: null, // Store the uploaded profile picture file
+      email: '', // Add a data property for the email
+      profilePictureFile: null,
     };
+  },
+  created() {
+    // Fetch and display the user's email
+    const auth = getAuth();
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        this.email = user.email;
+      }
+    });
   },
   methods: {
     saveProfile() {
-      // Get the authenticated user
       const auth = getAuth();
       onAuthStateChanged(auth, (user) => {
         if (user) {
-          // Get the Firestore instance
           const db = getFirestore();
-
-          // Create a reference to the business's document in Firestore (you may need to adjust this path)
           const businessDocRef = doc(db, 'businesses', user.uid);
 
-          // Create the business's profile data
           const businessProfile = {
             businessName: this.businessName,
             businessNumber: this.businessNumber,
             businessAddress: this.businessAddress,
             acraIdNumber: this.acraIdNumber,
-            accountCreatedDateTime: new Date(), // Add the current date and time
+            accountCreatedDateTime: new Date(),
+            email: this.email, // Include the email in the profile data
           };
 
-          // Set the business's profile data in Firestore
           setDoc(businessDocRef, businessProfile)
             .then(() => {
-              // Alert to notify the user
               alert('Business profile data saved successfully.');
-
-              // Push the user to the BusinessHomePage
               this.$router.push({ name: 'BusinessHomePage' });
             })
             .catch((error) => {
@@ -80,23 +82,7 @@ export default {
         }
       });
     },
-    handleProfilePictureUpload(event) {
-      // Handle the profile picture upload when a file is selected
-      const file = event.target.files[0];
-      this.profilePictureFile = file;
-    },
-    async uploadProfilePictureToStorage(user) {
-      // Upload the profile picture to Firebase Storage
-      const storage = getStorage();
-      const profilePictureRef = ref(storage, `profile_pictures/${user.uid}`);
-      
-      try {
-        await uploadBytes(profilePictureRef, this.profilePictureFile);
-        console.log('Profile picture uploaded successfully.');
-      } catch (error) {
-        console.error('Error uploading profile picture:', error);
-      }
-    },
+    // ... Your existing methods ...
   },
 };
 </script>
