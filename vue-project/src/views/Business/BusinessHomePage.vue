@@ -51,7 +51,8 @@ export default {
       userAccountCreatedDateTime: "",
       profilePictureUrl: null, // To store the URL of the profile picture
     };
-  },async created() {
+  },
+  async created() {
   const auth = getAuth();
 
   // Log whether the user is authenticated
