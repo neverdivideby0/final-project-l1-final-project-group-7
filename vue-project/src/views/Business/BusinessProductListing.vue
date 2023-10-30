@@ -118,6 +118,7 @@ export default {
           imageUrls: [this.imageUrl1, this.imageUrl2].filter((url) => url), // Filter out empty URLs
           uploadedImageUrls: uploadedImageUrls, // Include the uploaded image URLs
           email: this.email, // Include the email in the profile data
+          productCreatedDateTime: new Date(),
         };
 
         // Add productData to Firestore
