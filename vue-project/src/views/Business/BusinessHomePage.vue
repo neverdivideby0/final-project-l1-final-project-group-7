@@ -20,6 +20,7 @@
       />
     </div>
 
+    <FootFallChart/>
     <button @click="navigateToBusinessListingOverview">See all listings</button>
 
 
@@ -29,8 +30,9 @@
   </div>
 </template>
   
-  <script>
+<script>
 import LogOut from "@/components/LogOut.vue";
+import FootFallChart from "@/components/FootFallChart.vue";
 
 import { getFirestore, doc, getDoc } from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
@@ -40,6 +42,7 @@ export default {
   name: "BusinessHomePage",
   components: {
     LogOut,
+    FootFallChart
   },
   data() {
     return {
