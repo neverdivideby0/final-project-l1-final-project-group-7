@@ -13,6 +13,9 @@
       <p><strong>Delivery Address:</strong> {{ userDeliveryAddress }}</p>
       <p><strong>Account Created Date Time:</strong> {{ userAccountCreatedDateTime }}</p>
     </div>
+
+    <button @click="navigateToProductListing">See all products</button>
+
   </div>
   <LogOut />
 
@@ -41,6 +44,13 @@ export default {
   },
   async created() {
     const auth = getAuth();
+
+    // Check if the user is authenticated
+    if (auth.currentUser) {
+      console.log('User is authenticated');
+    } else {
+      console.log('User is not authenticated');
+    }
 
     // Fetch and set the user's name (you can adapt this to your authentication system)
     onAuthStateChanged(auth, async (user) => {
@@ -77,8 +87,29 @@ export default {
       }
     });
   },
+  methods: {
+    navigateToProductListing() {
+      this.checkAuthentication(() => {
+        // If authenticated, navigate to BusinessProductListing
+        this.$router.push({ name: 'CustomerProductList' });
+      });
+    },
+    checkAuthentication(callback) {
+      const auth = getAuth();
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          // User is authenticated
+          callback();
+        } else {
+          // User is not authenticated, you can handle this case here
+          console.log('User is not authenticated');
+        }
+      });
+    },
+  },
 };
 </script>
+
 
 <style scoped>
 .customer-home-page {
