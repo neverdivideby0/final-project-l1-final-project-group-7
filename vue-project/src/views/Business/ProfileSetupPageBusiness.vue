@@ -42,14 +42,18 @@ export default {
       businessAddress: '',
       acraIdNumber: '',
       profilePictureFile: null, // Store the uploaded profile picture file
+      profilePictureUrl: null, // Store the profile picture URL
     };
   },
   methods: {
     saveProfile() {
       // Get the authenticated user
       const auth = getAuth();
-      onAuthStateChanged(auth, (user) => {
+      onAuthStateChanged(auth, async (user) => {
         if (user) {
+
+          await this.uploadProfilePictureToStorage(user);
+
           // Get the Firestore instance
           const db = getFirestore();
 
@@ -63,6 +67,7 @@ export default {
             businessAddress: this.businessAddress,
             acraIdNumber: this.acraIdNumber,
             accountCreatedDateTime: new Date(), // Add the current date and time
+            //profilePictureUrl: this.profilePictureUrl, // Include the profile picture URL
           };
 
           // Set the business's profile data in Firestore
@@ -87,14 +92,17 @@ export default {
     },
     async uploadProfilePictureToStorage(user) {
       // Upload the profile picture to Firebase Storage
-      const storage = getStorage();
-      const profilePictureRef = ref(storage, `profile_pictures/${user.uid}`);
-      
-      try {
-        await uploadBytes(profilePictureRef, this.profilePictureFile);
-        console.log('Profile picture uploaded successfully.');
-      } catch (error) {
-        console.error('Error uploading profile picture:', error);
+      if (this.profilePictureFile) {
+        const storage = getStorage();
+        const profilePictureRef = ref(storage, `profile_pictures/${user.uid}`);
+        
+        try {
+          await uploadBytes(profilePictureRef, this.profilePictureFile);
+          //this.profilePictureUrl = await getDownloadURL(profilePictureRef);
+          console.log('Profile picture uploaded successfully.', this.profilePictureUrl);
+        } catch (error) {
+          console.error('Error uploading profile picture:', error);
+        }
       }
     },
   },
