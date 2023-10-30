@@ -13,7 +13,7 @@ import CompanyProfile from '@/views/CompanyProfile.vue'
 import EditCompanyProfile from '@/views/EditCompanyProfile.vue'
 import HomePage from '@/views/HomePage.vue'
 import NotFound from '@/views/NotFound.vue'
-import CustomerGymAndProfile from '@/views/Customer/CustomerGymAndProfile.vue'
+//import CustomerGymAndProfile from '@/views/Customer/CustomerGymAndProfile.vue'
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 const requireAuth = (to, from, next) => {
