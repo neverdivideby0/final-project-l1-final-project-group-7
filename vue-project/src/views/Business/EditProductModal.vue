@@ -113,7 +113,7 @@ export default {
           price: this.editingProduct.price,
           imageUrls: this.editingProduct.imageUrls,
           uploadedImageUrls: this.editingProduct.uploadedImageUrls,
-          // Add more fields as needed
+          productModifiedDateTime: new Date(),
         });
 
         // Alert for a successful update
@@ -211,7 +211,7 @@ export default {
 };
 </script>
   
-  <style scoped>
+<style scoped>
 /* Styles for the modal */
 .modal {
   position: fixed;
@@ -223,12 +223,16 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1000; /* Ensure it appears on top of other elements */
 }
 
 .modal-content {
   background: #fff;
   padding: 20px;
   border-radius: 5px;
+  max-width: 80%; /* Adjust as needed */
+  overflow-y: auto; /* Enable vertical scrolling if the content overflows */
+  max-height: 80vh; /* Limit the maximum height to 80% of the viewport height */
 }
 
 .form-group {
@@ -245,8 +249,7 @@ export default {
 }
 
 .image-preview img {
-  max-width: 200px; /* Adjust as needed */
+  max-width: 100%; /* Adjust as needed */
   max-height: 200px; /* Adjust as needed */
 }
 </style>
-  
