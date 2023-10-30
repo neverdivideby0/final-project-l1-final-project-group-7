@@ -1,41 +1,48 @@
 <template>
-  <div class="product-list">
-    <h2>Product Listings</h2>
-    <ul>
-      <li v-for="(product, index) in filteredProducts" :key="index">
-        <h3>{{ product.productName }}</h3>
-        <p><strong>Description:</strong> {{ product.description }}</p>
-        <p><strong>Category:</strong> {{ product.category }}</p>
-        <p><strong>Price:</strong> ${{ product.price.toFixed(2) }}</p>
-        <p><strong>Business ID:</strong> {{ product.businessId }}</p>
-        <p><strong>Email:</strong> {{ product.email }}</p>
-        <p><strong>Image URLs:</strong></p>
-        <ul>
-          <li v-for="(imageUrl, i) in product.imageUrls" :key="i">
-            <img :src="imageUrl" alt="Product Image" />
-          </li>
-        </ul>
-        <p><strong>Uploaded Image URLs:</strong></p>
-        <ul>
-          <li
-            v-for="(uploadedImageUrl, i) in product.uploadedImageUrls"
-            :key="i"
-          >
-            <img :src="uploadedImageUrl" alt="Uploaded Product Image" />
-          </li>
-        </ul>
-        <button @click="confirmDelete(product)">Delete</button>
-        <button @click="openEditModal(product)">Edit</button>
-      </li>
-    </ul>
-    <EditProductModal
-      :isEditModalOpen="isEditModalOpen"
-      :editingProduct="editingProduct"
-      :products="products"
-      @close="closeEditModal"
-    />
-  </div>
-</template>
+    <div class="product-list">
+      <h2>Product Listings</h2>
+      <ul>
+        <li v-for="(product, index) in filteredProducts" :key="index" class="product-listing">
+          <!-- Add a product number to each listing -->
+          <span class="product-number">{{ index + 1 }}</span>
+          <div class="product-details">
+            <h3>{{ product.productName }}</h3>
+            <p><strong>Description:</strong> {{ product.description }}</p>
+            <p><strong>Category:</strong> {{ product.category }}</p>
+            <p><strong>Price:</strong> ${{ product.price.toFixed(2) }}</p>
+            <p><strong>Business ID:</strong> {{ product.businessId }}</p>
+            <p><strong>Email:</strong> {{ product.email }}</p>
+            <p><strong>Image URLs:</strong></p>
+            <ul class="product-images">
+              <li v-for="(imageUrl, i) in product.imageUrls" :key="i">
+                <img :src="imageUrl" alt="Product Image" class="product-image" />
+              </li>
+            </ul>
+            <p><strong>Uploaded Image URLs:</strong></p>
+            <ul class="product-images">
+              <li
+                v-for="(uploadedImageUrl, i) in product.uploadedImageUrls"
+                :key="i"
+              >
+                <img :src="uploadedImageUrl" alt="Uploaded Product Image" class="product-image" />
+              </li>
+            </ul>
+          </div>
+          <div class="product-actions">
+            <button @click="confirmDelete(product)">Delete</button>
+            <button @click="openEditModal(product)">Edit</button>
+          </div>
+        </li>
+      </ul>
+      <EditProductModal
+        :isEditModalOpen="isEditModalOpen"
+        :editingProduct="editingProduct"
+        :products="products"
+        @close="closeEditModal"
+      />
+    </div>
+  </template>
+  
   
   <script>
 import EditProductModal from "@/views/Business/EditProductModal.vue";
@@ -143,21 +150,44 @@ export default {
 };
 </script>
   
-  <style scoped>
+<style scoped>
 .product-list {
   text-align: center;
   margin: 20px;
 }
 
-ul {
+/* Style for each product listing */
+.product-listing {
+  border: 1px solid #ddd;
+  margin: 20px;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Style for product number */
+.product-number {
+  font-size: 24px;
+  margin-right: 20px;
+}
+
+.product-details {
+  flex: 1; /* Expand to fill available space */
+}
+
+.product-actions {
+  text-align: center;
+}
+
+.product-images {
   list-style-type: none;
   padding: 0;
 }
 
-li {
-  border: 1px solid #ddd;
-  margin: 10px;
-  padding: 10px;
+/* Style for product images */
+.product-image {
+  max-width: 150px;
+  max-height: 150px;
 }
 </style>
-  
