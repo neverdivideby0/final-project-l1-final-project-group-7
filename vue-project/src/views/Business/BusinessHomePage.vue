@@ -34,10 +34,9 @@
 import LogOut from "@/components/LogOut.vue";
 import FootFallChart from "@/components/FootFallChart.vue";
 
-import { ref, onBeforeMount } from 'vue';
-import Chart from 'chart.js/auto';
-import { getFirestore, collection, doc, getDocs } from 'firebase/firestore';
-import { getAuth } from 'firebase/auth';
+import { getFirestore, doc, getDoc } from "firebase/firestore";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getStorage, ref, getDownloadURL } from "firebase/storage";
 
 export default {
   name: "BusinessHomePage",
