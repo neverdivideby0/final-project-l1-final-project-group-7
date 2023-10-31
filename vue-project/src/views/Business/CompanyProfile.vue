@@ -1,3 +1,4 @@
+<!-- decomissioned... use BusinessHomePage instead... can use this as reference -->
 <template>
   <main class="main-container">
     <section class="image-wrapper">
@@ -6,7 +7,7 @@
     <section class="image-wrapper">
       <img loading="lazy" srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/b70eefca-ac72-4903-b161-dcd8dcc0a2a7?apiKey=b1390de48d6247c499e829392e14f6a0&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/b70eefca-ac72-4903-b161-dcd8dcc0a2a7?apiKey=b1390de48d6247c499e829392e14f6a0&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/b70eefca-ac72-4903-b161-dcd8dcc0a2a7?apiKey=b1390de48d6247c499e829392e14f6a0&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/b70eefca-ac72-4903-b161-dcd8dcc0a2a7?apiKey=b1390de48d6247c499e829392e14f6a0&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/b70eefca-ac72-4903-b161-dcd8dcc0a2a7?apiKey=b1390de48d6247c499e829392e14f6a0&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/b70eefca-ac72-4903-b161-dcd8dcc0a2a7?apiKey=b1390de48d6247c499e829392e14f6a0&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/b70eefca-ac72-4903-b161-dcd8dcc0a2a7?apiKey=b1390de48d6247c499e829392e14f6a0&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/b70eefca-ac72-4903-b161-dcd8dcc0a2a7?apiKey=b1390de48d6247c499e829392e14f6a0&" class="img-2" />
     </section>
-    <section class="main-content">
+    <section class="main-cont../../components/CompanyNavBar.vue">
       <div class="title">Fitness First</div>
       <div class="sign-out">
         <button class="sign-out-button">Sign Out</button>

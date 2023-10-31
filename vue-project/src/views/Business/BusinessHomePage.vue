@@ -26,6 +26,9 @@
 
     <button @click="navigateToBusinessProductListing">Add new listing</button>
 
+    <button @click="navigateToEditBusinessProfile">Edit Business Profile</button>
+
+
     <LogOut />
   </div>
 </template>
@@ -115,6 +118,14 @@ export default {
       this.checkAuthentication(() => {
         // If authenticated, navigate to BusinessProductListing
         this.$router.push({ name: "BusinessProductListing" });
+      });
+    },
+
+
+    navigateToEditBusinessProfile() {
+      this.checkAuthentication(() => {
+        // If authenticated, navigate to BusinessProductListing
+        this.$router.push({ name: "EditBusinessProfile" });
       });
     },
 
