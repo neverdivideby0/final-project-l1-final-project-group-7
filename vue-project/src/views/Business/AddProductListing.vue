@@ -12,9 +12,19 @@
         <textarea id="description" v-model="description" required></textarea>
       </div>
       <div class="form-group">
-        <label for="category">Category:</label>
-        <input type="text" id="category" v-model="category" required />
+        <label>Categories:</label>
+        <!-- Use checkboxes for multiple category selection -->
+        <div v-for="(category, index) in categoryOptions" :key="index">
+          <input
+            type="checkbox"
+            :id="`category${index}`"
+            :value="category"
+            v-model="selectedCategories"
+          />
+          <label :for="`category${index}`">{{ category }}</label>
+        </div>
       </div>
+
       <div class="form-group">
         <label for="price">Price:</label>
         <input type="number" id="price" v-model="price" required />
@@ -41,8 +51,11 @@
     </form>
   </div>
 </template>
-  
-  <script>
+
+
+
+
+<script>
 import NotFound from "@/views/NotFound.vue";
 import { getFirestore, collection, addDoc } from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
@@ -57,12 +70,13 @@ export default {
     return {
       productName: "",
       description: "",
-      category: "",
+      selectedCategories: [], // Store the selected categories as an array
       price: "",
       imageUrl1: "",
       imageUrl2: "",
       user: null,
-      email: '',
+      email: "",
+      categoryOptions: ["Nutrition", "Apparel", "Equipment", "Others"], // List of predefined category options
     };
   },
 
@@ -113,7 +127,7 @@ export default {
           businessId: this.user.uid,
           productName: this.productName,
           description: this.description,
-          category: this.category,
+          category: this.selectedCategories,
           price: parseFloat(this.price),
           imageUrls: [this.imageUrl1, this.imageUrl2].filter((url) => url), // Filter out empty URLs
           uploadedImageUrls: uploadedImageUrls, // Include the uploaded image URLs
@@ -129,10 +143,12 @@ export default {
         // Clear the form fields
         this.productName = "";
         this.description = "";
-        this.category = "";
         this.price = "";
         this.imageUrl1 = "";
         this.imageUrl2 = "";
+        // Clear selected categories and custom category
+        this.selectedCategories = [];
+        this.customCategory = "";
       } catch (error) {
         console.error("Error adding product:", error);
       }
@@ -142,12 +158,11 @@ export default {
       const files = this.$refs.uploadImages.files;
       this.uploadedImages = files;
     },
-
   },
 };
 </script>
-  
-  <style scoped>
+
+<style scoped>
 .product-form {
   text-align: center;
   margin: 20px;
@@ -155,5 +170,7 @@ export default {
 .form-group {
   margin-bottom: 10px;
 }
+.custom-category {
+  margin-top: 10px;
+}
 </style>
-  

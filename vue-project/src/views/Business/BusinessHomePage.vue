@@ -23,7 +23,7 @@
     <button @click="navigateToBusinessListingOverview">See all listings</button>
 
 
-    <button @click="navigateToBusinessProductListing">Add new listing</button>
+    <button @click="navigateToAddProductListing">Add new listing</button>
 
     <button @click="navigateToEditBusinessProfile">Edit Business Profile</button>
 
@@ -111,10 +111,10 @@ export default {
       });
     },
 
-    navigateToBusinessProductListing() {
+    navigateToAddProductListing() {
       this.checkAuthentication(() => {
         // If authenticated, navigate to BusinessProductListing
-        this.$router.push({ name: "BusinessProductListing" });
+        this.$router.push({ name: "AddProductListing" });
       });
     },
 

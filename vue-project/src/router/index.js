@@ -7,7 +7,7 @@ import ProfileSetupPageCustomer from "@/views/Customer/ProfileSetupPageCustomer.
 import ProfileSetupPageBusiness from "@/views/Business/ProfileSetupPageBusiness.vue";
 import CustomerHomePage from '@/views/Customer/CustomerHomePage.vue'
 import BusinessHomePage from '@/views/Business/BusinessHomePage.vue'
-import BusinessProductListing from '@/views/Business/BusinessProductListing.vue'
+import AddProductListing from '@/views/Business/AddProductListing.vue'
 import BusinessListingOverview from '@/views/Business/BusinessListingOverview.vue'
 import CompanyProfile from '@/views/Business/CompanyProfile.vue'
 import EditCompanyProfile from '@/views/Business/EditCompanyProfile.vue'
@@ -95,9 +95,9 @@ const routes = [
     component: HomePage,
   },
   {
-    path: '/BusinessProductListing',
-    name: 'BusinessProductListing',
-    component: BusinessProductListing,
+    path: '/AddProductListing',
+    name: 'AddProductListing',
+    component: AddProductListing,
     beforeEnter: requireAuth, // Requires authentication
   },
   {

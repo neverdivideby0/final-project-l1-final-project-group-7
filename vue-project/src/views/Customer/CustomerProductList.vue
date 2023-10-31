@@ -25,7 +25,7 @@
           <p><strong>Email:</strong> {{ product.email }}</p>
           <p><strong>Image URLs:</strong></p>
           <ul>
-            <li v-for="(imageUrl, i) in product.imageUrls" :key="i">
+            <li v-for="(imageUrl, i) in [...product.imageUrls, ...product.uploadedImageUrls]" :key="i">
               <img :src="imageUrl" alt="Product Image" />
             </li>
           </ul>
