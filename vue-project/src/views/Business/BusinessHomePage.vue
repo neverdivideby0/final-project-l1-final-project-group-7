@@ -20,17 +20,22 @@
       />
     </div>
 
+    <FootFallChart/>
     <button @click="navigateToBusinessListingOverview">See all listings</button>
 
 
     <button @click="navigateToBusinessProductListing">Add new listing</button>
 
+    <button @click="navigateToEditBusinessProfile">Edit Business Profile</button>
+
+
     <LogOut />
   </div>
 </template>
   
-  <script>
+<script>
 import LogOut from "@/components/LogOut.vue";
+import FootFallChart from "@/components/FootFallChart.vue";
 
 import { getFirestore, doc, getDoc } from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
@@ -40,6 +45,7 @@ export default {
   name: "BusinessHomePage",
   components: {
     LogOut,
+    FootFallChart
   },
   data() {
     return {
@@ -51,7 +57,8 @@ export default {
       userAccountCreatedDateTime: "",
       profilePictureUrl: null, // To store the URL of the profile picture
     };
-  },async created() {
+  },
+  async created() {
   const auth = getAuth();
 
   // Log whether the user is authenticated
@@ -111,6 +118,14 @@ export default {
       this.checkAuthentication(() => {
         // If authenticated, navigate to BusinessProductListing
         this.$router.push({ name: "BusinessProductListing" });
+      });
+    },
+
+
+    navigateToEditBusinessProfile() {
+      this.checkAuthentication(() => {
+        // If authenticated, navigate to BusinessProductListing
+        this.$router.push({ name: "EditBusinessProfile" });
       });
     },
 

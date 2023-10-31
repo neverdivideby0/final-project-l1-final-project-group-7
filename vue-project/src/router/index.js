@@ -9,10 +9,14 @@ import CustomerHomePage from '@/views/Customer/CustomerHomePage.vue'
 import BusinessHomePage from '@/views/Business/BusinessHomePage.vue'
 import BusinessProductListing from '@/views/Business/BusinessProductListing.vue'
 import BusinessListingOverview from '@/views/Business/BusinessListingOverview.vue'
-import CompanyProfile from '@/views/CompanyProfile.vue'
-import EditCompanyProfile from '@/views/EditCompanyProfile.vue'
+import CompanyProfile from '@/views/Business/CompanyProfile.vue'
+import EditCompanyProfile from '@/views/Business/EditCompanyProfile.vue'
 import HomePage from '@/views/HomePage.vue'
 import NotFound from '@/views/NotFound.vue'
+import EditBusinessProfile from '@/views/Business/EditBusinessProfile.vue'
+import CustomerProductList from '@/views/Customer/CustomerProductList.vue'
+
+
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 const requireAuth = (to, from, next) => {
@@ -102,6 +106,19 @@ const routes = [
     component: BusinessListingOverview,
     beforeEnter: requireAuth, // Requires authentication
   },
+  {
+    path: '/EditBusinessProfile',
+    name: 'EditBusinessProfile',
+    component: EditBusinessProfile,
+    beforeEnter: requireAuth, // Requires authentication
+  },
+  {
+    path: '/CustomerProductList',
+    name: 'CustomerProductList',
+    component: CustomerProductList,
+    beforeEnter: requireAuth, // Requires authentication
+  },
+  
   {
     path: '/:catchAll(.*)',
     name: 'NotFound',
