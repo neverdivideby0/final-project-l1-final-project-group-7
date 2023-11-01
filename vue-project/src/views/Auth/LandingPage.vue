@@ -3,15 +3,15 @@
     <img :class="$style.bgIcon" src="@/assets/GetFitt.png" alt="">
     <form @submit.prevent="login" :class="$style.form">
       <div :class="$style.username">
-        <label for="email" :class="$style.username1">Email:</label>
+
         <img :class="$style.userIcon" alt="" src="@/assets/user.svg" />
-        <input type="email" id="email" v-model="email" required />
+        <input type="email" id="email" v-model="email" required placeholder="Email"/>
       </div>
       <div :class="$style.password">
-        <label for="password" :class="$style.password1">Password:</label>
+
         <img :class="$style.lockIcon" alt="" src="@/assets/lock.svg" />
         <img :class="$style.passwordHideAndSee" alt="" src="/password-hide-and-see.svg" />
-        <input type="password" id="password" v-model="password" required />
+        <input type="password" id="password" v-model="password" required placeholder="Password"/>
       </div>
       <div :class="$style.buttonGroup">
         <button type="submit" @click="customerLogin" :class="$style.loginButton">Customer Login</button>
