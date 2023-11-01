@@ -126,7 +126,7 @@ export default {
     align-items: center;
     justify-content: center;
     position: absolute;
-    top: 35%;
+    top: 30%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 1802.5px;
@@ -151,6 +151,14 @@ export default {
     text-transform: uppercase;
     font-weight: 500;
   }
+  .userIcon {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 25px;
+    height: 25px;
+    overflow: hidden;
+  }
   .username1 {
     position: flex;
     top: 13px;
@@ -166,6 +174,18 @@ export default {
     line-height: 20px;
     text-transform: uppercase;
     font-weight: 500;
+  }
+  .lockIcon {
+    position: absolute;
+    height: 47.56%;
+    width: 7.5%;
+    top: 47.56%;
+    right: 88.83%;
+    bottom: 4.89%;
+    left: 3.67%;
+    max-width: 100%;
+    overflow: hidden;
+    max-height: 100%;
   }
   .passwordHideAndSee {
     position: absolute;
