@@ -1,45 +1,71 @@
 <template>
   <div class="product-form">
-    <h2>Add a Product</h2>
 
-    <form @submit.prevent="addProduct">
-      <div class="form-group">
-        <label for="productName">Product Name:</label>
-        <input type="text" id="productName" v-model="productName" required />
+    <!-- Nav bar -->
+    <nav class = "navbar"> 
+
+      <div class = "navbar-left"> 
+        <img src="@/assets/GetFitt.png" alt="Logo" class="navbar-logo" />
+      
       </div>
-      <div class="form-group">
-        <label for="description">Description:</label>
-        <textarea id="description" v-model="description" required></textarea>
+
+      <div class="navbar-right">
+
+        <!-- Buttons -->
+        <button id = "btn" @click="signOut" v-if="user">Sign Out</button>
+        <button @click="goBackToHome">Back to Home</button>
+        <SignOutButton /> 
       </div>
-      <div class="form-group">
-        <label for="category">Category:</label>
-        <input type="text" id="category" v-model="category" required />
-      </div>
-      <div class="form-group">
-        <label for="price">Price:</label>
-        <input type="number" id="price" v-model="price" required />
-      </div>
-      <div class="form-group">
-        <label for="uploadImages">Upload Images:</label>
-        <input
-          type="file"
-          id="uploadImages"
-          ref="uploadImages"
-          multiple
-          @change="handleImageUpload"
-        />
-      </div>
-      <div class="form-group">
-        <label for="imageUrl1">Image URL 1:</label>
-        <input type="text" id="imageUrl1" v-model="imageUrl1" />
-      </div>
-      <div class="form-group">
-        <label for="imageUrl2">Image URL 2:</label>
-        <input type="text" id="imageUrl2" v-model="imageUrl2" />
-      </div>
-      <button type="submit">Add Product</button>
-    </form>
+
+    </nav>
+
+    <!-- Form Div -->
+    <div class = "actualForm"> 
+
+      <h2>Add Product Listing</h2>
+
+      <form @submit.prevent="addProduct">
+        <div class="form-group">
+          <label for="uploadImages">Upload Images:</label>
+          <input
+            type="file"
+            id="uploadImages"
+            ref="uploadImages"
+            multiple
+            @change="handleImageUpload"
+          />
+        </div>
+        <div class="form-group">
+          <label for="productName">Product Name:</label>
+          <input type="text" id="productName" v-model="productName" required />
+        </div>
+        <div class="form-group">
+          <label for="description">Description:</label>
+          <textarea id="description" v-model="description" required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="category">Category:</label>
+          <input type="text" id="category" v-model="category" required />
+        </div>
+        <div class="form-group">
+          <label for="price">Price:</label>
+          <input type="number" id="price" v-model="price" required />
+        </div>
+        <div class="form-group">
+          <label for="imageUrl1">Image URL 1:</label>
+          <input type="text" id="imageUrl1" v-model="imageUrl1" />
+        </div>
+        <div class="form-group">
+          <label for="imageUrl2">Image URL 2:</label>
+          <input type="text" id="imageUrl2" v-model="imageUrl2" />
+        </div>
+        <button type="submit">Add Product</button>
+      </form>
+    
+    </div>
+
   </div>
+
 </template>
   
   <script>
@@ -52,7 +78,7 @@ export default {
   name: "ProductForm",
   components: {
     NotFound,
-  },
+},
   data() {
     return {
       productName: "",
@@ -143,17 +169,83 @@ export default {
       this.uploadedImages = files;
     },
 
+    signOut() {
+      // Add code here to sign the user out, if applicable
+      // Then, navigate to the sign-out page
+      this.$router.push({ name: 'SignOut' }); // Replace 'SignOut' with the actual route name
+    },
+
+    goHome() {
+      // Navigate to the home page
+      this.$router.push({ name: 'BusinessHomePage' }); // Replace 'Home' with the actual route name
+    },
   },
 };
 </script>
   
   <style scoped>
-.product-form {
-  text-align: center;
-  margin: 20px;
+
+/* navbar style */
+.navbar {
+  background-color: #FF5733;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 20px; /* Adjust the padding as needed */
+  height: 60px; /* Adjust the height as needed */
 }
+
+.navbar-logo {
+  max-width: 400px;
+}
+.navbar-left {
+  display: flex;
+  align-items: center;
+}
+.navbar-right {
+  display: flex;
+  gap: 10px; /* Adjust the gap between buttons */
+}
+
+/* Additional styling for the buttons */
+.navbar button {
+  background-color: white;
+  color: #FF5733;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
 .form-group {
   margin-bottom: 10px;
+  margin: 20px;
+  width: 500px;
+  font-family: 'Montserrat', sans-serif; /* Use the correct font name */
+  font-weight: bold; /* Make the font bold */
+  justify-content: center;
+}
+.actualForm {
+  text-align: center;
+  margin: 20px;
+  padding: 20px;
+  border: 2px solid #000;
+  border-radius: 100px;
+  width: 700px;
+  margin: 0 auto; /* Center horizontally */
+  display: flex;
+  align-items: center; /* Center vertically */
+}
+
+.product-form {
+  text-align: center;
+}
+
+/* make text black */
+.product-form h2,
+.product-form label,
+.product-form input,
+.product-form textarea {
+  color: black;
 }
 </style>
   
