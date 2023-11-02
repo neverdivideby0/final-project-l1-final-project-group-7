@@ -1,10 +1,7 @@
 <template>
   <div :class="$style.landingPage">
-
+    <img :class="$style.bgIcon" src="@/assets/GetFitt.png" alt="">
     <form @submit.prevent="login" :class="$style.form">
-      <div :class="$style.bgIcon">
-        <img :class="$style.bgIcon" src="@/assets/GetFitt.png" alt="">
-      </div>
       <div :class="$style.username">
         <input type="email" id="email" v-model="email" required placeholder="Email"/>
       </div>
@@ -126,12 +123,12 @@ export default {
     align-items: center;
     justify-content: center;
     position: absolute;
-    top: 35%;
+    top: 25%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 1802.5px;
     height: 1152px;
-    margin-bottom: 20px;
+     margin-bottom: 20px;
   }
   .rectangle {
     position: absolute;
@@ -142,38 +139,6 @@ export default {
     box-sizing: border-box;
     width: 300px;
     height: 45px;
-  }
-  .username1 {
-    position: absolute;
-    top: 13px;
-    left: 65px;
-    line-height: 20px;
-    text-transform: uppercase;
-    font-weight: 500;
-  }
-  .username1 {
-    position: flex;
-    top: 13px;
-    left: 10px;
-    width: 0px;
-    height: 45px;
-    font-size: var(--font-size-sm);
-  }
-  .password1 {
-    position: absolute;
-    top: 13px;
-    left: 10px;
-    line-height: 20px;
-    text-transform: uppercase;
-    font-weight: 500;
-  }
-  .passwordHideAndSee {
-    position: absolute;
-    top: 13px;
-    left: 271px;
-    width: 20px;
-    height: 20px;
-    overflow: hidden;
   }
 
   .password {
@@ -237,7 +202,7 @@ export default {
     top: center;
     left: center;
     width: 300px;
-    height: 29px;
+    height: 299px;
   }
 
   .landingPage {
