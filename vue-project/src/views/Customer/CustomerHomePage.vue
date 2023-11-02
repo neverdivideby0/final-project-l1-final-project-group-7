@@ -1,198 +1,66 @@
 <template>
   <div :class="$style.homePage">
-    <div :class="$style.banner">
-    </div>
-    <div :class="$style.facilities">
-      <b :class="$style.heading3">Facilities</b>
-      <div :class="$style.label">
-        <div :class="$style.spanef785aa7f4" />
-        <div :class="$style.divdcd1ccc0b6">
-          <div :class="$style.spanabf093bdfe">
-            <div :class="$style.div">315</div>
-          </div>
-        </div>
+    <div :class="$style.body">
+      <div :class="$style.banner">
       </div>
-      <div :class="$style.label1">
-        <div :class="$style.spanef785aa7f4" />
-        <div :class="$style.divdcd1ccc0b6">
-          <div :class="$style.spanabf093bdfe">
-            <div :class="$style.div">302</div>
-          </div>
-        </div>
+      <div :class="$style.frame">
+        <img :class="$style.logo" alt="" src="@/assets/orangeGetFitt.png" />
       </div>
-      <div :class="$style.label2">
-        <div :class="$style.spanef785aa7f4" />
-        <div :class="$style.divdcd1ccc0b6">
-        </div>
+      <div :class="$style.frame1">
+        <div :class="$style.fitnessForYou">Fitness For You</div>
       </div>
-      <div :class="$style.label3">
-        <div :class="$style.spanef785aa7f4" />
-        <div :class="$style.divdcd1ccc0b6">
+      <div :class="$style.frame2">
+        <div :class="$style.linkCreateAnAccountmargi1">
+          <div :class="$style.signOut">
+            <button @click="signOut">Sign Out</button>  
+          </div>
         </div>
+        <div :class="$style.welcomeUser123">Welcome, User123</div>
       </div>
-      <div :class="$style.button">
-        <div :class="$style.spa">Show all 14</div>
-        <div :class="$style.svg">
-          <img :class="$style.vectorIcon" alt="" src="/vector.svg" />
+      <div :class="$style.frame3">
+        <div :class="$style.frame4">
+          <img :class="$style.leftSquare" alt=""/>
+          <img :class="$style.rightSquare" alt=""/>
+          <div :class="$style.viewGyms">
+            <button @click="navigateToGymListing">View Gyms</button>
+          </div>
+          <div :class="$style.svg1">
+            <img :class="$style.gymsIcon" alt="" src="@/assets/dumbell.png" />
+          </div>
+          <div :class="$style.svg2" />
+          <div :class="$style.viewProducts">
+            <button @click="navigateToProductListing">View Products</button>
+          </div>
+          <img :class="$style.productsIcon" alt="" src="@/assets/products.png" />
         </div>
-      </div>
-    </div>
-    <div :class="$style.areaOfSingapore">
-      <b :class="$style.heading3">Area Of Singapore</b>
-      <div :class="$style.label">
-        <div :class="$style.spanef785aa7f4" />
-        <div :class="$style.divdcd1ccc0b6">
-          <div :class="$style.diva53cbfa6de">
-            <div :class="$style.spa">Central</div>
-          </div>
-          <div :class="$style.spanabf093bdfe">
-            <div :class="$style.div">315</div>
-          </div>
-        </div>
-      </div>
-      <div :class="$style.label1">
-        <div :class="$style.spanef785aa7f4" />
-        <div :class="$style.divdcd1ccc0b6">
-          <div :class="$style.diva53cbfa6de1">
-            <div :class="$style.spa">North</div>
-          </div>
-          <div :class="$style.spanabf093bdfe">
-            <div :class="$style.div">302</div>
-          </div>
-        </div>
-      </div>
-      <div :class="$style.label2">
-        <div :class="$style.spanef785aa7f4" />
-        <div :class="$style.divdcd1ccc0b6">
-          <div :class="$style.diva53cbfa6de2">
-            <div :class="$style.spa">East</div>
-          </div>
-          <div :class="$style.spanabf093bdfe">
-            <div :class="$style.div">179</div>
-          </div>
-        </div>
-      </div>
-      <div :class="$style.label3">
-        <div :class="$style.spanef785aa7f4" />
-        <div :class="$style.divdcd1ccc0b6">
-          <div :class="$style.diva53cbfa6de3">
-            <div :class="$style.spa">South</div>
-          </div>
-          <div :class="$style.spanabf093bdfe">
-            <div :class="$style.div">134</div>
-          </div>
-        </div>
-      </div>
-      <div :class="$style.label4">
-        <div :class="$style.spanef785aa7f4" />
-        <div :class="$style.divdcd1ccc0b6">
-          <div :class="$style.diva53cbfa6de2">
-            <div :class="$style.spa">West</div>
-          </div>
-          <div :class="$style.spanabf093bdfe">
-            <div :class="$style.div">134</div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div :class="$style.frame">
-      <img :class="$style.frameIcon" alt="" src="@/assets/orangeGetFitt.png" />
-    </div>
-    <div :class="$style.frame1">
-      <div :class="$style.fitnessForYou">Fitness For You</div>
-    </div>
-    <div :class="$style.frame2">
-      <div :class="$style.divaca0ade214">
-        <div :class="$style.linkmargin">
-          <div :class="$style.linkList">List your property</div>
-        </div>
-        <div :class="$style.linkCreateAnAccountmargi">
-          <div :class="$style.linkCreateAnAccount">
-            <div :class="$style.register">Register</div>
-          </div>
-        </div>
-      </div>
-      <div :class="$style.linkCreateAnAccountmargi1">
-        <div :class="$style.linkCreateAnAccount">
-          <div :class="$style.register">Sign Out</div>
-        </div>
-      </div>
-      <div :class="$style.welcomeUser123">Welcome, User123</div>
-    </div>
-    <div :class="$style.frame3">
-      <div :class="$style.frame4">
-        <img :class="$style.frameChild" alt="" src="/rectangle-3.svg" />
-        <img :class="$style.frameItem" alt="" src="/rectangle-4.svg" />
-        <div :class="$style.viewGyms">View Gyms</div>
-        <div :class="$style.svg1">
-          <img :class="$style.vectorIcon1" alt="" src="/vector1.svg" />
-        </div>
-        <div :class="$style.svg2" />
-        <div :class="$style.viewProducts">View Products</div>
-        <img :class="$style.image2Icon" alt="" src="/image-2@2x.png" />
       </div>
     </div>
   </div>
+  <LogOut />
 </template>
-<script>
-  import { defineComponent } from "vue";
 
-  export default defineComponent({
-    name: "HomePage",
-  });
+
+<script>
+import { defineComponent } from "vue";
+import LogOut from '@/components/LogOut.vue';
+
+export default defineComponent({
+  name: "HomePage",
+  components: {
+    LogOut,
+  },
+  methods: {
+    navigateToProductListing() {
+      this.$router.push({ name: 'CustomerProductList' });
+    }
+
+    /* add signOut() here */
+  }
+});
 </script>
+
+
 <style module>
-  .heading3 {
-    position: absolute;
-    top: 12px;
-    left: 13px;
-    font-size: var(--font-size-sm);
-    line-height: 20px;
-  }
-  .spanef785aa7f4 {
-    position: relative;
-    border-radius: var(--br-9xs);
-    background-color: var(--color-white);
-    border: 1px solid var(--color-gray-100);
-    box-sizing: border-box;
-    width: 20px;
-    height: 20px;
-    z-index: 1;
-  }
-  .spa {
-    position: relative;
-    line-height: 20px;
-  }
-  .diva53cbfa6de {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    padding: var(--padding-0) 7.3300018310546875px var(--padding-0)
-      var(--padding-0);
-  }
-  .div {
-    position: relative;
-    line-height: 18px;
-  }
-  .spanabf093bdfe {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    padding: var(--padding-0) 1.0300006866455078px var(--padding-0)
-      var(--padding-0);
-    font-size: var(--font-size-2xs);
-    color: var(--color-darkslategray-100);
-  }
-  .divdcd1ccc0b6 {
-    width: 205px;
-    display: flex;
-    flex-direction: row;
-    align-items: flex-end;
-    justify-content: space-between;
-    z-index: 0;
-  }
   .label {
     position: absolute;
     width: calc(100% - 21px);
@@ -209,88 +77,6 @@
     gap: var(--gap-5xs);
     font-size: var(--font-size-xs);
   }
-  .diva53cbfa6de1 {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    padding: var(--padding-0) 2.3400001525878906px var(--padding-0)
-      var(--padding-0);
-  }
-  .label1 {
-    position: absolute;
-    width: calc(100% - 21px);
-    top: 63px;
-    right: 8px;
-    left: 13px;
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: flex-start;
-    padding: var(--padding-5xs) var(--padding-5xs) var(--padding-0)
-      var(--padding-0);
-    box-sizing: border-box;
-    gap: var(--gap-5xs);
-  }
-  .diva53cbfa6de2 {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-  }
-  .label2 {
-    position: absolute;
-    width: calc(100% - 21px);
-    top: 93px;
-    right: 8px;
-    left: 13px;
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: flex-start;
-    padding: var(--padding-5xs) var(--padding-5xs) var(--padding-0)
-      var(--padding-0);
-    box-sizing: border-box;
-    gap: var(--gap-5xs);
-  }
-  .diva53cbfa6de3 {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    padding: var(--padding-0) 0.5900001525878906px var(--padding-0)
-      var(--padding-0);
-  }
-  .label3 {
-    position: absolute;
-    width: calc(100% - 21px);
-    top: 123px;
-    right: 8px;
-    left: 13px;
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: flex-start;
-    padding: var(--padding-5xs) var(--padding-5xs) var(--padding-0)
-      var(--padding-0);
-    box-sizing: border-box;
-    gap: var(--gap-5xs);
-  }
-  .label4 {
-    position: absolute;
-    width: calc(100% - 21px);
-    top: 153px;
-    right: 8px;
-    left: 13px;
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: flex-start;
-    padding: var(--padding-5xs) var(--padding-5xs) var(--padding-0)
-      var(--padding-0);
-    box-sizing: border-box;
-    gap: var(--gap-5xs);
-  }
   .vectorIcon {
     display: flex;
     align-items: center;
@@ -299,31 +85,6 @@
     position: relative;
     width: 14.5px;
     height: 8px;
-  }
-  .svg {
-    width: 24px;
-    height: 24px;
-    overflow: hidden;
-    flex-shrink: 0;
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: flex-start;
-    padding: var(--padding-5xs) 4.731846809387207px 7.999969482421875px
-      4.731929779052734px;
-    box-sizing: border-box;
-  }
-  .button {
-    position: absolute;
-    top: 194px;
-    left: 13px;
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: flex-start;
-    gap: 0.39px;
-    font-size: var(--font-size-sm);
-    color: var(--color-royalblue);
   }
   .facilities {
     position: absolute;
@@ -334,16 +95,7 @@
     height: 226px;
     display: none;
   }
-  .areaOfSingapore {
-    position: absolute;
-    width: calc(100% - 1178px);
-    top: 771px;
-    right: 1176px;
-    left: 2px;
-    height: 226px;
-    display: none;
-  }
-  .frameIcon {
+  .logo {
     position: absolute;
     top: 0px;
     left: 0px;
@@ -364,12 +116,16 @@
   .fitnessForYou {
     position: absolute;
     top: 0px;
-    left: 0px;
-    line-height: 20px;
+    left: center;
+    width: 551px;
+    height: 132px;
+    overflow: hidden;
+    object-fit: cover;
+    mix-blend-mode: darken;
   }
   .frame1 {
     position: absolute;
-    top: 314px;
+    top: 366px;
     left: 549px;
     width: 342px;
     height: 20px;
@@ -377,23 +133,8 @@
     font-size: var(--font-size-29xl);
     color: var(--color-black);
   }
-  .linkList {
-    position: relative;
-    line-height: 24px;
-    font-weight: 500;
-  }
-  .linkmargin {
-    display: none;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    padding: var(--padding-5xs) 24.610000610351562px var(--padding-5xs)
-      var(--padding-xs);
-    box-sizing: border-box;
-    min-width: 56px;
-    min-height: 56px;
-  }
-  .register {
+
+  .signOut {
     position: relative;
     line-height: 20px;
     font-weight: 500;
@@ -411,29 +152,6 @@
       var(--padding-xs);
     min-width: 36px;
     min-height: 36px;
-  }
-  .linkCreateAnAccountmargi {
-    display: none;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    padding: var(--padding-9xs) var(--padding-5xs) var(--padding-9xs)
-      var(--padding-0);
-    box-sizing: border-box;
-    min-width: 44px;
-    min-height: 44px;
-    font-size: var(--font-size-sm);
-    color: var(--color-royalblue);
-  }
-  .divaca0ade214 {
-    position: absolute;
-    top: calc(50% - 44px);
-    left: 1298px;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: flex-end;
   }
   .linkCreateAnAccountmargi1 {
     position: absolute;
@@ -472,31 +190,53 @@
     font-size: var(--font-size-mini);
     color: var(--color-white);
   }
-  .frameChild {
-    position: absolute;
-    top: 0px;
-    left: 33px;
-    width: 412px;
-    height: 502px;
-  }
-  .frameItem {
-    position: absolute;
-    top: 0px;
-    left: 584px;
-    width: 412px;
-    height: 502px;
-  }
+.leftSquare {
+  position: absolute;
+  top: 0px;
+  left: 33px;
+  width: 412px;
+  height: 502px;
+  background-color: red; 
+}
+.rightSquare {
+  position: absolute;
+  top: 0px;
+  left: 584px;
+  width: 412px;
+  height: 502px;
+  background-color: turquoise; 
+}
+
   .viewGyms {
     position: absolute;
     top: 389px;
-    left: 119px;
+    left: 180px;
     line-height: 20px;
   }
-  .vectorIcon1 {
-    position: relative;
-    width: 288px;
-    height: 239px;
-    mix-blend-mode: color;
+  .viewProducts {
+    position: absolute;
+    top: 389px;
+    left: 730px;
+    line-height: 20px;
+  }
+  .gymsIcon {
+    position: absolute;
+    top: 20px;
+    left: 111px;
+    width: 251px;
+    height: 263px;
+    object-fit: cover;
+    mix-blend-mode: hue;
+  }
+  .productsIcon {
+    position: absolute;
+    top: 75px;
+    left: 660px;
+    width: 251px;
+    height: 263px;
+    object-fit: cover;
+    color: black;
+    mix-blend-mode: hue;
   }
   .svg1 {
     position: absolute;
@@ -522,21 +262,7 @@
     height: 327px;
     overflow: hidden;
   }
-  .viewProducts {
-    position: absolute;
-    top: 389px;
-    left: 638px;
-    line-height: 20px;
-  }
-  .image2Icon {
-    position: absolute;
-    top: 80px;
-    left: 673px;
-    width: 251px;
-    height: 263px;
-    object-fit: cover;
-    mix-blend-mode: hue;
-  }
+
   .frame4 {
     position: absolute;
     top: 0px;
@@ -555,33 +281,40 @@
     font-size: var(--font-size-29xl);
     color: var(--color-black);
   }
-  .homePage {
-    position: relative;
-    background-color: var(--color-white);
-    width: 100%;
-    height: 1024px;
-    overflow: hidden;
-    text-align: left;
-    font-size: var(--font-size-smi);
-    color: var(--color-gray-200);
-    font-family: var(--font-roboto);
-  }
+/* ... other styles ... */
 
-  .banner {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    top: 0;
-    width: 100%;
-    background-color: orange; /* Replace with your desired color */
-    padding: 169px; /* Adjust the padding as needed */
-    box-sizing: border-box;
-    color: orange; /* Set text color to contrast with the background */
-    text-align: center;
-    font-size: 24px; /* Adjust the font size as needed */
-    font-weight: bold;
-    
-  }
+.homePage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: 100vh; /* Set the minimum height of the homepage to 100% of the viewport height */
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 50%; /* Adjust the width as needed */
+  margin: 0 auto; /* Center the body horizontally */
+}
+
+.banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  background-color: orange; /* Replace with your desired color */
+  padding: 169px; /* Adjust the padding as needed */
+  box-sizing: border-box;
+  color: orange; /* Set text color to contrast with the background */
+  text-align: center;
+  font-size: 24px; /* Adjust the font size as needed */
+  font-weight: bold;   
+}
 
 </style>

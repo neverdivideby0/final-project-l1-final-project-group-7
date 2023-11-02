@@ -128,7 +128,7 @@ export default {
     transform: translate(-50%, -50%);
     width: 1802.5px;
     height: 1152px;
-     margin-bottom: 20px;
+    margin-bottom: 20px;
   }
   .rectangle {
     position: absolute;
