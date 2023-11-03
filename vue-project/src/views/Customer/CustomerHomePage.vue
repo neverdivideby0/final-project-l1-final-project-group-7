@@ -11,22 +11,20 @@
         </div>
       </div>
       <img :class="$style.logo" alt="" src="@/assets/orangeGetFitt.png" /> 
-      <div :class="$style.frame3">
-        <div :class="$style.frame4">
-          <img :class="$style.leftSquare" alt=""/>
-          <img :class="$style.rightSquare" alt=""/>
-          <div :class="$style.viewGyms">
-            <button @click="navigateToGymListing">View Gyms</button>
-          </div>
-          <div :class="$style.svg1">
-            <img :class="$style.gymsIcon" alt="" src="@/assets/dumbell.png" />
-          </div>
-          <div :class="$style.svg2" />
-          <div :class="$style.viewProducts">
-            <button @click="navigateToProductListing">View Products</button>
-          </div>
-          <img :class="$style.productsIcon" alt="" src="@/assets/products.png" />
+      <div :class="$style.frame4">
+        <img :class="$style.leftSquare" alt=""/>
+        <img :class="$style.rightSquare" alt=""/>
+        <div :class="$style.viewGyms">
+          <button @click="navigateToGymListing">View Gyms</button>
         </div>
+        <div :class="$style.svg1">
+          <img :class="$style.gymsIcon" alt="" src="@/assets/dumbell.png" />
+        </div>
+        <div :class="$style.svg2" />
+        <div :class="$style.viewProducts">
+          <button @click="navigateToProductListing">View Products</button>
+        </div>
+        <img :class="$style.productsIcon" alt="" src="@/assets/products.png" />
       </div>
     </div>
   </div>
@@ -135,22 +133,10 @@ export default defineComponent({
     color: var(--color-black);
     color: white;
   }
-
-  .frame2 {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    background-color: var(--color-tomato);
-    width: 1440px;
-    height: 106px;
-    overflow: hidden;
-    font-size: var(--font-size-mini);
-    color: var(--color-white);
-  }
 .leftSquare {
   position: absolute;
   top: 0px;
-  left: 33px;
+  left: 100px;
   width: 412px;
   height: 502px;
   background-color: red; 
@@ -158,7 +144,7 @@ export default defineComponent({
 .rightSquare {
   position: absolute;
   top: 0px;
-  left: 584px;
+  left: 650px;
   width: 412px;
   height: 502px;
   background-color: turquoise; 
@@ -167,19 +153,19 @@ export default defineComponent({
   .viewGyms {
     position: absolute;
     top: 389px;
-    left: 180px;
+    left: 250px;
     line-height: 20px;
   }
   .viewProducts {
     position: absolute;
     top: 389px;
-    left: 730px;
+    left: 795px;
     line-height: 20px;
   }
   .gymsIcon {
     position: absolute;
     top: 20px;
-    left: 111px;
+    left: 172px;
     width: 251px;
     height: 263px;
     object-fit: cover;
@@ -188,7 +174,7 @@ export default defineComponent({
   .productsIcon {
     position: absolute;
     top: 75px;
-    left: 660px;
+    left: 725px;
     width: 251px;
     height: 263px;
     object-fit: cover;
@@ -198,7 +184,7 @@ export default defineComponent({
   .svg1 {
     position: absolute;
     top: 55px;
-    left: 0px;
+    left: 10px;
     width: 474px;
     height: 294px;
     overflow: hidden;
@@ -222,21 +208,11 @@ export default defineComponent({
 
   .frame4 {
     position: absolute;
-    top: 0px;
-    left: 156px;
+    top: 400px;
+    left: center;
     width: 1184px;
     height: 502px;
     overflow: hidden;
-  }
-  .frame3 {
-    position: absolute;
-    top: 400px;
-    left: 50px;
-    width: 1340px;
-    height: 502px;
-    overflow: hidden;
-    font-size: var(--font-size-29xl);
-    color: var(--color-black);
   }
 /* ... other styles ... */
 
