@@ -2,21 +2,11 @@
   <div :class="$style.homePage">
     <div :class="$style.body">
       <div :class="$style.banner">
-      </div>
-      <div :class="$style.frame">
-        <img :class="$style.logo" alt="" src="@/assets/orangeGetFitt.png" />
-      </div>
-      <div :class="$style.frame1">
-        <div :class="$style.fitnessForYou">Fitness For You</div>
-      </div>
-      <div :class="$style.frame2">
-        <div :class="$style.linkCreateAnAccountmargi1">
-          <div :class="$style.signOut">
-            <button @click="signOut">Sign Out</button>  
-          </div>
-        </div>
         <div :class="$style.welcomeUser123">Welcome, User123</div>
+        <div :class="$style.fitnessForYou">Fitness For You</div>
+        <button @click="signOut">Sign Out</button> 
       </div>
+      <img :class="$style.logo" alt="" src="@/assets/orangeGetFitt.png" /> 
       <div :class="$style.frame3">
         <div :class="$style.frame4">
           <img :class="$style.leftSquare" alt=""/>
@@ -36,7 +26,6 @@
       </div>
     </div>
   </div>
-  <LogOut />
 </template>
 
 
@@ -97,88 +86,44 @@ export default defineComponent({
   }
   .logo {
     position: absolute;
-    top: 0px;
-    left: 0px;
-    width: 551px;
-    height: 132px;
-    overflow: hidden;
-    object-fit: cover;
-    mix-blend-mode: darken;
-  }
-  .frame {
-    position: absolute;
-    top: 159px;
-    left: 444px;
-    width: 552px;
-    height: 132px;
-    overflow: hidden;
-  }
-  .fitnessForYou {
-    position: absolute;
-    top: 0px;
+    top: 110px;
     left: center;
-    width: 551px;
+    width: 699px;
     height: 132px;
     overflow: hidden;
     object-fit: cover;
     mix-blend-mode: darken;
-  }
-  .frame1 {
-    position: absolute;
-    top: 366px;
-    left: 549px;
-    width: 342px;
-    height: 20px;
-    overflow: hidden;
-    font-size: var(--font-size-29xl);
-    color: var(--color-black);
-  }
-
-  .signOut {
-    position: relative;
-    line-height: 20px;
-    font-weight: 500;
-  }
-  .linkCreateAnAccount {
-    border-radius: var(--br-9xs);
-    background-color: var(--color-white);
-    border: 1px solid var(--color-royalblue);
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    padding: var(--padding-5xs) 11.13999938964843var (--padding-5xs) 8px
-      var(--padding-xs);
-    min-width: 36px;
-    min-height: 36px;
-  }
-  .linkCreateAnAccountmargi1 {
-    position: absolute;
-    top: 31px;
-    left: 1298px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    padding: var(--padding-9xs) var(--padding-5xs) var(--padding-9xs)
-      var(--padding-0);
-    box-sizing: border-box;
-    min-width: 44px;
-    min-height: 44px;
-    font-size: var(--font-size-base);
-    color: var(--color-royalblue);
   }
   .welcomeUser123 {
-    position: flex;
-    top: 49px;
-    text-align: center;
-    font-size: 50px;
+    position: absolute;
+    top: 120px;
+    left: center;
+    top: 0px;
+    font-size: 69px;
     line-height: 100px;
     font-weight: 900;
     color: var(--color-black);
-    color: black;
+    color: white;
   }
+  .fitnessForYou {
+    position: absolute;
+    top: 120px;
+    left: center;
+    top: 240px;
+    font-size: 69px;
+    line-height: 100px;
+    font-weight: 900;
+    color: var(--color-black);
+    color: white;
+  }
+  .signOut {
+    position: absolute;
+    top: 389px;
+    left: 180px;
+    width: 200px;
+    line-height: 20px;
+  }
+
   .frame2 {
     position: absolute;
     top: 0px;
@@ -284,12 +229,17 @@ export default defineComponent({
 /* ... other styles ... */
 
 .homePage {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  min-height: 100vh; /* Set the minimum height of the homepage to 100% of the viewport height */
+    display: flex; /* Add flexbox display */
+    align-items: center; /* Vertically center the content */
+    justify-content: center; /* Horizontally center the content */
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    text-align: center;
+    font-size: var(--font-size-base);
+    color: var(--color-royalblue);
+    font-family: var(--font-montserrat);
 }
 
 .body {
@@ -307,6 +257,7 @@ export default defineComponent({
   justify-content: center;
   position: absolute;
   top: 0;
+      z-index: -999; 
   width: 100%;
   background-color: orange; /* Replace with your desired color */
   padding: 169px; /* Adjust the padding as needed */
