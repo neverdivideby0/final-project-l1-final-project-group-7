@@ -4,7 +4,11 @@
       <div :class="$style.banner">
         <div :class="$style.welcomeUser123">Welcome, User123</div>
         <div :class="$style.fitnessForYou">Fitness For You</div>
-        <button @click="signOut">Sign Out</button> 
+        <div :class="$style.signOutButton">
+          <div :class="$style.signOut">
+            <button @click="signOut">Sign Out</button>  
+          </div>
+        </div>
       </div>
       <img :class="$style.logo" alt="" src="@/assets/orangeGetFitt.png" /> 
       <div :class="$style.frame3">
