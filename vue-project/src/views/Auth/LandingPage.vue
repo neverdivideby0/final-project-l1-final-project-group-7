@@ -130,16 +130,6 @@ export default {
     height: 1152px;
     margin-bottom: 20px;
   }
-  .rectangle {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    border-radius: var(--br-9xs);
-    border: 1px solid var(--color-royalblue);
-    box-sizing: border-box;
-    width: 300px;
-    height: 45px;
-  }
 
   .password {
     position: absolute;
@@ -149,16 +139,7 @@ export default {
     height: 45px;
     font-size: var(--font-size-sm);
   }
-  .rectangle2 {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    border-radius: var(--br-9xs);
-    background-color: var(--color-white);
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
-    width: 300px;
-    height: 45px;
-  }
+
   .login {
     position: absolute;
     top: 14px;
@@ -209,7 +190,7 @@ export default {
     display: flex; /* Add flexbox display */
     align-items: center; /* Vertically center the content */
     justify-content: center; /* Horizontally center the content */
-    position: relative;
+    position: absolute;
     background-color: #ff8a00;
     width: 100%;
     height: 100vh;

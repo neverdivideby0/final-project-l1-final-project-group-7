@@ -2,41 +2,32 @@
   <div :class="$style.homePage">
     <div :class="$style.body">
       <div :class="$style.banner">
-      </div>
-      <div :class="$style.frame">
-        <img :class="$style.logo" alt="" src="@/assets/orangeGetFitt.png" />
-      </div>
-      <div :class="$style.frame1">
+        <div :class="$style.welcomeUser123">Welcome, User123</div>
         <div :class="$style.fitnessForYou">Fitness For You</div>
-      </div>
-      <div :class="$style.frame2">
-        <div :class="$style.linkCreateAnAccountmargi1">
+        <div :class="$style.signOutButton">
           <div :class="$style.signOut">
             <button @click="signOut">Sign Out</button>  
           </div>
         </div>
-        <div :class="$style.welcomeUser123">Welcome, User123</div>
       </div>
-      <div :class="$style.frame3">
-        <div :class="$style.frame4">
-          <img :class="$style.leftSquare" alt=""/>
-          <img :class="$style.rightSquare" alt=""/>
-          <div :class="$style.viewGyms">
-            <button @click="navigateToGymListing">View Gyms</button>
-          </div>
-          <div :class="$style.svg1">
-            <img :class="$style.gymsIcon" alt="" src="@/assets/dumbell.png" />
-          </div>
-          <div :class="$style.svg2" />
-          <div :class="$style.viewProducts">
-            <button @click="navigateToProductListing">View Products</button>
-          </div>
-          <img :class="$style.productsIcon" alt="" src="@/assets/products.png" />
+      <img :class="$style.logo" alt="" src="@/assets/orangeGetFitt.png" /> 
+      <div :class="$style.frame4">
+        <img :class="$style.leftSquare" alt=""/>
+        <img :class="$style.rightSquare" alt=""/>
+        <div :class="$style.viewGyms">
+          <button @click="navigateToGymListing">View Gyms</button>
         </div>
+        <div :class="$style.svg1">
+          <img :class="$style.gymsIcon" alt="" src="@/assets/dumbell.png" />
+        </div>
+        <div :class="$style.svg2" />
+        <div :class="$style.viewProducts">
+          <button @click="navigateToProductListing">View Products</button>
+        </div>
+        <img :class="$style.productsIcon" alt="" src="@/assets/products.png" />
       </div>
     </div>
   </div>
-  <LogOut />
 </template>
 
 
@@ -97,103 +88,55 @@ export default defineComponent({
   }
   .logo {
     position: absolute;
-    top: 0px;
-    left: 0px;
-    width: 551px;
+    top: 110px;
+    left: center;
+    width: 699px;
     height: 132px;
     overflow: hidden;
     object-fit: cover;
     mix-blend-mode: darken;
   }
-  .frame {
+  .welcomeUser123 {
     position: absolute;
-    top: 159px;
-    left: 444px;
-    width: 552px;
-    height: 132px;
-    overflow: hidden;
+    top: 120px;
+    left: center;
+    top: 0px;
+    font-size: 69px;
+    line-height: 100px;
+    font-weight: 900;
+    color: var(--color-black);
+    color: white;
   }
   .fitnessForYou {
     position: absolute;
-    top: 0px;
+    top: 120px;
     left: center;
-    width: 551px;
-    height: 132px;
-    overflow: hidden;
-    object-fit: cover;
-    mix-blend-mode: darken;
-  }
-  .frame1 {
-    position: absolute;
-    top: 366px;
-    left: 549px;
-    width: 342px;
-    height: 20px;
-    overflow: hidden;
-    font-size: var(--font-size-29xl);
+    top: 240px;
+    font-size: 69px;
+    line-height: 100px;
+    font-weight: 900;
     color: var(--color-black);
+    color: white;
   }
-
   .signOut {
     position: relative;
     line-height: 20px;
     font-weight: 500;
   }
-  .linkCreateAnAccount {
-    border-radius: var(--br-9xs);
-    background-color: var(--color-white);
-    border: 1px solid var(--color-royalblue);
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    padding: var(--padding-5xs) 11.13999938964843var (--padding-5xs) 8px
-      var(--padding-xs);
-    min-width: 36px;
-    min-height: 36px;
-  }
-  .linkCreateAnAccountmargi1 {
+    .signOutButton {
     position: absolute;
-    top: 31px;
-    left: 1298px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    padding: var(--padding-9xs) var(--padding-5xs) var(--padding-9xs)
-      var(--padding-0);
-    box-sizing: border-box;
-    min-width: 44px;
-    min-height: 44px;
-    font-size: var(--font-size-base);
-    color: var(--color-royalblue);
-  }
-  .welcomeUser123 {
-    position: flex;
-    top: 49px;
-    text-align: center;
-    font-size: 50px;
+    top: 12px;
+    right: 10px;
+    font-size: 69px;
     line-height: 100px;
     font-weight: 900;
     color: var(--color-black);
-    color: black;
-  }
-  .frame2 {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    background-color: var(--color-tomato);
-    width: 1440px;
-    height: 106px;
-    overflow: hidden;
-    font-size: var(--font-size-mini);
-    color: var(--color-white);
+    color: white;
   }
 .leftSquare {
   position: absolute;
   top: 0px;
-  left: 33px;
+  left: 100px;
   width: 412px;
   height: 502px;
   background-color: red; 
@@ -201,7 +144,7 @@ export default defineComponent({
 .rightSquare {
   position: absolute;
   top: 0px;
-  left: 584px;
+  left: 650px;
   width: 412px;
   height: 502px;
   background-color: turquoise; 
@@ -210,19 +153,19 @@ export default defineComponent({
   .viewGyms {
     position: absolute;
     top: 389px;
-    left: 180px;
+    left: 250px;
     line-height: 20px;
   }
   .viewProducts {
     position: absolute;
     top: 389px;
-    left: 730px;
+    left: 795px;
     line-height: 20px;
   }
   .gymsIcon {
     position: absolute;
     top: 20px;
-    left: 111px;
+    left: 172px;
     width: 251px;
     height: 263px;
     object-fit: cover;
@@ -231,7 +174,7 @@ export default defineComponent({
   .productsIcon {
     position: absolute;
     top: 75px;
-    left: 660px;
+    left: 725px;
     width: 251px;
     height: 263px;
     object-fit: cover;
@@ -241,7 +184,7 @@ export default defineComponent({
   .svg1 {
     position: absolute;
     top: 55px;
-    left: 0px;
+    left: 10px;
     width: 474px;
     height: 294px;
     overflow: hidden;
@@ -265,31 +208,26 @@ export default defineComponent({
 
   .frame4 {
     position: absolute;
-    top: 0px;
-    left: 156px;
+    top: 400px;
+    left: center;
     width: 1184px;
     height: 502px;
     overflow: hidden;
   }
-  .frame3 {
-    position: absolute;
-    top: 400px;
-    left: 50px;
-    width: 1340px;
-    height: 502px;
-    overflow: hidden;
-    font-size: var(--font-size-29xl);
-    color: var(--color-black);
-  }
 /* ... other styles ... */
 
 .homePage {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  min-height: 100vh; /* Set the minimum height of the homepage to 100% of the viewport height */
+    display: flex; /* Add flexbox display */
+    align-items: center; /* Vertically center the content */
+    justify-content: center; /* Horizontally center the content */
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    text-align: center;
+    font-size: var(--font-size-base);
+    color: var(--color-royalblue);
+    font-family: var(--font-montserrat);
 }
 
 .body {
@@ -307,6 +245,7 @@ export default defineComponent({
   justify-content: center;
   position: absolute;
   top: 0;
+      z-index: -999; 
   width: 100%;
   background-color: orange; /* Replace with your desired color */
   padding: 169px; /* Adjust the padding as needed */
