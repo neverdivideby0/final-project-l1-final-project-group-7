@@ -121,11 +121,19 @@ export default defineComponent({
     color: white;
   }
   .signOut {
-    position: absolute;
-    top: 389px;
-    left: 180px;
-    width: 200px;
+    position: relative;
     line-height: 20px;
+    font-weight: 500;
+  }
+    .signOutButton {
+    position: absolute;
+    top: 12px;
+    right: 10px;
+    font-size: 69px;
+    line-height: 100px;
+    font-weight: 900;
+    color: var(--color-black);
+    color: white;
   }
 
   .frame2 {
