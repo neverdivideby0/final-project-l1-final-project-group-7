@@ -27,6 +27,10 @@
         <img :class="$style.productsIcon" alt="" src="@/assets/products.png" />
       </div>
     </div>
+
+    <button @click="navigateToProductListing">See all products</button>
+    <button @click="navigateToGymListing">See all gyms</button>
+
   </div>
 </template>
 
@@ -42,12 +46,25 @@ export default defineComponent({
   },
   methods: {
     navigateToProductListing() {
-      this.$router.push({ name: 'CustomerProductList' });
-    }
-
-    /* add signOut() here */
-  }
-});
+      this.checkAuthentication(() => {
+        // If authenticated, navigate to BusinessProductListing
+        this.$router.push({ name: 'CustomerProductList' });
+      });
+    },
+    checkAuthentication(callback) {
+      const auth = getAuth();
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          // User is authenticated
+          callback();
+        } else {
+          // User is not authenticated, you can handle this case here
+          console.log('User is not authenticated');
+        }
+      });
+    },
+  },
+};
 </script>
 
 

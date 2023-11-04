@@ -45,7 +45,7 @@
   
   
   <script>
-import EditProductModal from "@/views/Business/EditProductModal.vue";
+import EditProductModal from "@/views/Business/Products/EditProductModal.vue";
 import {
   getFirestore,
   collection,

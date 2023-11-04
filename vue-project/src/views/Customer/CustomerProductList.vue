@@ -14,6 +14,12 @@
         </div>
         <button @click="applyFilters">Search</button>
       </div>
+
+          <!-- Sorting buttons -->
+    <div class="sorting-buttons">
+      <button @click="sortProducts('ascending')">Sort Ascending</button>
+      <button @click="sortProducts('descending')">Sort Descending</button>
+    </div>
       
       <ul>
         <li v-for="(product, index) in filteredProducts" :key="index">
@@ -25,10 +31,11 @@
           <p><strong>Email:</strong> {{ product.email }}</p>
           <p><strong>Image URLs:</strong></p>
           <ul>
-            <li v-for="(imageUrl, i) in product.imageUrls" :key="i">
+            <li v-for="(imageUrl, i) in [...product.imageUrls, ...product.uploadedImageUrls]" :key="i">
               <img :src="imageUrl" alt="Product Image" />
             </li>
           </ul>
+          <p><strong>Last Modified:</strong> {{ formatDate(product.productModifiedDateTime) }}</p>
         </li>
       </ul>
     </div>
@@ -45,6 +52,8 @@
         minPrice: null, // Min price filter
         maxPrice: null, // Max price filter
         filteredProducts: [], // Initialize the filtered products array
+        sortBy: null, // Sorting order (ascending or descending)
+
       };
     },
     created() {
@@ -78,7 +87,24 @@
             return price <= this.maxPrice;
           }
         });
+              // Sort the filtered products after applying filters
+      this.sortProducts();
       },
+      sortProducts(order = this.sortBy) {
+      if (order === "ascending") {
+        this.filteredProducts.sort((a, b) => a.productModifiedDateTime - b.productModifiedDateTime);
+        this.sortBy = "ascending";
+      } else if (order === "descending") {
+        this.filteredProducts.sort((a, b) => b.productModifiedDateTime - a.productModifiedDateTime);
+        this.sortBy = "descending";
+      } else {
+        this.sortBy = null;
+      }
+    },
+    formatDate(date) {
+      const options = { year: "numeric", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" };
+      return new Date(date).toLocaleDateString(undefined, options);
+    },
     },
   };
   </script>

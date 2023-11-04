@@ -17,7 +17,6 @@
         <SignOutButton /> 
       </div>
 
-    </nav>
 
     <!-- Form Div -->
     <div class = "actualForm"> 
@@ -44,9 +43,14 @@
           <textarea id="description" v-model="description" required></textarea>
         </div>
         <div class="form-group">
-          <label for="category">Category:</label>
-          <input type="text" id="category" v-model="category" required />
-        </div>
+        <label for="categories">Categories (Comma-separated):</label>
+        <input
+          type="text"
+          id="categories"
+          v-model="categories"
+          required
+        />
+      </div>
         <div class="form-group">
           <label for="price">Price:</label>
           <input type="number" id="price" v-model="price" required />
@@ -63,12 +67,16 @@
       </form>
     
     </div>
-
+  </nav>
   </div>
+  
 
 </template>
-  
-  <script>
+
+
+
+
+<script>
 import NotFound from "@/views/NotFound.vue";
 import { getFirestore, collection, addDoc } from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
@@ -83,12 +91,12 @@ export default {
     return {
       productName: "",
       description: "",
-      category: "",
+      categories: "", // Store categories as a comma-separated string
       price: "",
       imageUrl1: "",
       imageUrl2: "",
       user: null,
-      email: '',
+      email: "",
     };
   },
 
@@ -139,7 +147,7 @@ export default {
           businessId: this.user.uid,
           productName: this.productName,
           description: this.description,
-          category: this.category,
+          category: this.categories.split(',').map((category) => category.trim()), // Split and trim categories into an array
           price: parseFloat(this.price),
           imageUrls: [this.imageUrl1, this.imageUrl2].filter((url) => url), // Filter out empty URLs
           uploadedImageUrls: uploadedImageUrls, // Include the uploaded image URLs
@@ -155,10 +163,11 @@ export default {
         // Clear the form fields
         this.productName = "";
         this.description = "";
-        this.category = "";
         this.price = "";
         this.imageUrl1 = "";
         this.imageUrl2 = "";
+        this.categories = ""; // Clear categories
+
       } catch (error) {
         console.error("Error adding product:", error);
       }
@@ -247,5 +256,7 @@ export default {
 .product-form textarea {
   color: black;
 }
+.custom-category {
+  margin-top: 10px;
+}
 </style>
-  

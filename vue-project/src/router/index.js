@@ -7,15 +7,17 @@ import ProfileSetupPageCustomer from "@/views/Customer/ProfileSetupPageCustomer.
 import ProfileSetupPageBusiness from "@/views/Business/ProfileSetupPageBusiness.vue";
 import CustomerHomePage from '@/views/Customer/CustomerHomePage.vue'
 import BusinessHomePage from '@/views/Business/BusinessHomePage.vue'
-import BusinessProductListing from '@/views/Business/BusinessProductListing.vue'
-import BusinessListingOverview from '@/views/Business/BusinessListingOverview.vue'
+import AddProductListing from '@/views/Business/Products/AddProductListing.vue'
+import BusinessProductListingOverview from '@/views/Business/Products/BusinessProductListingOverview.vue'
 import CompanyProfile from '@/views/Business/CompanyProfile.vue'
 import EditCompanyProfile from '@/views/Business/EditCompanyProfile.vue'
 import HomePage from '@/views/HomePage.vue'
 import NotFound from '@/views/NotFound.vue'
 import EditBusinessProfile from '@/views/Business/EditBusinessProfile.vue'
 import CustomerProductList from '@/views/Customer/CustomerProductList.vue'
-
+import CustomerGymList from '@/views/Customer/CustomerGymList.vue'
+import AddGymListing from '@/views/Business/Gyms/AddGymListing.vue'
+import BusinessGymListingOverview from '@/views/Business/Gyms/BusinessGymListingOverview.vue'
 
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
@@ -95,15 +97,15 @@ const routes = [
     component: HomePage,
   },
   {
-    path: '/BusinessProductListing',
-    name: 'BusinessProductListing',
-    component: BusinessProductListing,
+    path: '/AddProductListing',
+    name: 'AddProductListing',
+    component: AddProductListing,
     beforeEnter: requireAuth, // Requires authentication
   },
   {
-    path: '/BusinessListingOverview',
-    name: 'BusinessListingOverview',
-    component: BusinessListingOverview,
+    path: '/BusinessProductListingOverview',
+    name: 'BusinessProductListingOverview',
+    component: BusinessProductListingOverview,
     beforeEnter: requireAuth, // Requires authentication
   },
   {
@@ -118,7 +120,24 @@ const routes = [
     component: CustomerProductList,
     beforeEnter: requireAuth, // Requires authentication
   },
-  
+  {
+    path: '/AddGymListing',
+    name: 'AddGymListing',
+    component: AddGymListing,
+    beforeEnter: requireAuth, // Requires authentication
+  },
+  {
+    path: '/BusinessGymListingOverview',
+    name: 'BusinessGymListingOverview',
+    component: BusinessGymListingOverview,
+    beforeEnter: requireAuth, // Requires authentication
+  },
+  {
+    path: '/CustomerGymList',
+    name: 'CustomerGymList',
+    component: CustomerGymList,
+    beforeEnter: requireAuth, // Requires authentication
+  },
   {
     path: '/:catchAll(.*)',
     name: 'NotFound',
