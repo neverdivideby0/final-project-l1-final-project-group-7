@@ -20,11 +20,15 @@
       />
     </div>
 
+    <button @click="navigateToBusinessProductListingOverview">See all Product listings</button>
+
+    <button @click="navigateToAddProductListing">Add new Product</button>
     <FootFallChart/>
     <button @click="navigateToBusinessListingOverview">See all listings</button>
 
+    <button @click="navigateToBusinessGymListingOverview">See all Gym listings</button>
 
-    <button @click="navigateToBusinessProductListing">Add new listing</button>
+    <button @click="navigateToAddGymListing">Add new Gym</button>
 
     <button @click="navigateToEditBusinessProfile">Edit Business Profile</button>
 
@@ -107,20 +111,32 @@ export default {
         console.error("Error fetching profile picture:", error);
       }
     },
-    navigateToBusinessListingOverview() {
+    navigateToBusinessProductListingOverview() {
       this.checkAuthentication(() => {
-        // If authenticated, navigate to BusinessListingOverview
-        this.$router.push({ name: "BusinessListingOverview" });
+        // If authenticated, navigate to BusinessProductListingOverview
+        this.$router.push({ name: "BusinessProductListingOverview" });
       });
     },
 
-    navigateToBusinessProductListing() {
+    navigateToAddProductListing() {
       this.checkAuthentication(() => {
         // If authenticated, navigate to BusinessProductListing
-        this.$router.push({ name: "BusinessProductListing" });
+        this.$router.push({ name: "AddProductListing" });
+      });
+    },
+    navigateToBusinessGymListingOverview() {
+      this.checkAuthentication(() => {
+        // If authenticated, navigate to BusinessProductListingOverview
+        this.$router.push({ name: "BusinessGymListingOverview" });
       });
     },
 
+    navigateToAddGymListing() {
+      this.checkAuthentication(() => {
+        // If authenticated, navigate to BusinessProductListing
+        this.$router.push({ name: "AddGymListing" });
+      });
+    },
 
     navigateToEditBusinessProfile() {
       this.checkAuthentication(() => {
