@@ -15,6 +15,7 @@
     </div>
 
     <button @click="navigateToProductListing">See all products</button>
+    <button @click="navigateToGymListing">See all gyms</button>
 
   </div>
   <LogOut />
@@ -92,6 +93,12 @@ export default {
       this.checkAuthentication(() => {
         // If authenticated, navigate to BusinessProductListing
         this.$router.push({ name: 'CustomerProductList' });
+      });
+    },
+    navigateToGymListing() {
+      this.checkAuthentication(() => {
+        // If authenticated, navigate to BusinessProductListing
+        this.$router.push({ name: 'CustomerGymList' });
       });
     },
     checkAuthentication(callback) {

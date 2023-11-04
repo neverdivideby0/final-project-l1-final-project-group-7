@@ -12,17 +12,13 @@
         <textarea id="description" v-model="description" required></textarea>
       </div>
       <div class="form-group">
-        <label>Categories:</label>
-        <!-- Use checkboxes for multiple category selection -->
-        <div v-for="(category, index) in categoryOptions" :key="index">
-          <input
-            type="checkbox"
-            :id="`category${index}`"
-            :value="category"
-            v-model="selectedCategories"
-          />
-          <label :for="`category${index}`">{{ category }}</label>
-        </div>
+        <label for="categories">Categories (Comma-separated):</label>
+        <input
+          type="text"
+          id="categories"
+          v-model="categories"
+          required
+        />
       </div>
 
       <div class="form-group">
@@ -70,7 +66,7 @@ export default {
     return {
       productName: "",
       description: "",
-      selectedCategories: [], // Store the selected categories as an array
+      categories: "", // Store categories as a comma-separated string
       price: "",
       imageUrl1: "",
       imageUrl2: "",
@@ -127,7 +123,7 @@ export default {
           businessId: this.user.uid,
           productName: this.productName,
           description: this.description,
-          category: this.selectedCategories,
+          category: this.categories.split(',').map((category) => category.trim()), // Split and trim categories into an array
           price: parseFloat(this.price),
           imageUrls: [this.imageUrl1, this.imageUrl2].filter((url) => url), // Filter out empty URLs
           uploadedImageUrls: uploadedImageUrls, // Include the uploaded image URLs
@@ -146,9 +142,8 @@ export default {
         this.price = "";
         this.imageUrl1 = "";
         this.imageUrl2 = "";
-        // Clear selected categories and custom category
-        this.selectedCategories = [];
-        this.customCategory = "";
+        this.categories = ""; // Clear categories
+
       } catch (error) {
         console.error("Error adding product:", error);
       }
