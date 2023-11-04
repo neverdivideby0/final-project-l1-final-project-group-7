@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "ccxt": "^4.1.13",
+    "chart.js": "^4.4.0",
     "debug": "^4.3.4",
     "firebase": "^10.5.0",
     "firebase-admin": "^11.11.0",
@@ -20,6 +21,6 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.3.4",
-    "vite": "^4.4.9"
+    "vite": "^4.5.0"
   }
 }

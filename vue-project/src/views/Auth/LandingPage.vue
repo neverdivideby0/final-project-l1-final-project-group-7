@@ -1,25 +1,25 @@
 <template>
-  <div class="landing-page">
-    <img id="bg" src="@/assets/GetFitt.png" alt="">
-
-    <h1>Welcome to Our App</h1>
-    <form @submit.prevent="login">
-      <div class="form-group">
-        <label for="email">Email:</label>
-        <input type="email" id="email" v-model="email" required>
+  <div :class="$style.landingPage">
+    <img :class="$style.bgIcon" src="@/assets/GetFitt.png" alt="">
+    <form @submit.prevent="login" :class="$style.form">
+      <div :class="$style.username">
+        <input type="email" id="email" v-model="email" required placeholder="Email"/>
       </div>
-      <div class="form-group">
-        <label for="password">Password:</label>
-        <input type="password" id="password" v-model="password" required>
+      <div :class="$style.password">
+        <input type="password" id="password" v-model="password" required placeholder="Password"/>
       </div>
-      <button type="submit" @click="customerLogin">Customer Login</button>
-      <button type="submit" @click="businessLogin">Business Login</button>
+      <div :class="$style.buttonGroup">
+        <button type="submit" @click="customerLogin" :class="$style.loginButton">Customer Login</button>
+        <button type="submit" @click="businessLogin" :class="$style.loginButton">Business Login</button>
+        <button @click="signup" :class="$style.signUpButton">Sign Up</button>
+        <button @click="resetPassword" :class="$style.resetPasswordButton">Reset Password</button>
+                <p v-if="errMsg" :class="$style.errorMessage"> {{ errMsg }}</p>
+      </div>
     </form>
-    <p v-if="errMsg"> {{ errMsg }}</p>
-    <button @click="signup">Sign Up</button>
-    <button @click="resetPassword">Reset Password</button>
   </div>
 </template>
+
+
 
 <script>
 import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth';
@@ -110,17 +110,94 @@ export default {
 };
 </script>
 
-<style scoped>
-.landing-page {
-  text-align: center;
-  margin: 20px;
-}
 
-.form-group {
-  margin-bottom: 10px;
-}
+<style module>
+  .contentContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+  .bgIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 1802.5px;
+    height: 1152px;
+    margin-bottom: 20px;
+  }
 
-button {
-  margin: 5px;
-}
+  .password {
+    position: absolute;
+    top: 65px;
+    left: 0px;
+    width: 300px;
+    height: 45px;
+    font-size: var(--font-size-sm);
+  }
+
+  .login {
+    position: absolute;
+    top: 14px;
+    left: 0px;
+    line-height: 20px;
+    text-transform: uppercase;
+    font-weight: 600;
+    width: 300px;
+  }
+  .buttonGroup {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 69px;
+    width: 327px;
+  }
+  .loginButton {
+    margin-bottom: 10px;
+    width: 327px;
+    align-items: center;
+  }
+  .signUp {
+    position: absolute;
+    top: 12px;
+    left: 113px;
+    line-height: 20px;
+    text-transform: uppercase;
+    width: 327px;
+    font-weight: 600;
+  }
+  .signUpButton {
+    margin-bottom: 10px;
+    width: 327px;
+  }
+  .resetPasswordButton {
+    margin-bottom: 10px;
+  }
+  .form {
+    position: absolute;
+    top: center;
+    left: center;
+    width: 300px;
+    height: 299px;
+  }
+
+  .landingPage {
+    display: flex; /* Add flexbox display */
+    align-items: center; /* Vertically center the content */
+    justify-content: center; /* Horizontally center the content */
+    position: absolute;
+    background-color: #ff8a00;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    text-align: center;
+    font-size: var(--font-size-base);
+    color: var(--color-royalblue);
+    font-family: var(--font-montserrat);
+  }
 </style>

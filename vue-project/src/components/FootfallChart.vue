@@ -1,108 +1,95 @@
 <template>
+  <div>
+    <h1>Footfall (Past 7 Days) </h1>
     <div>
-        <h1>Product Visit Chart</h1>
-    <div>
-        <label for="productId">Select a product:</label>
-        <select v-model="selectedProductId" @change="fetchVisitsData">
-            <option disabled value="">Select a product</option>
-            <option v-for="product in products" :key="product.id" :value="product.id">{{ product.name }}</option>
-        </select>
+      <label for="productName">Select Product:</label>
+      <select v-model="selectedProductName" @change="generateChart">
+        <option disabled value="">Select Product</option>
+        <option v-for="product in exampleProducts" :key="product.name" :value="product.name">{{ product.name }}</option>
+      </select>
     </div>
     <div>
-      <canvas ref="chart"></canvas>
+      <canvas id="chartCanvas"></canvas>
     </div>
   </div>
 </template>
 
 <script>
-import {
-  getFirestore,
-  collection,
-  query,
-  where,
-  getDocs,
-  Timestamp,
-  subDays,
-  startOfDay,
-  endOfDay,
-  addDoc,
-  serverTimestamp,
-} from 'firebase/firestore';
-
+import { onMounted } from 'vue';
 import Chart from 'chart.js/auto';
+import { getFirestore, collection, doc, query, getDocs } from 'firebase/firestore';
 
 export default {
   data() {
     return {
-      selectedProductId: '',
-      products: [], // Store your product data here
-      chart: null,
-      visitData: [],
+      exampleProducts: [],
+      selectedProductName: '',
     };
   },
-  async created() {
-    // Fetch the list of products 
-    this.products = await this.fetchProducts();
+  mounted() {
+    this.fetchExampleProducts().then(() => {
+      if (this.exampleProducts.length > 0) {
+        this.selectedProductName = this.exampleProducts[0].name;
+        this.generateChart();
+      }
+    });
   },
   methods: {
-    async fetchProducts() {
+    async fetchExampleProducts() {
+      const db = getFirestore();
+      const productsCollection = collection(db, 'ExampleProducts');
+      const querySnapshot = await getDocs(productsCollection);
+      const products = [];
 
+      querySnapshot.forEach((doc) => {
+        const product = doc.data();
+        products.push({
+          name: product.name,
+          description: product.description,
+          visits: product.visits,
+        });
+      });
+
+      this.exampleProducts = products;
     },
-    async fetchVisitsData() {
-      if (this.selectedProductId) {
-        const db = getFirestore();
-        const productDocRef = collection(db, 'Listings', 'UserID', 'Product', this.selectedProductId);
-
-        // Define the date range for the query (last 7 days)
-        const endDate = new Date(); // Today
-        const startDate = subDays(endDate, 7); // 7 days ago
-
-        const visitsCollectionRef = collection(productDocRef, 'visits');
-        const queryRef = query(
-          visitsCollectionRef,
-          where('timestamp', '>=', Timestamp.fromDate(startDate)),
-          where('timestamp', '<=', Timestamp.fromDate(endDate))
-        );
-
-        try {
-          const querySnapshot = await getDocs(queryRef);
-          this.visitData = this.processVisitData(querySnapshot);
-
-          // Update the chart with the visit data
-          this.updateChart();
-        } catch (error) {
-          console.error('Error fetching visit data', error);
+    generateChart() {
+      if (this.selectedProductName) {
+        const product = this.exampleProducts.find((p) => p.name === this.selectedProductName);
+        if (product) {
+          const chartData = product.visits;
+          const chartLabels = this.generateDateLabels();
+          this.updateChart(chartData, chartLabels);
         }
       }
     },
-    async logVisit() {
-      const db = getFirestore();
-      const productDocRef = collection(db, 'Listings', 'UserID', 'Product', this.selectedProductId);
+    generateDateLabels() {
+      const dateLabels = [];
+      const today = new Date();
 
-      const visitsCollectionRef = collection(productDocRef, 'visits');
+      for (let i = 0; i < 7; i++) {
+        const date = new Date(today);
+        date.setDate(today.getDate() - i);
+        dateLabels.unshift(date.toLocaleDateString());
+      }
 
-      // Log a visit by adding a new document with a timestamp
-      await addDoc(visitsCollectionRef, {
-        timestamp: serverTimestamp(),
-      });
-
-      // Fetch and update the visit data for the chart
-      this.fetchVisitsData();
+      return dateLabels;
     },
-    updateChart() {
+    updateChart(data, labels) {
+      const canvas = document.getElementById('chartCanvas');
+      const ctx = canvas.getContext('2d');
+
       if (this.chart) {
         this.chart.destroy();
       }
 
-      const ctx = this.$refs.chart.getContext('2d');
       this.chart = new Chart(ctx, {
         type: 'line',
         data: {
-          labels: this.visitData.map((data) => data.date),
+          labels: labels,
           datasets: [
             {
-              label: 'Visits per Day',
-              data: this.visitData.map((data) => data.count), // Count of visits per day
+              label: 'Page Visits per Day',
+              data: data,
               fill: false,
               borderColor: 'rgb(75, 192, 192)',
               tension: 0.1,
@@ -118,25 +105,14 @@ export default {
         },
       });
     },
-    processVisitData(querySnapshot) {
-      const data = {};
-      querySnapshot.forEach((doc) => {
-        const date = doc.data().timestamp.toDate().toLocaleDateString();
-        if (!data[date]) {
-          data[date] = 0;
-        }
-        data[date]++;
-      });
-
-      return Object.keys(data).map((date) => ({
-        date,
-        count: data[date],
-      }));
-    },
   },
 };
 </script>
 
-<style scoped>
+<style>
 
+.chart-wrapper {
+  display: inline-block; /* Allow it to center horizontally */
+  width: 30%; /* Adjust the width of the chart container */
+}
 </style>
