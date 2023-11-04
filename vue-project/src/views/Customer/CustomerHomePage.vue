@@ -38,6 +38,7 @@
 <script>
 import { defineComponent } from "vue";
 import LogOut from '@/components/LogOut.vue';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 export default defineComponent({
   name: "HomePage",
@@ -49,6 +50,12 @@ export default defineComponent({
       this.checkAuthentication(() => {
         // If authenticated, navigate to BusinessProductListing
         this.$router.push({ name: 'CustomerProductList' });
+      });
+    },
+    navigateToGymListing() {
+      this.checkAuthentication(() => {
+        // If authenticated, navigate to BusinessProductListing
+        this.$router.push({ name: 'CustomerGymList' });
       });
     },
     checkAuthentication(callback) {
@@ -64,7 +71,7 @@ export default defineComponent({
       });
     },
   },
-};
+});
 </script>
 
 
