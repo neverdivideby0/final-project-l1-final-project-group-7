@@ -3,14 +3,9 @@
     <img :class="$style.bgIcon" src="@/assets/GetFitt.png" alt="">
     <form @submit.prevent="login" :class="$style.form">
       <div :class="$style.username">
-
-        <img :class="$style.userIcon" alt="" src="@/assets/user.svg" />
         <input type="email" id="email" v-model="email" required placeholder="Email"/>
       </div>
       <div :class="$style.password">
-
-        <img :class="$style.lockIcon" alt="" src="@/assets/lock.svg" />
-        <img :class="$style.passwordHideAndSee" alt="" src="/password-hide-and-see.svg" />
         <input type="password" id="password" v-model="password" required placeholder="Password"/>
       </div>
       <div :class="$style.buttonGroup">
@@ -128,74 +123,12 @@ export default {
     align-items: center;
     justify-content: center;
     position: absolute;
-    top: 30%;
+    top: 25%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 1802.5px;
     height: 1152px;
-     margin-bottom: 20px;
-  }
-  .rectangle {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    border-radius: var(--br-9xs);
-    border: 1px solid var(--color-royalblue);
-    box-sizing: border-box;
-    width: 300px;
-    height: 45px;
-  }
-  .username1 {
-    position: absolute;
-    top: 13px;
-    left: 65px;
-    line-height: 20px;
-    text-transform: uppercase;
-    font-weight: 500;
-  }
-  .userIcon {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    width: 25px;
-    height: 25px;
-    overflow: hidden;
-  }
-  .username1 {
-    position: flex;
-    top: 13px;
-    left: 10px;
-    width: 0px;
-    height: 45px;
-    font-size: var(--font-size-sm);
-  }
-  .password1 {
-    position: absolute;
-    top: 13px;
-    left: 10px;
-    line-height: 20px;
-    text-transform: uppercase;
-    font-weight: 500;
-  }
-  .lockIcon {
-    position: absolute;
-    height: 47.56%;
-    width: 7.5%;
-    top: 47.56%;
-    right: 88.83%;
-    bottom: 4.89%;
-    left: 3.67%;
-    max-width: 100%;
-    overflow: hidden;
-    max-height: 100%;
-  }
-  .passwordHideAndSee {
-    position: absolute;
-    top: 13px;
-    left: 271px;
-    width: 20px;
-    height: 20px;
-    overflow: hidden;
+    margin-bottom: 20px;
   }
 
   .password {
@@ -206,16 +139,7 @@ export default {
     height: 45px;
     font-size: var(--font-size-sm);
   }
-  .rectangle2 {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    border-radius: var(--br-9xs);
-    background-color: var(--color-white);
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
-    width: 300px;
-    height: 45px;
-  }
+
   .login {
     position: absolute;
     top: 14px;
@@ -266,7 +190,7 @@ export default {
     display: flex; /* Add flexbox display */
     align-items: center; /* Vertically center the content */
     justify-content: center; /* Horizontally center the content */
-    position: relative;
+    position: absolute;
     background-color: #ff8a00;
     width: 100%;
     height: 100vh;
