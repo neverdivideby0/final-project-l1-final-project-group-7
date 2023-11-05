@@ -22,6 +22,7 @@
     </form>
   </div>
   <SignOutButton />
+  <GoLandingPage /> 
 </template>
 
 <script>
@@ -29,11 +30,13 @@ import { getFirestore, doc, setDoc } from 'firebase/firestore';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { getStorage, ref, uploadBytes } from 'firebase/storage';
 import SignOutButton from '@/components/SignOutButton.vue';
+import GoLandingPage from '@/components/GoLandingPage.vue';
 
 export default {
   name: 'ProfileSetupPageCustomer',
   components: {
     SignOutButton,
+    GoLandingPage,
   },
   data() {
     return {
