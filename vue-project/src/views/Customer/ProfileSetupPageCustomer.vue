@@ -21,15 +21,20 @@
       <button type="submit">Save Profile</button>
     </form>
   </div>
+  <SignOutButton />
 </template>
 
 <script>
 import { getFirestore, doc, setDoc } from 'firebase/firestore';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { getStorage, ref, uploadBytes } from 'firebase/storage';
+import SignOutButton from '@/components/SignOutButton.vue';
 
 export default {
   name: 'ProfileSetupPageCustomer',
+  components: {
+    SignOutButton,
+  },
   data() {
     return {
       fullName: '',
