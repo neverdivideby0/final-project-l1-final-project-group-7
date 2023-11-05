@@ -11,7 +11,6 @@ import AddProductListing from '@/views/Business/Products/AddProductListing.vue'
 import BusinessProductListingOverview from '@/views/Business/Products/BusinessProductListingOverview.vue'
 import CompanyProfile from '@/views/Business/CompanyProfile.vue'
 import EditCompanyProfile from '@/views/Business/EditCompanyProfile.vue'
-import HomePage from '@/views/HomePage.vue'
 import NotFound from '@/views/NotFound.vue'
 import EditBusinessProfile from '@/views/Business/EditBusinessProfile.vue'
 import CustomerProductList from '@/views/Customer/CustomerProductList.vue'
@@ -90,11 +89,6 @@ const routes = [
     name: 'EditCompanyProfile',
     component: EditCompanyProfile,
     beforeEnter: requireAuth, // Requires authentication
-  },
-  {
-    path: '/HomePage',
-    name: 'HomePage',
-    component: HomePage,
   },
   {
     path: '/AddProductListing',

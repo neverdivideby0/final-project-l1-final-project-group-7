@@ -51,14 +51,6 @@
           />
         </div>
         <div class="form-group">
-          <label for="website">Website:</label>
-          <input
-            type="text"
-            id="website"
-            v-model="editingGym.website"
-          />
-        </div>
-        <div class="form-group">
           <label for="amenities">Amenities:</label>
           <textarea
             id="amenities"

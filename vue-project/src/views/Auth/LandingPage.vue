@@ -35,7 +35,7 @@ export default {
   },
   methods: {
     login() {
-      if (this.userType === 'customer') {
+      if (this.userType === 'customers') {
         console.log('Customer logging in...');
         const auth = getAuth();
         signInWithEmailAndPassword(auth, this.email, this.password)
@@ -47,7 +47,7 @@ export default {
             // Handle login errors
             this.handleError(error);
           });
-      } else if (this.userType === 'business') {
+      } else if (this.userType === 'businesses') {
         console.log('Business logging in...');
         const auth = getAuth();
         signInWithEmailAndPassword(auth, this.email, this.password)
@@ -64,11 +64,11 @@ export default {
       }
     },
     customerLogin() {
-      this.userType = 'customer';
+      this.userType = 'customers';
       this.login();
     },
     businessLogin() {
-      this.userType = 'business';
+      this.userType = 'businesses';
       this.login();
     },
     signup() {

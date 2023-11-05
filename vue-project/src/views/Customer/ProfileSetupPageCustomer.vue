@@ -62,14 +62,14 @@ export default {
       onAuthStateChanged(auth, (user) => {
         if (user) {
           const db = getFirestore();
-          const userDocRef = doc(db, 'users', user.uid);
+          const userDocRef = doc(db, 'customers', user.uid);
 
           const userProfile = {
             fullName: this.fullName,
             mobileNumber: this.mobileNumber,
             deliveryAddress: this.deliveryAddress,
             accountCreatedDateTime: new Date(),
-            email: this.email, // Include the email in the user profile data
+            email: this.email,
           };
 
           setDoc(userDocRef, userProfile)

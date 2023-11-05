@@ -1,76 +1,71 @@
 <template>
   <div class="product-form">
-
     <!-- Nav bar -->
-    <nav class = "navbar"> 
-
-      <div class = "navbar-left"> 
+    <nav class="navbar">
+      <div class="navbar-left">
         <img src="@/assets/GetFitt.png" alt="Logo" class="navbar-logo" />
-      
       </div>
 
       <div class="navbar-right">
-
         <!-- Buttons -->
-        <button id = "btn" @click="signOut" v-if="user">Sign Out</button>
+        <button id="btn" @click="signOut" v-if="user">Sign Out</button>
         <button @click="goBackToHome">Back to Home</button>
-        <SignOutButton /> 
+        <SignOutButton />
       </div>
 
+      <!-- Form Div -->
+      <div class="actualForm">
+        <h2>Add Product Listing</h2>
 
-    <!-- Form Div -->
-    <div class = "actualForm"> 
-
-      <h2>Add Product Listing</h2>
-
-      <form @submit.prevent="addProduct">
-        <div class="form-group">
-          <label for="uploadImages">Upload Images:</label>
-          <input
-            type="file"
-            id="uploadImages"
-            ref="uploadImages"
-            multiple
-            @change="handleImageUpload"
-          />
-        </div>
-        <div class="form-group">
-          <label for="productName">Product Name:</label>
-          <input type="text" id="productName" v-model="productName" required />
-        </div>
-        <div class="form-group">
-          <label for="description">Description:</label>
-          <textarea id="description" v-model="description" required></textarea>
-        </div>
-        <div class="form-group">
-        <label for="categories">Categories (Comma-separated):</label>
-        <input
-          type="text"
-          id="categories"
-          v-model="categories"
-          required
-        />
+        <form @submit.prevent="addProduct">
+          <div class="form-group">
+            <label for="uploadImages">Upload Images:</label>
+            <input
+              type="file"
+              id="uploadImages"
+              ref="uploadImages"
+              multiple
+              @change="handleImageUpload"
+            />
+          </div>
+          <div class="form-group">
+            <label for="productName">Product Name:</label>
+            <input
+              type="text"
+              id="productName"
+              v-model="productName"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="description">Description:</label>
+            <textarea
+              id="description"
+              v-model="description"
+              required
+            ></textarea>
+          </div>
+          <div class="form-group">
+            <label for="categories">Categories (Comma-separated):</label>
+            <input type="text" id="categories" v-model="categories" required />
+          </div>
+          <div class="form-group">
+            <label for="price">Price:</label>
+            <input type="number" id="price" v-model="price" required />
+          </div>
+          <div class="form-group">
+            <label for="imageUrl1">Image URL 1:</label>
+            <input type="text" id="imageUrl1" v-model="imageUrl1" />
+          </div>
+          <div class="form-group">
+            <label for="imageUrl2">Image URL 2:</label>
+            <input type="text" id="imageUrl2" v-model="imageUrl2" />
+          </div>
+          <button type="submit">Add Product</button>
+        </form>
       </div>
-        <div class="form-group">
-          <label for="price">Price:</label>
-          <input type="number" id="price" v-model="price" required />
-        </div>
-        <div class="form-group">
-          <label for="imageUrl1">Image URL 1:</label>
-          <input type="text" id="imageUrl1" v-model="imageUrl1" />
-        </div>
-        <div class="form-group">
-          <label for="imageUrl2">Image URL 2:</label>
-          <input type="text" id="imageUrl2" v-model="imageUrl2" />
-        </div>
-        <button type="submit">Add Product</button>
-      </form>
-    
-    </div>
-  </nav>
+    </nav>
   </div>
-  
-
 </template>
 
 
@@ -86,7 +81,7 @@ export default {
   name: "ProductForm",
   components: {
     NotFound,
-},
+  },
   data() {
     return {
       productName: "",
@@ -123,23 +118,26 @@ export default {
       const uploadedImageUrls = [];
 
       try {
-        // Iterate over uploadedImageUrls and add them to the productData
-        for (let i = 0; i < this.uploadedImages.length; i++) {
-          const file = this.uploadedImages[i];
-          const fileName = `${this.user.uid}_${Date.now()}_${file.name}`; // Create a unique filename
+        // Check if there are any uploaded images
+        if (this.uploadedImages && this.uploadedImages.length > 0) {
+          // Iterate over uploadedImageUrls and add them to the productData
+          for (let i = 0; i < this.uploadedImages.length; i++) {
+            const file = this.uploadedImages[i];
+            const fileName = `${this.user.uid}_${Date.now()}_${file.name}`; // Create a unique filename
 
-          // Reference to the location where you want to store the file in Firebase Storage
-          const storageRef = ref(storage, "product_images/" + fileName);
+            // Reference to the location where you want to store the file in Firebase Storage
+            const storageRef = ref(storage, "product_images/" + fileName);
 
-          // Upload the file to Firebase Storage
-          await uploadBytes(storageRef, file);
-          console.log("File uploaded");
+            // Upload the file to Firebase Storage
+            await uploadBytes(storageRef, file);
+            console.log("File uploaded");
 
-          // Get the download URL for the uploaded file
-          const downloadURL = await getDownloadURL(storageRef);
+            // Get the download URL for the uploaded file
+            const downloadURL = await getDownloadURL(storageRef);
 
-          // Store the download URL in the array
-          uploadedImageUrls.push(downloadURL);
+            // Store the download URL in the array
+            uploadedImageUrls.push(downloadURL);
+          }
         }
 
         // Define productData
@@ -147,7 +145,9 @@ export default {
           businessId: this.user.uid,
           productName: this.productName,
           description: this.description,
-          category: this.categories.split(',').map((category) => category.trim()), // Split and trim categories into an array
+          category: this.categories
+            .split(",")
+            .map((category) => category.trim()), // Split and trim categories into an array
           price: parseFloat(this.price),
           imageUrls: [this.imageUrl1, this.imageUrl2].filter((url) => url), // Filter out empty URLs
           uploadedImageUrls: uploadedImageUrls, // Include the uploaded image URLs
@@ -167,7 +167,6 @@ export default {
         this.imageUrl1 = "";
         this.imageUrl2 = "";
         this.categories = ""; // Clear categories
-
       } catch (error) {
         console.error("Error adding product:", error);
       }
@@ -181,22 +180,21 @@ export default {
     signOut() {
       // Add code here to sign the user out, if applicable
       // Then, navigate to the sign-out page
-      this.$router.push({ name: 'SignOut' }); // Replace 'SignOut' with the actual route name
+      this.$router.push({ name: "SignOut" }); // Replace 'SignOut' with the actual route name
     },
 
     goHome() {
       // Navigate to the home page
-      this.$router.push({ name: 'BusinessHomePage' }); // Replace 'Home' with the actual route name
+      this.$router.push({ name: "BusinessHomePage" }); // Replace 'Home' with the actual route name
     },
   },
 };
 </script>
   
   <style scoped>
-
 /* navbar style */
 .navbar {
-  background-color: #FF5733;
+  background-color: #ff5733;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -219,7 +217,7 @@ export default {
 /* Additional styling for the buttons */
 .navbar button {
   background-color: white;
-  color: #FF5733;
+  color: #ff5733;
   border: none;
   padding: 5px 10px;
   cursor: pointer;
@@ -229,7 +227,7 @@ export default {
   margin-bottom: 10px;
   margin: 20px;
   width: 500px;
-  font-family: 'Montserrat', sans-serif; /* Use the correct font name */
+  font-family: "Montserrat", sans-serif; /* Use the correct font name */
   font-weight: bold; /* Make the font bold */
   justify-content: center;
 }

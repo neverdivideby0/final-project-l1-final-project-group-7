@@ -18,6 +18,10 @@
         <label for="acraIdNumber">ACRA ID Number:</label>
         <input type="text" id="acraIdNumber" v-model="acraIdNumber" required />
       </div>
+      <div class="form-group">
+        <label for="website">Website:</label>
+        <input type="text" id="website" v-model="website" required />
+      </div>
       <!-- Add an input field for profile picture upload -->
       <div class="form-group">
         <label for="profilePicture">Profile Picture:</label>
@@ -41,6 +45,7 @@ export default {
       businessNumber: '',
       businessAddress: '',
       acraIdNumber: '',
+      website: '',
       profilePictureFile: null, // Store the uploaded profile picture file
       profilePictureUrl: null, // Store the profile picture URL
     };
@@ -66,6 +71,7 @@ export default {
             businessNumber: this.businessNumber,
             businessAddress: this.businessAddress,
             acraIdNumber: this.acraIdNumber,
+            website: this.website,
             accountCreatedDateTime: new Date(), // Add the current date and time
             //profilePictureUrl: this.profilePictureUrl, // Include the profile picture URL
           };
