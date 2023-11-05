@@ -1,47 +1,76 @@
 <template>
-    <div class="product-list">
-      <h2>Product Listings</h2>
-      <ul>
-        <li v-for="(product, index) in filteredProducts" :key="index" class="product-listing">
-          <!-- Add a product number to each listing -->
-          <span class="product-number">{{ index + 1 }}</span>
-          <div class="product-details">
-            <h3>{{ product.productName }}</h3>
-            <p><strong>Description:</strong> {{ product.description }}</p>
-            <p><strong>Category:</strong> {{ product.category }}</p>
-            <p><strong>Price:</strong> ${{ product.price.toFixed(2) }}</p>
-            <p><strong>Business ID:</strong> {{ product.businessId }}</p>
-            <p><strong>Email:</strong> {{ product.email }}</p>
-            <p><strong>Image URLs:</strong></p>
-            <ul class="product-images">
-              <li v-for="(imageUrl, i) in product.imageUrls" :key="i">
-                <img :src="imageUrl" alt="Product Image" class="product-image" />
-              </li>
-            </ul>
-            <p><strong>Uploaded Image URLs:</strong></p>
-            <ul class="product-images">
-              <li
-                v-for="(uploadedImageUrl, i) in product.uploadedImageUrls"
-                :key="i"
-              >
-                <img :src="uploadedImageUrl" alt="Uploaded Product Image" class="product-image" />
-              </li>
-            </ul>
-          </div>
-          <div class="product-actions">
-            <button @click="confirmDelete(product)">Delete</button>
-            <button @click="openEditModal(product)">Edit</button>
-          </div>
-        </li>
-      </ul>
-      <EditProductModal
-        :isEditModalOpen="isEditModalOpen"
-        :editingProduct="editingProduct"
-        :products="products"
-        @close="closeEditModal"
-      />
+  <div class="product-list">
+    <div class="sorting-options">
+      <label for="sortBy">Sort By:</label>
+      <select v-model="sortBy" @change="fetchProducts">
+        <option value="productModifiedDateTime">Modified Date</option>
+        <!-- Add other sorting options as needed -->
+      </select>
+
+      <label for="sortDirection">Sort Direction:</label>
+      <select v-model="sortDirection" @change="fetchProducts">
+        <option value="latest">Latest</option>
+        <option value="earliest">Earliest</option>
+      </select>
     </div>
-  </template>
+
+    <h2>Product Listings</h2>
+
+    <!-- Update the product listings -->
+    <ul>
+      <li
+        v-for="(product, index) in filteredProducts"
+        :key="index"
+        class="product-listing"
+      >
+        <!-- Add a product number to each listing -->
+        <span class="product-number">{{ index + 1 }}</span>
+        <div class="product-details">
+          <h3>{{ product.productName }}</h3>
+          <p><strong>Description:</strong> {{ product.description }}</p>
+          <p><strong>Category:</strong> {{ product.category }}</p>
+          <p><strong>Price:</strong> ${{ product.price.toFixed(2) }}</p>
+          <!-- Display business information -->
+          <p><strong>Business Name:</strong> {{ product.businessName }}</p>
+          <p>
+            <strong>Business Address:</strong> {{ product.businessAddress }}
+          </p>
+          <p><strong>Business Number:</strong> {{ product.businessNumber }}</p>
+          <p><strong>Email:</strong> {{ product.email }}</p>
+          <p><strong>Images</strong></p>
+          <ul class="product-images">
+            <li v-for="(imageUrl, i) in product.imageUrls" :key="i">
+              <img :src="imageUrl" alt="Product Image" class="product-image" />
+            </li>
+          </ul>
+          <ul class="product-images">
+            <li
+              v-for="(uploadedImageUrl, i) in product.uploadedImageUrls"
+              :key="i"
+            >
+              <img
+                :src="uploadedImageUrl"
+                alt="Uploaded Product Image"
+                class="product-image"
+              />
+            </li>
+          </ul>
+        </div>
+        <div class="product-actions">
+          <button @click="confirmDelete(product)">Delete</button>
+          <button @click="openEditModal(product)">Edit</button>
+        </div>
+      </li>
+    </ul>
+
+    <EditProductModal
+      :isEditModalOpen="isEditModalOpen"
+      :editingProduct="editingProduct"
+      :products="products"
+      @close="closeEditModal"
+    />
+  </div>
+</template>
   
   
   <script>
@@ -52,6 +81,7 @@ import {
   getDocs,
   deleteDoc,
   doc,
+  getDoc,
 } from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { getStorage, ref, deleteObject } from "firebase/storage";
@@ -67,6 +97,8 @@ export default {
       user: null,
       isEditModalOpen: false,
       editingProduct: null,
+      sortBy: "productModifiedDateTime", // Initial sorting by productModifiedDateTime
+      sortDirection: "earliest", // Initial sorting direction (latest)
     };
   },
   created() {
@@ -81,6 +113,19 @@ export default {
     });
   },
   methods: {
+    sortProducts(products) {
+      // Use JavaScript's sort method to sort products array
+      return products.sort((a, b) => {
+        const dateA = a[this.sortBy];
+        const dateB = b[this.sortBy];
+
+        if (this.sortDirection === "earliest") {
+          return dateA - dateB;
+        } else {
+          return dateB - dateA;
+        }
+      });
+    },
     openEditModal(product) {
       this.editingProduct = { ...product }; // Create a copy of the product to edit
       this.isEditModalOpen = true;
@@ -96,16 +141,37 @@ export default {
 
         try {
           const querySnapshot = await getDocs(productsCollection);
-          querySnapshot.forEach((doc) => {
-            const productData = doc.data();
-            productData.id = doc.id; // Store the document ID for later reference
-            this.products.push(productData);
-          });
+          const products = [];
+
+          for (const productDoc of querySnapshot.docs) {
+            const productData = productDoc.data();
+            productData.id = productDoc.id; // Store the document ID for later reference
+
+            // Fetch business information based on businessId
+            const businessDocRef = doc(
+              db,
+              "businesses",
+              productData.businessId
+            );
+            const businessDocSnap = await getDoc(businessDocRef);
+
+            if (businessDocSnap.exists()) {
+              const businessData = businessDocSnap.data();
+              productData.businessName = businessData.businessName;
+              productData.businessAddress = businessData.businessAddress;
+              productData.businessNumber = businessData.businessNumber;
+            }
+
+            products.push(productData);
+          }
+
+          this.products = products;
         } catch (error) {
           console.error("Error fetching products:", error);
         }
       }
     },
+
     confirmDelete(product) {
       if (window.confirm("Are you sure you want to delete this product?")) {
         this.deleteProduct(product);
@@ -140,8 +206,9 @@ export default {
   computed: {
     filteredProducts() {
       if (this.user) {
-        return this.products.filter(
-          (product) => product.businessId === this.user.uid
+        // Sort the products before returning
+        return this.sortProducts(
+          this.products.filter((product) => product.businessId === this.user.uid)
         );
       }
       return [];

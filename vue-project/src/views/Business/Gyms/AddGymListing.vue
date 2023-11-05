@@ -107,80 +107,82 @@ export default {
   },
   methods: {
     async addGym() {
-      const storage = getStorage();
-      if (!this.user) {
-        console.log("User is not authenticated");
-        return; // Exit the function early
+  const storage = getStorage();
+  if (!this.user) {
+    console.log("User is not authenticated");
+    return; // Exit the function early
+  }
+
+  const db = getFirestore();
+  const gymsCollection = collection(db, "gyms");
+  const uploadedImageUrls = [];
+
+  try {
+    // Check if any files were uploaded
+    if (this.uploadedImages && this.uploadedImages.length > 0) {
+      // Iterate over uploadedImages and add them to the gymData
+      for (let i = 0; i < this.uploadedImages.length; i++) {
+        const file = this.uploadedImages[i];
+        const fileName = `${this.user.uid}_${Date.now()}_${file.name}`; // Create a unique filename
+
+        // Reference to the location where you want to store the file in Firebase Storage
+        const storageRef = ref(storage, "gym_images/" + fileName);
+
+        // Upload the file to Firebase Storage
+        await uploadBytes(storageRef, file);
+        console.log("File uploaded");
+
+        // Get the download URL for the uploaded file
+        const downloadURL = await getDownloadURL(storageRef);
+
+        // Store the download URL in the array
+        uploadedImageUrls.push(downloadURL);
       }
+    }
 
-      const db = getFirestore();
-      const gymsCollection = collection(db, "gyms");
-      const uploadedImageUrls = [];
+    // Define gymData
+    const gymData = {
+      businessId: this.user.uid,
+      gymName: this.gymName,
+      description: this.description,
+      address: this.address,
+      contactNumber: this.contactNumber,
+      operationalHours: this.operationalHours,
+      price: parseFloat(this.price),
+      imageUrls: [this.imageUrl1, this.imageUrl2].filter((url) => url), // Filter out empty URLs
+      uploadedImageUrls: uploadedImageUrls, // Include the uploaded image URLs
+      email: this.email, // Include the email in the profile data
+      gymCreatedDateTime: new Date(),
+      gymModifiedDateTime: new Date(),
 
-      try {
-        // Iterate over uploadedImageUrls and add them to the gymData
-        for (let i = 0; i < this.uploadedImages.length; i++) {
-          const file = this.uploadedImages[i];
-          const fileName = `${this.user.uid}_${Date.now()}_${file.name}`; // Create a unique filename
+      postalCode: this.postalCode,
+      amenities: this.amenities,
+      socialMediaLinks: this.socialMediaLinks,
+    };
 
-          // Reference to the location where you want to store the file in Firebase Storage
-          const storageRef = ref(storage, "gym_images/" + fileName);
+    // Add gymData to Firestore
+    await addDoc(gymsCollection, gymData);
+    alert("Gym added successfully.");
 
-          // Upload the file to Firebase Storage
-          await uploadBytes(storageRef, file);
-          console.log("File uploaded");
+    // Clear the form fields
+    this.gymName = "";
+    this.description = "";
+    this.address = "";
+    this.contactNumber = "";
+    this.operationalHours = "";
+    this.price = "";
+    this.imageUrl1 = "";
+    this.imageUrl2 = "";
+    this.city = "";
+    this.state = "";
+    this.postalCode = "";
+    this.amenities = "";
+    this.socialMediaLinks = "";
+  } catch (error) {
+    console.error("Error adding gym:", error);
+  }
+},
 
-          // Get the download URL for the uploaded file
-          const downloadURL = await getDownloadURL(storageRef);
-
-          // Store the download URL in the array
-          uploadedImageUrls.push(downloadURL);
-        }
-
-        // Define gymData
-        const gymData = {
-          businessId: this.user.uid,
-          gymName: this.gymName,
-          description: this.description,
-          address: this.address,
-          contactNumber: this.contactNumber,
-          operationalHours: this.operationalHours,
-          price: parseFloat(this.price),
-          imageUrls: [this.imageUrl1, this.imageUrl2].filter((url) => url), // Filter out empty URLs
-          uploadedImageUrls: uploadedImageUrls, // Include the uploaded image URLs
-          email: this.email, // Include the email in the profile data
-          gymCreatedDateTime: new Date(),
-          gymModifiedDateTime: new Date(),
-
-
-          postalCode: this.postalCode,
-          amenities: this.amenities,
-          socialMediaLinks: this.socialMediaLinks,
-        };
-
-        // Add gymData to Firestore
-        await addDoc(gymsCollection, gymData);
-        alert("Gym added successfully.");
-
-        // Clear the form fields
-        this.gymName = "";
-        this.description = "";
-        this.address = "";
-        this.contactNumber = "";
-        this.operationalHours = "";
-        this.price = "";
-        this.imageUrl1 = "";
-        this.imageUrl2 = "";
-        this.city = "";
-        this.state = "";
-        this.postalCode = "";
-        this.website = "";
-        this.amenities = "";
-        this.socialMediaLinks = "";
-      } catch (error) {
-        console.error("Error adding gym:", error);
-      }
-    },
 
     async handleImageUpload() {
       const files = this.$refs.uploadImages.files;

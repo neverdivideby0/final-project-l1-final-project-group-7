@@ -24,7 +24,6 @@
 
     <button @click="navigateToAddProductListing">Add new Product</button>
     <FootFallChart/>
-    <button @click="navigateToBusinessListingOverview">See all listings</button>
 
     <button @click="navigateToBusinessGymListingOverview">See all Gym listings</button>
 

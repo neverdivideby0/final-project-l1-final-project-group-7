@@ -2,7 +2,7 @@
   <div :class="$style.homePage">
     <div :class="$style.body">
       <div :class="$style.banner">
-        <div :class="$style.welcomeUser123">Welcome, User123</div>
+        <div :class="$style.welcomeUser123">Welcome, {{ fullName }}</div>
         <div :class="$style.fitnessForYou">Fitness For You</div>
         <div :class="$style.signOutButton">
           <div :class="$style.signOut">
@@ -31,6 +31,7 @@
     <button @click="navigateToProductListing">See all products</button>
     <button @click="navigateToGymListing">See all gyms</button>
 
+
   </div>
 </template>
 
@@ -39,22 +40,32 @@
 import { defineComponent } from "vue";
 import LogOut from '@/components/LogOut.vue';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { getFirestore, collection, getDocs, doc, getDoc } from 'firebase/firestore';
 
 export default defineComponent({
-  name: "HomePage",
+  name: "CustomerHomePage",
   components: {
     LogOut,
+  },
+  data() {
+    return {
+      userExistsInCustomersCollection: false,
+      fullName: "", // Add fullName data property
+    };
+  },
+  created() {
+    this.checkAuthentication(() => {
+      this.checkIfUserExistsInCustomersCollection();
+    });
   },
   methods: {
     navigateToProductListing() {
       this.checkAuthentication(() => {
-        // If authenticated, navigate to BusinessProductListing
         this.$router.push({ name: 'CustomerProductList' });
       });
     },
     navigateToGymListing() {
       this.checkAuthentication(() => {
-        // If authenticated, navigate to BusinessProductListing
         this.$router.push({ name: 'CustomerGymList' });
       });
     },
@@ -62,17 +73,51 @@ export default defineComponent({
       const auth = getAuth();
       onAuthStateChanged(auth, (user) => {
         if (user) {
-          // User is authenticated
           callback();
         } else {
-          // User is not authenticated, you can handle this case here
+          // User is not authenticated, handle this case
           console.log('User is not authenticated');
+          this.$router.push({ name: 'LoginPage' }); // Redirect to login page
         }
       });
+    },
+    async checkIfUserExistsInCustomersCollection() {
+      const auth = getAuth();
+      const uid = auth.currentUser.uid;
+
+      const db = getFirestore();
+      const customersCollection = collection(db, 'customers');
+      const customerSnapshot = await getDocs(customersCollection);
+
+      this.userExistsInCustomersCollection = customerSnapshot.docs.some((doc) => doc.id === uid);
+
+      if (!this.userExistsInCustomersCollection) {
+        // User does not exist in the "customers" collection, redirect to profile setup
+        this.$router.push({ name: 'ProfileSetupPageCustomer' });
+      } else {
+        // Fetch the user's full name and set it in the fullName data property
+        const customerDocRef = doc(db, 'customers', uid);
+        const customerDocSnap = await getDoc(customerDocRef);
+        if (customerDocSnap.exists()) {
+          this.fullName = customerDocSnap.data().fullName;
+        }
+      }
+    },
+    signOut() {
+      const auth = getAuth();
+      firebaseSignOut(auth)
+        .then(() => {
+          // Successful sign-out, you can redirect the user to the login page or perform any other actions.
+          this.$router.push({ name: 'LandingPage' });
+        })
+        .catch((error) => {
+          console.error("Sign-out error:", error);
+        });
     },
   },
 });
 </script>
+
 
 
 <style module>
