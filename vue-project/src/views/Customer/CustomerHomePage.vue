@@ -28,9 +28,6 @@
       </div>
     </div>
 
-    <button @click="navigateToProductListing">See all products</button>
-    <button @click="navigateToGymListing">See all gyms</button>
-
 
   </div>
 </template>
