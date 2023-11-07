@@ -8,7 +8,6 @@
         type="text"
         id="search"
         v-model="searchTerm"
-        @input="searchProducts"
       />
     </div>
 
@@ -29,22 +28,37 @@
       <label for="sortBy">Sort By:</label>
       <select v-model="sortBy" @change="fetchProducts">
         <option value="productModifiedDateTime">Modified Date</option>
+        <option value="price">Product Price</option>
+        <option value="productName">Product Name</option>
         <!-- Add other sorting options as needed -->
       </select>
 
       <label for="sortDirection">Sort Direction:</label>
       <select v-model="sortDirection" @change="fetchProducts">
-        <option value="latest">Latest</option>
-        <option value="earliest">Earliest</option>
+        <option value="earliest" v-if="sortBy === 'productModifiedDateTime'">
+          Earliest
+        </option>
+        <option value="latest" v-if="sortBy === 'productModifiedDateTime'">
+          Latest
+        </option>
+        <option value="highest" v-if="sortBy === 'price'">
+          Highest to Lowest
+        </option>
+        <option value="lowest" v-if="sortBy === 'price'">
+          Lowest to Highest
+        </option>
+        <option value="atoz" v-if="sortBy === 'productName'">A to Z</option>
+        <option value="ztoa" v-if="sortBy === 'productName'">Z to A</option>
       </select>
     </div>
+
     <ul>
       <li v-for="(product, index) in filteredProducts" :key="index">
         <h3>{{ product.productName }}</h3>
         <p><strong>Description:</strong> {{ product.description }}</p>
         <p><strong>Category:</strong> {{ product.category }}</p>
         <p><strong>Price:</strong> ${{ product.price.toFixed(2) }}</p>
-        <p><strong>Business ID:</strong> {{ product.businessId }}</p>
+        <p><strong>Business Name:</strong> {{ product.businessName }}</p>
         <p><strong>Email:</strong> {{ product.email }}</p>
         <p><strong>Image URLs:</strong></p>
         <ul>
@@ -58,10 +72,6 @@
             <img :src="imageUrl" alt="Product Image" />
           </li>
         </ul>
-        <p>
-          <strong>Last Modified:</strong>
-          {{ formatDate(product.productModifiedDateTime) }}
-        </p>
       </li>
     </ul>
   </div>
@@ -87,45 +97,41 @@ export default {
     this.fetchProducts();
   },
   methods: {
-    searchProducts() {
-      // Apply search based on the searchTerm
-      this.filteredProducts = this.products.filter((product) => {
-        const searchTerm = this.searchTerm.toLowerCase();
-        const productName = product.productName.toLowerCase();
-        const description = product.description.toLowerCase();
-
-        // Check if product.category is an array
-        const categoryArray = Array.isArray(product.category)
-          ? product.category
-          : [];
-
-        // Check if searchTerm exists in any of the categoryArray elements
-        const categoryMatch = categoryArray.some((category) => {
-          return category.toLowerCase().includes(searchTerm);
-        });
-
-        return (
-          productName.includes(searchTerm) ||
-          description.includes(searchTerm) ||
-          categoryMatch
-        );
-      });
-
-      // Sort the filtered products after applying filters and search
-      this.sortProducts();
-    },
 
     sortProducts() {
-      // Sort the filteredProducts array based on sortBy and sortDirection
-      this.filteredProducts.sort((a, b) => {
-        const dateA = a[this.sortBy];
-        const dateB = b[this.sortBy];
+      // Use JavaScript's sort method to sort r array
+      this.products.sort((a, b) => {
+        const propA = a[this.sortBy];
+        const propB = b[this.sortBy];
+        console.log("sorting")
 
-        if (this.sortDirection === "earliest") {
-          return dateA - dateB;
-        } else {
-          return dateB - dateA;
+        if (this.sortBy === "price") {
+          // Convert prices to numbers for proper comparison
+          const priceA = parseFloat(propA);
+          const priceB = parseFloat(propB);
+
+          if (this.sortDirection === "highest") {
+            return priceB - priceA;
+          } else if (this.sortDirection === "lowest") {
+            return priceA - priceB;
+          }
         }
+
+        if (this.sortBy === "productName") {
+          const nameA = propA.toLowerCase();
+          const nameB = propB.toLowerCase();
+
+          if (this.sortDirection === "atoz") {
+            return nameA.localeCompare(nameB);
+          } else if (this.sortDirection === "ztoa") {
+            return nameB.localeCompare(nameA);
+          }
+        }
+
+        // For other cases (Modified Date), compare normally
+        return this.sortDirection === "earliest"
+          ? propA - propB
+          : propB - propA;
       });
     },
 
@@ -141,39 +147,35 @@ export default {
       } catch (error) {
         console.error("Error fetching products:", error);
       }
+      this.sortProducts()
     },
+    
     applyFilters() {
       // Apply filters based on minPrice and maxPrice
       this.filteredProducts = this.products.filter((product) => {
-        if (!this.minPrice && !this.maxPrice) return true;
+        const searchTerm = this.searchTerm.toLowerCase();
+        const productName = product.productName.toLowerCase();
+        const description = product.description.toLowerCase();
 
-        const price = product.price;
-        if (this.minPrice && this.maxPrice) {
-          return price >= this.minPrice && price <= this.maxPrice;
-        } else if (this.minPrice) {
-          return price >= this.minPrice;
-        } else if (this.maxPrice) {
-          return price <= this.maxPrice;
-        }
+        const matchesSearchTerm =
+          productName.includes(searchTerm) || description.includes(searchTerm);
+
+        // Check if the product falls within the specified price range (if minPrice and/or maxPrice is specified)
+        const priceInRange =
+          (!this.minPrice || product.price >= this.minPrice) &&
+          (!this.maxPrice || product.price <= this.maxPrice);
+
+        // Return true if both conditions are met (search term and price range)
+        return priceInRange && matchesSearchTerm;
       });
       this.sortProducts();
     },
-    formatDate(date) {
-      const options = {
-        year: "numeric",
-        month: "short",
-        day: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
-      };
-      return new Date(date).toLocaleDateString(undefined, options);
-    },
-  },
-  watch: {
+    watch: {
     sortDirection() {
       // When sortDirection changes, re-sort the filteredProducts
       this.sortProducts();
     },
+  },
   },
 };
 </script>

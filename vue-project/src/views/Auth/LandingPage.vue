@@ -11,7 +11,7 @@
       <div :class="$style.buttonGroup">
         <button type="submit" @click="customerLogin" :class="$style.loginButton">Customer Login</button>
         <button type="submit" @click="businessLogin" :class="$style.loginButton">Business Login</button>
-        <button @click="signup" :class="$style.signUpButton">Sign Up</button>
+        <button @click="signUp" :class="$style.signUpButton">Sign Up</button>
         <button @click="resetPassword" :class="$style.resetPasswordButton">Reset Password</button>
                 <p v-if="errMsg" :class="$style.errorMessage"> {{ errMsg }}</p>
       </div>
@@ -71,7 +71,7 @@ export default {
       this.userType = 'businesses';
       this.login();
     },
-    signup() {
+    signUp() {
       console.log('Redirecting to sign-up page');
       this.$router.push({ name: 'SignUpPage' });
     },

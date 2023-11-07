@@ -112,7 +112,7 @@ export default {
         await updateDoc(productDocRef, {
           productName: this.editingProduct.productName,
           description: this.editingProduct.description,
-          category: categoryArray, // Use the split and trimmed categories
+          category: categoryArray,
           price: this.editingProduct.price,
           imageUrls: this.editingProduct.imageUrls,
           uploadedImageUrls: this.editingProduct.uploadedImageUrls,

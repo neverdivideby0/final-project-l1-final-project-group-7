@@ -188,6 +188,12 @@ export default {
       const files = this.$refs.uploadImages.files;
       this.uploadedImages = files;
     },
+    async fetchUpdatedGyms() {
+  // Fetch updated gym data from Firebase Firestore and update the `gyms` data property
+  // This assumes that you have a method to fetch gyms similar to what you have in your existing code
+  await this.fetchGyms(); // You can replace this with your actual fetch method
+}
+
   },
 };
 </script>

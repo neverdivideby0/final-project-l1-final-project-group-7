@@ -9,7 +9,6 @@ import CustomerHomePage from '@/views/Customer/CustomerHomePage.vue'
 import BusinessHomePage from '@/views/Business/BusinessHomePage.vue'
 import AddProductListing from '@/views/Business/Products/AddProductListing.vue'
 import BusinessProductListingOverview from '@/views/Business/Products/BusinessProductListingOverview.vue'
-import CompanyProfile from '@/views/Business/CompanyProfile.vue'
 import EditCompanyProfile from '@/views/Business/EditCompanyProfile.vue'
 import NotFound from '@/views/NotFound.vue'
 import EditBusinessProfile from '@/views/Business/EditBusinessProfile.vue'
@@ -76,12 +75,6 @@ const routes = [
     path: '/BusinessHomePage',
     name: 'BusinessHomePage',
     component: BusinessHomePage,
-    beforeEnter: requireAuth, // Requires authentication
-  },
-  {
-    path: '/CompanyProfile',
-    name: 'CompanyProfile',
-    component: CompanyProfile,
     beforeEnter: requireAuth, // Requires authentication
   },
   {

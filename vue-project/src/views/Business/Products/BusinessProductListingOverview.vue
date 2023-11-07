@@ -4,13 +4,27 @@
       <label for="sortBy">Sort By:</label>
       <select v-model="sortBy" @change="fetchProducts">
         <option value="productModifiedDateTime">Modified Date</option>
+        <option value="price">Product Price</option>
+        <option value="productName">Product Name</option>
         <!-- Add other sorting options as needed -->
       </select>
 
       <label for="sortDirection">Sort Direction:</label>
       <select v-model="sortDirection" @change="fetchProducts">
-        <option value="latest">Latest</option>
-        <option value="earliest">Earliest</option>
+        <option value="earliest" v-if="sortBy === 'productModifiedDateTime'">
+          Earliest
+        </option>
+        <option value="latest" v-if="sortBy === 'productModifiedDateTime'">
+          Latest
+        </option>
+        <option value="highest" v-if="sortBy === 'price'">
+          Highest to Lowest
+        </option>
+        <option value="lowest" v-if="sortBy === 'price'">
+          Lowest to Highest
+        </option>
+        <option value="atoz" v-if="sortBy === 'productName'">A to Z</option>
+        <option value="ztoa" v-if="sortBy === 'productName'">Z to A</option>
       </select>
     </div>
 
@@ -113,17 +127,39 @@ export default {
     });
   },
   methods: {
-    sortProducts(products) {
-      // Use JavaScript's sort method to sort products array
-      return products.sort((a, b) => {
-        const dateA = a[this.sortBy];
-        const dateB = b[this.sortBy];
+    sortProducts() {
+      // Use JavaScript's sort method to sort r array
+      this.products.sort((a, b) => {
+        const propA = a[this.sortBy];
+        const propB = b[this.sortBy];
 
-        if (this.sortDirection === "earliest") {
-          return dateA - dateB;
-        } else {
-          return dateB - dateA;
+        if (this.sortBy === "price") {
+          // Convert prices to numbers for proper comparison
+          const priceA = parseFloat(propA);
+          const priceB = parseFloat(propB);
+
+          if (this.sortDirection === "highest") {
+            return priceB - priceA;
+          } else if (this.sortDirection === "lowest") {
+            return priceA - priceB;
+          }
         }
+
+        if (this.sortBy === "productName") {
+          const nameA = propA.toLowerCase();
+          const nameB = propB.toLowerCase();
+
+          if (this.sortDirection === "atoz") {
+            return nameA.localeCompare(nameB);
+          } else if (this.sortDirection === "ztoa") {
+            return nameB.localeCompare(nameA);
+          }
+        }
+
+        // For other cases (Modified Date), compare normally
+        return this.sortDirection === "earliest"
+          ? propA - propB
+          : propB - propA;
       });
     },
     openEditModal(product) {
@@ -133,6 +169,8 @@ export default {
     closeEditModal() {
       this.isEditModalOpen = false;
       this.editingProduct = null; // Clear the editingProduct when closing the modal
+      this.fetchProducts(); // Fetch products after the user is authenticated
+
     },
     async fetchProducts() {
       if (this.user) {
@@ -206,11 +244,12 @@ export default {
   computed: {
     filteredProducts() {
       if (this.user) {
-        // Sort the products before returning
-        return this.sortProducts(
-          this.products.filter((product) => product.businessId === this.user.uid)
+        this.sortProducts()
+                return this.products.filter(
+          (product) => product.businessId === this.user.uid
         );
       }
+
       return [];
     },
   },
