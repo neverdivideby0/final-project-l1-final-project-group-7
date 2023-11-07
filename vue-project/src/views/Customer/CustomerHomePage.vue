@@ -1,14 +1,12 @@
 <template>
+<div :class="$style.signOutButton">
+<SignOutButton />
+</div>
   <div :class="$style.homePage">
     <div :class="$style.body">
       <div :class="$style.banner">
         <div :class="$style.welcomeUser123">Welcome, {{ fullName }}</div>
         <div :class="$style.fitnessForYou">Fitness For You</div>
-        <div :class="$style.signOutButton">
-          <div :class="$style.signOut">
-            <SignOutButton />
-          </div>
-        </div>
       </div>
       <img :class="$style.logo" alt="" src="@/assets/orangeGetFitt.png" /> 
       <div :class="$style.frame4">
@@ -27,9 +25,8 @@
         <img :class="$style.productsIcon" alt="" src="@/assets/products.png" />
       </div>
     </div>
-
-
   </div>
+
 </template>
 
 
@@ -191,7 +188,7 @@ export default defineComponent({
     line-height: 20px;
     font-weight: 500;
   }
-    .signOutButton {
+  .signOutButton {
     position: absolute;
     top: 12px;
     right: 10px;
@@ -200,6 +197,7 @@ export default defineComponent({
     font-weight: 900;
     color: var(--color-black);
     color: white;
+    z-index: 999; /* Adjust the z-index value as needed */
   }
 .leftSquare {
   position: absolute;
