@@ -6,7 +6,7 @@
         <div :class="$style.fitnessForYou">Fitness For You</div>
         <div :class="$style.signOutButton">
           <div :class="$style.signOut">
-            <button @click="signOut">Sign Out</button>  
+            <SignOutButton />
           </div>
         </div>
       </div>
@@ -38,11 +38,13 @@ import { defineComponent } from "vue";
 import LogOut from '@/components/LogOut.vue';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { getFirestore, collection, getDocs, doc, getDoc } from 'firebase/firestore';
+import SignOutButton from '@/components/SignOutButton.vue';
 
 export default defineComponent({
   name: "CustomerHomePage",
   components: {
     LogOut,
+    SignOutButton
   },
   data() {
     return {
