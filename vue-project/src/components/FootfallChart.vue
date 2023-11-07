@@ -2,7 +2,7 @@
   <div>
     <h1>Footfall (Past 7 Days) </h1>
     <div>
-      <label for="productName">Select Product:</label>
+      <label for="productName" class="select-label">Select Product:</label>
       <select v-model="selectedProductName" @change="generateChart">
         <option disabled value="">Select Product</option>
         <option v-for="product in exampleProducts" :key="product.name" :value="product.name">{{ product.name }}</option>
@@ -12,9 +12,10 @@
       <canvas id="chartCanvas"></canvas>
     </div>
   </div>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap" rel="stylesheet">
 </template>
 
-<script>
+<script> 
 import { onMounted } from 'vue';
 import Chart from 'chart.js/auto';
 import { getFirestore, collection, doc, query, getDocs } from 'firebase/firestore';
@@ -110,7 +111,9 @@ export default {
 </script>
 
 <style>
-
+h1, h2, h3, p, button, .select-label {
+  font-family: 'Roboto', sans-serif;
+}
 .chart-wrapper {
   display: inline-block; /* Allow it to center horizontally */
   width: 30%; /* Adjust the width of the chart container */
