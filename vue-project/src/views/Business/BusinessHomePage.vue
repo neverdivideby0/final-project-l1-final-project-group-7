@@ -193,12 +193,13 @@ export default {
 body, h1, h2, h3, p, button  {
   font-family: 'Roboto', sans-serif;
 }
-/* Apply Roboto font to buttons within .productButtons and .gymButtons */
+/* 4 bottoms code */ 
 .productButtons button, .gymButtons button {
   font-family: 'Roboto', sans-serif;
   margin-top: 50px;
   margin-bottom: 10px; /* Add margin to create vertical spacing between buttons */
   margin-left: 50px; /* Add amrgin to create horizontal spacing between buttons */
+  border-radius: 8px
 }
 
 /* Div Below Banner To Push The Words below banner" */ 
@@ -319,6 +320,7 @@ button {
   border-radius: 5px;
   transition: background-color 0.3s, color 0.3s, border-color 0.3s; /* Smooth transitions on hover */
   width: 200px;
+  border-radius: 8px
 }
 
 button:hover {
