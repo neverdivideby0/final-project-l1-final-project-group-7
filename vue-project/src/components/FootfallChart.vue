@@ -111,9 +111,11 @@ export default {
 </script>
 
 <style>
+/* Roboto Font */ 
 h1, h2, h3, p, button, .select-label {
   font-family: 'Roboto', sans-serif;
 }
+
 .chart-wrapper {
   display: inline-block; /* Allow it to center horizontally */
   width: 30%; /* Adjust the width of the chart container */
