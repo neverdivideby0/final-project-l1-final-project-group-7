@@ -117,6 +117,8 @@ export default defineComponent({
 
 
 <style module>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap" rel="stylesheet">
+
   .label {
     position: absolute;
     width: calc(100% - 21px);
@@ -132,6 +134,7 @@ export default defineComponent({
     box-sizing: border-box;
     gap: var(--gap-5xs);
     font-size: var(--font-size-xs);
+    font-family: 'Roboto';
   }
   .vectorIcon {
     display: flex;
@@ -167,6 +170,7 @@ export default defineComponent({
     left: center;
     top: 0px;
     font-size: 69px;
+    font-family: 'Roboto';
     line-height: 100px;
     font-weight: 900;
     color: var(--color-black);
@@ -178,6 +182,7 @@ export default defineComponent({
     left: center;
     top: 240px;
     font-size: 69px;
+    font-family: 'Roboto';
     line-height: 100px;
     font-weight: 900;
     color: var(--color-black);
@@ -221,12 +226,14 @@ export default defineComponent({
     top: 389px;
     left: 250px;
     line-height: 20px;
+    font-family: "Roboto";
   }
   .viewProducts {
     position: absolute;
     top: 389px;
     left: 795px;
     line-height: 20px;
+    
   }
   .gymsIcon {
     position: absolute;

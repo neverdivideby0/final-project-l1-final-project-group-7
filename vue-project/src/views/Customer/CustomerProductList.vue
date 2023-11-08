@@ -178,7 +178,8 @@ export default {
 };
 </script>
   
-  <style scoped>
+<style scoped>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap" rel="stylesheet">
 .customer-product-list {
   text-align: center;
   margin: 20px;

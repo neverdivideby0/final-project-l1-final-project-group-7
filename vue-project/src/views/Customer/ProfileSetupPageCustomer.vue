@@ -113,6 +113,7 @@ export default {
 </script>
 
 <style scoped>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap" rel="stylesheet">
 .profile-setup-page-customer {
   text-align: center;
   margin: 20px;
