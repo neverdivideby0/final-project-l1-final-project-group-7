@@ -266,7 +266,7 @@ export default {
   justify-content: flex-start;
   align-items: center;
   width: 100%;
-  /* Remove height property */
+  padding-bottom: 200px;
 }
 
 /* Rectangle covering the form */ 
