@@ -142,19 +142,20 @@
       async saveChanges() {
         const db = getFirestore();
         const gymDocRef = doc(db, "gyms", this.editingGym.id);
-  
+
         // Update the Gym details
         try {
           await updateDoc(gymDocRef, {
-        gymName: this.editingGym.gymName,
+          gymName: this.editingGym.gymName,
           description: this.editingGym.description,
           address: this.editingGym.address,
           postalCode: this.editingGym.postalCode,
           contactNumber: this.editingGym.contactNumber,
           operationalHours: this.editingGym.operationalHours,
-          website: this.editingGym.website,
           amenities: this.editingGym.amenities,
           socialMediaLinks: this.editingGym.socialMediaLinks,
+          imageUrls: this.editingGym.imageUrls,
+          uploadedImageUrls: this.editingGym.uploadedImageUrls,
           gymModifiedDateTime: new Date(),
           });
   
@@ -202,6 +203,7 @@
   
               const storageRef = ref(storage, "gym_images/" + fileName);
               const downloadURL = await getDownloadURL(storageRef);
+              this.editingGym.imageUrls.push(downloadURL);
               this.editingGym.uploadedImageUrls.push(downloadURL);
               console.log("thisruns");
             } catch (error) {
