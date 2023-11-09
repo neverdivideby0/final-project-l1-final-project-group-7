@@ -1,6 +1,6 @@
 <template>
 
-  <!-- Everything above is the top nav bar -->
+  <!-- Everything here is the top nav bar -->
   <div class="Banner"></div>
   <div class="buttonDiv">
     <SignOutButton />
@@ -212,7 +212,7 @@ export default {
 }
 /* This is the orange banner */ 
 .Banner {
-  height: 106px;
+  height: 90px;
   left: 0;
   right: 0;
   top: 0;
@@ -224,11 +224,12 @@ export default {
   width: 92.14px;
   height: 44px;
   left: 90%;
-  top: 60px;
+  top: 23px;
   position: absolute;
   justify-content: flex-end;
   align-items: center;
   display: inline-flex;
+  z-index: 1;
 }
 /* This is the center of the dashboard with logo and dashboard name */
 .Dashboard {
