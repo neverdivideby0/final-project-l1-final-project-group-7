@@ -1,7 +1,6 @@
 <template>
   <div :class="$style.homePage">
-    <div :class="$style.body">
-      <div :class="$style.banner">
+  <div :class="$style.banner">
         <div :class="$style.welcomeUser123">Welcome, {{ fullName }}</div>
         <div :class="$style.fitnessForYou">Fitness For You</div>
         <div :class="$style.signOutButton">
@@ -10,6 +9,7 @@
           </div>
         </div>
       </div>
+    <div :class="$style.body">
       <img :class="$style.logo" alt="" src="@/assets/orangeGetFitt.png" /> 
       <div :class="$style.frame4">
         <img :class="$style.leftSquare" alt=""/>
@@ -155,7 +155,7 @@ export default defineComponent({
   }
   .logo {
     position: absolute;
-    top: 110px;
+    top: 77px;
     left: center;
     width: 699px;
     height: 132px;
@@ -209,6 +209,7 @@ export default defineComponent({
   width: 412px;
   height: 502px;
   background-color: red; 
+  border-radius: 30px;
 }
 .rightSquare {
   position: absolute;
@@ -217,6 +218,7 @@ export default defineComponent({
   width: 412px;
   height: 502px;
   background-color: turquoise; 
+  border-radius: 30px;
 }
 
   .viewGyms {
@@ -314,9 +316,9 @@ export default defineComponent({
   display: flex;
   align-items: center;
   justify-content: center;
-  position: absolute;
+  position: fixed;
   top: 0;
-      z-index: -999; 
+  z-index: -999; 
   width: 100%;
   background-color: orange; /* Replace with your desired color */
   padding: 169px; /* Adjust the padding as needed */
