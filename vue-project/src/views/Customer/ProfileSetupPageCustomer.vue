@@ -17,8 +17,9 @@
       <div class="form-group">
         <label for="profilePicture">Profile Picture:</label>
         <input type="file" id="profilePicture" @change="onFileChange" />
+        <button type="submit" class="wide-button" style="margin: 0 auto; display: block; margin-top: 10px; margin-bottom: 10px">Save Profile</button>
       </div>
-      <button type="submit">Save Profile</button>
+      
     </form>
   </div>
   <SignOutButton />
@@ -113,12 +114,40 @@ export default {
 </script>
 
 <style scoped>
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap" rel="stylesheet">
-.profile-setup-page-customer {
-  text-align: center;
-  margin: 20px;
-}
-.form-group {
-  margin-bottom: 10px;
-}
+  .form-group label[for="fullName"] {
+    color: red; 
+  }
+
+  .form-group input#fullName {
+    width: 500px; 
+  }
+
+  .form-group label[for="mobileNumber"] {
+    color: red; 
+  }
+  .form-group input#mobileNumber {
+    width: 500px; 
+  }
+
+  .form-group label[for="deliveryAddress"] {
+    color: red; 
+  }
+  .form-group textarea#deliveryAddress {
+    width: 500px; 
+  }
+
+  .form-group label[for="profilePicture"] {
+    color: red;
+  }
+  .form-group input[type="file"] {
+    width: 240px; 
+  }
+
+  .wide-button {
+    width: 150px; /* You can adjust this width as needed */
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+  }
 </style>
+
