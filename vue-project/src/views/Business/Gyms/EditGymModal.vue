@@ -144,8 +144,6 @@ export default {
           uploadedImageUrls: this.editingGym.uploadedImageUrls,
           gymModifiedDateTime: new Date(),
         });
-
-        // Alert for a successful update
         alert("Gym details updated successfully");
 
         // Update the local gym data to reflect the edited values
@@ -153,12 +151,9 @@ export default {
         if (index !== -1) {
           this.gyms[index] = { ...this.editingGym };
         }
-  
-          // Close the modal
-          this.closeModal();
+            this.closeModal();
         } catch (error) {
           console.error("Error updating gym details:", error);
-          // Handle the error, e.g., show an error message to the user
         }
       },
       removeImage(index) {
@@ -194,87 +189,15 @@ export default {
               console.log("thisruns");
             } catch (error) {
               console.error("Error uploading image:", error);
-              // Handle the error, e.g., show an error message to the user
             }
           }
         } else {
           // Handle the case when the user is not authenticated (e.g., show an error or redirect to a login page)
         }
       },
-      async removeUploadedImage(index) {
-        if (this.editingGym && this.editingGym.uploadedImageUrls) {
-          const imageRef = this.editingGym.uploadedImageUrls[index];
-  
-          if (imageRef) {
-            const confirmDeletion = window.confirm(
-              "Are you sure you want to delete this image?"
-            );
-  
-            if (confirmDeletion) {
-              const storage = getStorage();
-              const imageStorageRef = ref(storage, imageRef);
-  
-              try {
-                // Delete the object from Firebase Storage
-                await deleteObject(imageStorageRef);
-                console.log("Image deleted from Firebase Storage");
-              } catch (error) {
-                console.error(
-                  "Error deleting image from Firebase Storage:",
-                  error
-                );
-              }
-  
-              // Remove the URL from the array
-              this.editingGym.uploadedImageUrls.splice(index, 1);
-            }
-          }
-        }
-      },
-  
       closeModal() {
         this.$emit("close");
       },
->>>>>>> main
-    },
-    removeImage(index) {
-      this.editingGym.imageUrls.splice(index, 1);
-    },
-    addImage() {
-      if (this.newImageUrl) {
-        this.editingGym.imageUrls.push(this.newImageUrl);
-        this.newImageUrl = "";
-      }
-    },
-    async uploadImageFiles(event) {
-      const auth = getAuth();
-      const user = auth.currentUser;
-
-      if (user) {
-        const storage = getStorage();
-        const imagesFolderRef = ref(storage, "gym_images");
-
-        for (let i = 0; i < event.target.files.length; i++) {
-          const file = event.target.files[i];
-          const fileName = `${user.uid}_${Date.now()}_${file.name}`;
-          const imageRef = ref(imagesFolderRef, fileName);
-
-          try {
-            await uploadBytes(imageRef, file);
-            console.log("pushing", fileName);
-
-            const storageRef = ref(storage, "gym_images/" + fileName);
-            const downloadURL = await getDownloadURL(storageRef);
-            this.editingGym.uploadedImageUrls.push(downloadURL);
-            console.log("thisruns");
-          } catch (error) {
-            console.error("Error uploading image:", error);
-            // Handle the error, e.g., show an error message to the user
-          }
-        }
-      } else {
-        // Handle the case when the user is not authenticated (e.g., show an error or redirect to a login page)
-      }
     },
     async removeUploadedImage(index) {
       if (this.editingGym && this.editingGym.uploadedImageUrls) {
@@ -299,18 +222,12 @@ export default {
                 error
               );
             }
-
             // Remove the URL from the array
             this.editingGym.uploadedImageUrls.splice(index, 1);
           }
         }
       }
     },
-
-    closeModal() {
-      this.$emit("close");
-    },
-  },
 };
 </script>
     
