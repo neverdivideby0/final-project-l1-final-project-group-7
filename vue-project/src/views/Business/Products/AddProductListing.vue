@@ -140,6 +140,7 @@ export default {
         // Define productData
         const productData = {
           businessId: this.user.uid,
+          businessName: this.user.businessName,
           productName: this.productName,
           description: this.description,
           category: this.categories

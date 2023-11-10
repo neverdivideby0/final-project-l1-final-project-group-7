@@ -1,4 +1,31 @@
 <template>
+  <div class="gym-list">
+    <h2>Gym Listings</h2>
+    <div class="sorting-options">
+      <label for="sortBy">Sort By:</label>
+      <select v-model="sortBy" @change="fetchGyms">
+        <option value="gymModifiedDateTime">Modified Date</option>
+        <option value="price">Gym Price</option>
+        <option value="gymName">Gym Name</option>
+        <!-- Add other sorting options as needed -->
+      </select>
+      <label for="sortDirection">Sort Direction:</label>
+      <select v-model="sortDirection" @change="fetchGyms">
+        <option value="earliest" v-if="sortBy === 'gymModifiedDateTime'">
+          Earliest
+        </option>
+        <option value="latest" v-if="sortBy === 'gymModifiedDateTime'">
+          Latest
+        </option>
+        <option value="highest" v-if="sortBy === 'price'">
+          Highest to Lowest
+        </option>
+        <option value="lowest" v-if="sortBy === 'price'">
+          Lowest to Highest
+        </option>
+        <option value="atoz" v-if="sortBy === 'gymName'">A to Z</option>
+        <option value="ztoa" v-if="sortBy === 'gymName'">Z to A</option>
+      </select>
   <!-- Overall Background-->
   <div class="Background">
   <!-- Header -->
@@ -129,8 +156,8 @@ export default {
       user: null,
       isEditModalOpen: false,
       editingGym: null,
-      sortBy: "gymModifiedDateTime", // Initial sorting by gymModifiedDateTime
-      sortDirection: "earliest",
+      sortBy: "", // Initial sorting by gymModifiedDateTime
+      sortDirection: "",
     };
   },
   created() {
@@ -152,6 +179,7 @@ export default {
     closeEditModal() {
       this.isEditModalOpen = false;
       this.editingGym = null; // Clear the editingGym when closing the modal
+      this.fetchGyms(); // Fetch Gyms after the user is authenticated
     },
     async fetchGyms() {
       if (this.user) {
@@ -178,14 +206,37 @@ export default {
     sortGyms() {
       // Use JavaScript's sort method to sort gyms array
       this.gyms.sort((a, b) => {
-        const dateA = a[this.sortBy];
-        const dateB = b[this.sortBy];
+        const propA = a[this.sortBy];
+        const propB = b[this.sortBy];
 
-        if (this.sortDirection === "earliest") {
-          return dateA - dateB;
-        } else {
-          return dateB - dateA;
+        if (this.sortBy === "price") {
+          // Convert prices to numbers for proper comparison
+          const priceA = parseFloat(propA);
+          const priceB = parseFloat(propB);
+
+          if (this.sortDirection === "highest") {
+            return priceB - priceA;
+          } else if (this.sortDirection === "lowest") {
+            return priceA - priceB;
+          }
         }
+
+        if (this.sortBy === "gymName") {
+          // Case-insensitive comparison for gymName
+          const nameA = propA.toLowerCase();
+          const nameB = propB.toLowerCase();
+
+          if (this.sortDirection === "atoz") {
+            return nameA.localeCompare(nameB);
+          } else if (this.sortDirection === "ztoa") {
+            return nameB.localeCompare(nameA);
+          }
+        }
+
+        // For other cases (Modified Date), compare normally
+        return this.sortDirection === "earliest"
+          ? propA - propB
+          : propB - propA;
       });
     },
 
