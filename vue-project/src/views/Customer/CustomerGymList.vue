@@ -22,7 +22,7 @@
 
     <div class="sorting-options">
       <label for="sortBy">Sort By:</label>
-      <select v-model="sortBy" @change="fetchGyms">
+      <select v-model="sortBy" @change="applyFilters">
         <option value="gymModifiedDateTime">Modified Date</option>
         <option value="price">Gym Price</option>
         <option value="gymName">Gym Name</option>
@@ -30,7 +30,7 @@
       </select>
 
       <label for="sortDirection">Sort Direction:</label>
-      <select v-model="sortDirection" @change="fetchGyms">
+      <select v-model="sortDirection" @change="applyFilters">
         <option value="earliest" v-if="sortBy === 'gymModifiedDateTime'">
           Earliest
         </option>
@@ -49,7 +49,7 @@
     </div>
 
     <ul>
-      <li v-for="(gym, index) in filteredGyms" :key="index">
+      <li v-for="(gym, index) in (filteredGyms.length > 0 ? filteredGyms : gyms)" :key="index">
         <h3>{{ gym.gymName }}</h3>
         <p><strong>Address:</strong> {{ gym.address }}</p>
         <p><strong>Postal Code:</strong> {{ gym.postalCode }}</p>
@@ -63,10 +63,10 @@
         <!-- Display gym images -->
         <p><strong>Images:</strong></p>
         <ul>
-          <li v-for="(imageUrl, i) in gym.uploadedImageUrls" :key="i">
+          <li v-for="(imageUrl, i) in gym.uploadedImageUrls" :key="`uploaded-${i}`">
             <img :src="imageUrl" alt="Gym Image" />
-          </li>  
-          <li v-for="(imageUrl, i) in gym.imageUrls" :key="i">
+          </li>
+          <li v-for="(imageUrl, i) in gym.imageUrls" :key="`image-${i}`">
             <img :src="imageUrl" alt="Gym Image" />
           </li>
         </ul>
@@ -148,7 +148,6 @@ export default {
     },
 
     applyFilters() {
-      // Apply filters based on minPrice and maxPrice
       this.filteredGyms = this.gyms.filter((gym) => {
         const searchTerm = this.searchTerm.toLowerCase();
         const gymName = gym.gymName.toLowerCase();
@@ -172,16 +171,14 @@ export default {
         // Return true if both conditions are met (search term and price range)
         return matchesSearchTerm && priceInRange;
       });
-
       this.sortGyms();
     },
-
     watch: {
-      sortDirection() {
-        // When sortDirection changes, re-sort the filteredGyms
-        this.sortGyms();
-      },
+    sortDirection() {
+      // When sortDirection changes, re-sort the filteredProducts
+      this.sortProducts();
     },
+  },
   },
 };
 </script>
