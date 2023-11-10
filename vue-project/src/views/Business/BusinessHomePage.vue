@@ -36,7 +36,7 @@
         <p><strong>Business Number:</strong> {{ businessNumber }}</p>
         <p><strong>Business Address:</strong> {{ businessAddress }}</p>
         <p><strong>ACRA ID Number:</strong> {{ acraIdNumber }}</p>
-        <p><strong>Account Created:</strong> {{ userAccountCreatedDateTime }}</p>
+        <p><strong>Account Created:</strong> {{ userAccountCreatedDateTime.toDate() }}</p>
       </div>
 
 
@@ -66,7 +66,6 @@ import LogOut from "@/components/LogOut.vue";
 import FootFallChart from "@/components/FootFallChart.vue";
 import GoLandingPage from "@/components/GoLandingPage.vue";
 import SignOutButton from "@/components/SignOutButton.vue";
-import { getFirestore, doc, getDoc } from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import {
   getFirestore,
