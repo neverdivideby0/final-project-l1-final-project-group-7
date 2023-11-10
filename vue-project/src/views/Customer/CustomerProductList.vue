@@ -1,9 +1,7 @@
 <template>
   <div class="customer-product-list">
       <div class="banner"></div>
-
     <h2 class="products-heading">Products</h2>
-
     <div class="search-bar">
       <label for="search">Search:</label>
       <input
@@ -12,8 +10,6 @@
         v-model="searchTerm"
       />
     </div>
-
-
     <!-- Filter section -->
     <div class="filter-section">
       <div class="filter-input">
@@ -26,10 +22,9 @@
       </div>
       <button @click="applyFilters">Search</button>
     </div>
-
     <div class="sorting-options">
       <label for="sortBy">Sort By:</label>
-      <select v-model="sortBy" @change="fetchProducts">
+      <select v-model="sortBy" @change="applyFilters">
         <option value="productModifiedDateTime">Modified Date</option>
         <option value="price">Product Price</option>
         <option value="productName">Product Name</option>
@@ -37,7 +32,7 @@
       </select>
 
       <label for="sortDirection">Sort Direction:</label>
-      <select v-model="sortDirection" @change="fetchProducts">
+      <select v-model="sortDirection" @change="applyFilters">
         <option value="earliest" v-if="sortBy === 'productModifiedDateTime'">
           Earliest
         </option>
@@ -56,7 +51,7 @@
     </div>
 
     <ul>
-      <li v-for="(product, index) in filteredProducts" :key="index">
+      <li v-for="(product, index) in (filteredProducts.length > 0 ? filteredProducts : products)" :key="index">
         <h3>{{ product.productName }}</h3>
         <p><strong>Description:</strong> {{ product.description }}</p>
         <p><strong>Category:</strong> {{ product.category }}</p>
@@ -101,9 +96,43 @@ export default {
   },
   methods: {
 
+    async fetchProducts() {
+      const db = getFirestore();
+      const productsCollection = collection(db, "products");
+
+      try {
+        const querySnapshot = await getDocs(productsCollection);
+        querySnapshot.forEach((doc) => {
+          this.products.push(doc.data());
+        });
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+      this.sortProducts()
+    },
+    applyFilters() {
+      // Apply filters based on minPrice and maxPrice
+      this.filteredProducts = this.products.filter((product) => {
+        const searchTerm = this.searchTerm.toLowerCase();
+        const productName = product.productName.toLowerCase();
+        const description = product.description.toLowerCase();
+
+        const matchesSearchTerm =
+          productName.includes(searchTerm) || description.includes(searchTerm);
+
+        // Check if the product falls within the specified price range (if minPrice and/or maxPrice is specified)
+        const priceInRange =
+          (!this.minPrice || product.price >= this.minPrice) &&
+          (!this.maxPrice || product.price <= this.maxPrice);
+
+        // Return true if both conditions are met (search term and price range)
+        return priceInRange && matchesSearchTerm;
+      });
+      this.sortProducts();
+    },
     sortProducts() {
       // Use JavaScript's sort method to sort r array
-      this.products.sort((a, b) => {
+      this.filteredProducts.sort((a, b) => {
         const propA = a[this.sortBy];
         const propB = b[this.sortBy];
         console.log("sorting")
@@ -137,48 +166,6 @@ export default {
           : propB - propA;
       });
     },
-
-    async fetchProducts() {
-      const db = getFirestore();
-      const productsCollection = collection(db, "products");
-
-      try {
-        const querySnapshot = await getDocs(productsCollection);
-        querySnapshot.forEach((doc) => {
-          this.products.push(doc.data());
-        });
-      } catch (error) {
-        console.error("Error fetching products:", error);
-      }
-      this.sortProducts()
-    },
-    
-    applyFilters() {
-      // Apply filters based on minPrice and maxPrice
-      this.filteredProducts = this.products.filter((product) => {
-        const searchTerm = this.searchTerm.toLowerCase();
-        const productName = product.productName.toLowerCase();
-        const description = product.description.toLowerCase();
-
-        const matchesSearchTerm =
-          productName.includes(searchTerm) || description.includes(searchTerm);
-
-        // Check if the product falls within the specified price range (if minPrice and/or maxPrice is specified)
-        const priceInRange =
-          (!this.minPrice || product.price >= this.minPrice) &&
-          (!this.maxPrice || product.price <= this.maxPrice);
-
-        // Return true if both conditions are met (search term and price range)
-        return priceInRange && matchesSearchTerm;
-      });
-      this.sortProducts();
-    },
-    watch: {
-    sortDirection() {
-      // When sortDirection changes, re-sort the filteredProducts
-      this.sortProducts();
-    },
-  },
   },
 };
 </script>
