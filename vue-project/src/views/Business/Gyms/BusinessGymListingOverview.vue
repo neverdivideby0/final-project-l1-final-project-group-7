@@ -7,11 +7,6 @@
       <SignOutButton />
     </div>
 
-
-    <div class = "logo">
-      <img  class="dashboard-image" src="../../../assets/GetFittSmall.png" alt="GetFitt Logo"/>
-    </div>
-
     <div class="Dashboard">
       <img  class="dashboard-image" src="../../../assets/dumbell.png" alt="Dumbell Logo"/>
       Gyms
@@ -39,8 +34,6 @@
           </select>
         </div>
       </div>
-
-
 
       <!-- Gym List Itself -->
       <ul>
@@ -100,11 +93,6 @@
         :gyms="gyms"
         @close="closeEditModal"
       />
-
-
-
-
-
 
 
     </div>
@@ -341,7 +329,6 @@ export default {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  width: 100%;
 }
 
 /* Then, the gym listing CSS */ 
@@ -351,8 +338,9 @@ export default {
   align-items: center;
   justify-content: space-between;
   padding: 20px; /* Adjust padding as needed */
-  border: #ddd 1px solid; /* Add a border to each gym listing */
+  border: #FF5733 1px solid; /* Add a border to each gym listing */
   margin: 20px;
+  border-radius: 8px
 }
 
 /* Style for each gym listing */
