@@ -68,7 +68,7 @@
 
 <script>
 import NotFound from "@/views/NotFound.vue";
-import { getFirestore, collection, addDoc } from "firebase/firestore";
+import { getFirestore, collection, addDoc, doc, getDoc } from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import SignOutButton from "@/components/SignOutButton.vue";
@@ -136,6 +136,11 @@ export default {
             uploadedImageUrls.push(downloadURL);
           }
         }
+
+        const businessDocRef = doc(db, "businesses", this.user.uid);
+        const businessDocSnap = await getDoc(businessDocRef);
+        const businessData = businessDocSnap.data();
+        this.user.businessName = businessData.businessName;
 
         // Define productData
         const productData = {
