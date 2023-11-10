@@ -52,6 +52,9 @@
         <!-- Display gym images -->
         <p><strong>Images:</strong></p>
         <ul>
+          <li v-for="(imageUrl, i) in gym.uploadedImageUrls" :key="i">
+            <img :src="imageUrl" alt="Gym Image" />
+          </li>  
           <li v-for="(imageUrl, i) in gym.imageUrls" :key="i">
             <img :src="imageUrl" alt="Gym Image" />
           </li>
