@@ -1,19 +1,21 @@
 <template>
-
   <!-- Everything here is the top nav bar -->
   <div class="Banner"></div>
   <div class="buttonDiv">
     <SignOutButton />
   </div>
   <div class="Dashboard">
-    <img  class="dashboard-image" src="../../../assets/GetFittSmall.png" alt="GetFitt Logo"/>
+    <img
+      class="dashboard-image"
+      src="../../../assets/GetFittSmall.png"
+      alt="GetFitt Logo"
+    />
   </div>
 
   <!-- Everything below is the add product listing -->
 
   <div class="Background">
     <div class="Rectangle">
-
       <h1>Add A Product</h1>
       <!-- Form Div -->
       <form @submit.prevent="addProduct">
@@ -29,20 +31,11 @@
         </div>
         <div class="form-group">
           <label for="productName">Product Name:</label>
-          <input
-            type="text"
-            id="productName"
-            v-model="productName"
-            required
-          />
+          <input type="text" id="productName" v-model="productName" required />
         </div>
         <div class="form-group">
           <label for="description">Description:</label>
-          <textarea
-            id="description"
-            v-model="description"
-            required
-          ></textarea>
+          <textarea id="description" v-model="description" required></textarea>
         </div>
         <div class="form-group">
           <label for="categories">Categories (Comma-separated):</label>
@@ -68,7 +61,13 @@
 
 <script>
 import NotFound from "@/views/NotFound.vue";
-import { getFirestore, collection, addDoc, doc, getDoc } from "firebase/firestore";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  doc,
+  getDoc,
+} from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import SignOutButton from "@/components/SignOutButton.vue";
@@ -195,27 +194,25 @@ export default {
 </script>
   
 <style scoped>
-
-
 /* Top Nav Bar CSS */
 
-/* Div Below Banner To Push The Words below banner" */ 
+/* Div Below Banner To Push The Words below banner" */
 .MenuBar {
   width: 1440px;
   height: 90px;
   position: relative;
-  background: rgba(0, 108, 228, 0.10);
+  background: rgba(0, 108, 228, 0.1);
 }
-/* This is the orange banner */ 
+/* This is the orange banner */
 .Banner {
   height: 90px;
   left: 0;
   right: 0;
   top: 0;
   position: absolute;
-  background: #FF5733;
+  background: #ff5733;
 }
-/* Sign Out Button Div */ 
+/* Sign Out Button Div */
 .buttonDiv {
   width: 92.14px;
   height: 44px;
@@ -235,7 +232,7 @@ export default {
   text-align: center;
   color: black;
   font-size: 32px;
-  font-family: 'Roboto';
+  font-family: "Roboto";
   font-weight: 600;
   line-height: 20px;
   word-wrap: break-word;
@@ -253,9 +250,9 @@ export default {
 }
 
 /* BODY CSS */
-/* Form and Edit Business Profile CSS */ 
+/* Form and Edit Business Profile CSS */
 .Background {
-  background: rgba(0, 108, 228, 0.10);
+  background: rgba(0, 108, 228, 0.1);
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -264,7 +261,7 @@ export default {
   padding-bottom: 200px;
 }
 
-/* Rectangle covering the form */ 
+/* Rectangle covering the form */
 .Rectangle {
   width: 708px;
   background: white;
