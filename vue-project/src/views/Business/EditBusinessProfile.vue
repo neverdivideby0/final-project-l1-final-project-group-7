@@ -1,11 +1,23 @@
 <template>
-  <div class="edit-business-profile">
-    <h1>Edit Business Profile</h1>
-    <form @submit.prevent="updateProfile">
-      <div class="form-group">
+
+  <!-- Everything here is the top nav bar -->
+  <div class="Banner"></div>
+  <div class="buttonDiv">
+    <SignOutButton />
+  </div>
+  <div class="Dashboard">
+    <img  class="dashboard-image" src="../../assets/GetFittSmall.png" alt="GetFitt Logo"/>
+  </div>
+
+  <!-- Everything below is the edit business profile -->
+  <div class="Background">
+    <div class="Rectangle14">
+      <h1>Edit Business Profile</h1>
+      <form @submit.prevent="updateProfile">
+        <div class="form-group">
         <label for="businessName">Business Name:</label>
         <input type="text" id="businessName" v-model="businessName" required />
-      </div>
+        </div>
       <div class="form-group">
         <label for="businessNumber">Business Number:</label>
         <input
@@ -35,7 +47,9 @@
       <!-- Display the existing profile picture -->
       <div class="form-group">
         <label for="existingProfilePicture">Existing Profile Picture:</label>
+        <div class="profile-picture">
         <img :src="existingProfilePictureUrl" alt="Existing Profile Picture" />
+        </div>
       </div>
       <!-- Input field to upload a new profile picture -->
       <div class="form-group">
@@ -46,14 +60,18 @@
           @change="handleProfilePictureUpload"
         />
       </div>
-      <button type="submit">Update Profile</button>
-    </form>
+        <button type="submit">Update Profile</button>
+      </form>
   </div>
+</div>
+
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap" rel="stylesheet">
 </template>
   
-  <script>
+<script>
 import { getFirestore, doc, getDoc, updateDoc } from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import SignOutButton from "@/components/SignOutButton.vue";
 import {
   getStorage,
   ref,
@@ -64,6 +82,9 @@ import {
 
 export default {
   name: "EditBusinessProfile",
+  components: {
+    SignOutButton,
+  },
   data() {
     return {
       businessName: "",
@@ -179,12 +200,105 @@ export default {
 </script>
   
   <style scoped>
-.edit-business-profile {
+
+/* Top Nav Bar CSS */
+
+/* Div Below Banner To Push The Words below banner" */ 
+.MenuBar {
+  width: 1440px;
+  height: 90px;
+  position: relative;
+  background: rgba(0, 108, 228, 0.10);
+}
+/* This is the orange banner */ 
+.Banner {
+  height: 90px;
+  left: 0;
+  right: 0;
+  top: 0;
+  position: absolute;
+  background: #FF5733;
+}
+/* Sign Out Button Div */ 
+.buttonDiv {
+  width: 92.14px;
+  height: 44px;
+  left: 90%;
+  top: 23px;
+  position: absolute;
+  justify-content: flex-end;
+  align-items: center;
+  display: inline-flex;
+  z-index: 1;
+}
+/* This is the center of the dashboard with logo and dashboard name */
+.Dashboard {
+  width: 100%; /* Use 100% width to span the entire container */
+  height: 54px; /* Allow the height to adjust based on content */
+  position: absolute;
   text-align: center;
-  margin: 20px;
+  color: black;
+  font-size: 32px;
+  font-family: 'Roboto';
+  font-weight: 600;
+  line-height: 20px;
+  word-wrap: break-word;
+  display: flex;
+  flex-direction: column; /* Stack image and text vertically */
+  align-items: center; /* Center horizontally within the div */
+  justify-content: center; /* Center vertically within the div */
+  top: 2%; /* Adjust the vertical position as a percentage */
 }
+.dashboard-image {
+  max-width: 100%; /* Ensure the image doesn't exceed the width of the parent div */
+  max-height: 100%; /* Ensure the image doesn't exceed the height of the parent div */
+  display: block; /* Remove any extra space reserved for inline elements */
+  margin: 0 auto; /* Center the image horizontally within the parent div */
+}
+
+/* BODY CSS */
+
+/* Form and Edit Business Profile CSS */ 
+.Background {
+  background: rgba(0, 108, 228, 0.10);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  padding-bottom: 200px;
+}
+
+/* Rectangle covering the form */ 
+.Rectangle14 {
+  width: 708px;
+  background: white;
+  border-radius: 30px;
+  margin-top: 100px;
+}
+
+/* Form CSS */
 .form-group {
-  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  margin: 10px auto; /* Center horizontally and adjust the top and bottom margin as needed */
+  max-width: 500px; /* Adjust the maximum width as needed */
 }
+
+.profile-picture img {
+  max-width: 100%; /* Set a maximum width to prevent it from being too large */
+  max-height: 200px; /* Adjust the maximum height as needed */
+  display: block; /* Remove any extra space reserved for inline elements */
+  margin: 0 auto; /* Center the image horizontally */
+}
+
+/* Button CSS */
+button {
+  font-family: "Roboto", sans-serif;
+  /* You can specify alternative font families after Roboto */
+}
+
+
 </style>
   

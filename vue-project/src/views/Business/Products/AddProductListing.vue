@@ -1,86 +1,83 @@
 <template>
-  <div class="product-form">
-    <!-- Nav bar -->
-    <nav class="navbar">
-      <div class="navbar-left">
-        <img src="@/assets/GetFitt.png" alt="Logo" class="navbar-logo" />
-      </div>
 
-      <div class="navbar-right">
-        <!-- Buttons -->
-        <button id="btn" @click="signOut" v-if="user">Sign Out</button>
-        <button @click="goBackToHome">Back to Home</button>
-        <SignOutButton />
-      </div>
+  <!-- Everything here is the top nav bar -->
+  <div class="Banner"></div>
+  <div class="buttonDiv">
+    <SignOutButton />
+  </div>
+  <div class="Dashboard">
+    <img  class="dashboard-image" src="../../../assets/GetFittSmall.png" alt="GetFitt Logo"/>
+  </div>
 
+  <!-- Everything below is the add product listing -->
+
+  <div class="Background">
+    <div class="Rectangle">
+
+      <h1>Add A Product</h1>
       <!-- Form Div -->
-      <div class="actualForm">
-        <h2>Add Product Listing</h2>
-
-        <form @submit.prevent="addProduct">
-          <div class="form-group">
-            <label for="uploadImages">Upload Images:</label>
-            <input
-              type="file"
-              id="uploadImages"
-              ref="uploadImages"
-              multiple
-              @change="handleImageUpload"
-            />
-          </div>
-          <div class="form-group">
-            <label for="productName">Product Name:</label>
-            <input
-              type="text"
-              id="productName"
-              v-model="productName"
-              required
-            />
-          </div>
-          <div class="form-group">
-            <label for="description">Description:</label>
-            <textarea
-              id="description"
-              v-model="description"
-              required
-            ></textarea>
-          </div>
-          <div class="form-group">
-            <label for="categories">Categories (Comma-separated):</label>
-            <input type="text" id="categories" v-model="categories" required />
-          </div>
-          <div class="form-group">
-            <label for="price">Price:</label>
-            <input type="number" id="price" v-model="price" required />
-          </div>
-          <div class="form-group">
-            <label for="imageUrl1">Image URL 1:</label>
-            <input type="text" id="imageUrl1" v-model="imageUrl1" />
-          </div>
-          <div class="form-group">
-            <label for="imageUrl2">Image URL 2:</label>
-            <input type="text" id="imageUrl2" v-model="imageUrl2" />
-          </div>
-          <button type="submit">Add Product</button>
-        </form>
-      </div>
-    </nav>
+      <form @submit.prevent="addProduct">
+        <div class="form-group">
+          <label for="uploadImages">Upload Images:</label>
+          <input
+            type="file"
+            id="uploadImages"
+            ref="uploadImages"
+            multiple
+            @change="handleImageUpload"
+          />
+        </div>
+        <div class="form-group">
+          <label for="productName">Product Name:</label>
+          <input
+            type="text"
+            id="productName"
+            v-model="productName"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="description">Description:</label>
+          <textarea
+            id="description"
+            v-model="description"
+            required
+          ></textarea>
+        </div>
+        <div class="form-group">
+          <label for="categories">Categories (Comma-separated):</label>
+          <input type="text" id="categories" v-model="categories" required />
+        </div>
+        <div class="form-group">
+          <label for="price">Price:</label>
+          <input type="number" id="price" v-model="price" required />
+        </div>
+        <div class="form-group">
+          <label for="imageUrl1">Image URL 1:</label>
+          <input type="text" id="imageUrl1" v-model="imageUrl1" />
+        </div>
+        <div class="form-group">
+          <label for="imageUrl2">Image URL 2:</label>
+          <input type="text" id="imageUrl2" v-model="imageUrl2" />
+        </div>
+        <button type="submit">Add Product</button>
+      </form>
+    </div>
   </div>
 </template>
-
-
-
 
 <script>
 import NotFound from "@/views/NotFound.vue";
 import { getFirestore, collection, addDoc } from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import SignOutButton from "@/components/SignOutButton.vue";
 
 export default {
   name: "ProductForm",
   components: {
     NotFound,
+    SignOutButton,
   },
   data() {
     return {
@@ -192,70 +189,95 @@ export default {
 };
 </script>
   
-  <style scoped>
-/* navbar style */
-.navbar {
-  background-color: #ff5733;
-  display: flex;
-  justify-content: space-between;
+<style scoped>
+
+
+/* Top Nav Bar CSS */
+
+/* Div Below Banner To Push The Words below banner" */ 
+.MenuBar {
+  width: 1440px;
+  height: 90px;
+  position: relative;
+  background: rgba(0, 108, 228, 0.10);
+}
+/* This is the orange banner */ 
+.Banner {
+  height: 90px;
+  left: 0;
+  right: 0;
+  top: 0;
+  position: absolute;
+  background: #FF5733;
+}
+/* Sign Out Button Div */ 
+.buttonDiv {
+  width: 92.14px;
+  height: 44px;
+  left: 90%;
+  top: 23px;
+  position: absolute;
+  justify-content: flex-end;
   align-items: center;
-  padding: 5px 20px; /* Adjust the padding as needed */
-  height: 60px; /* Adjust the height as needed */
+  display: inline-flex;
+  z-index: 1;
+}
+/* This is the center of the dashboard with logo and dashboard name */
+.Dashboard {
+  width: 100%; /* Use 100% width to span the entire container */
+  height: 54px; /* Allow the height to adjust based on content */
+  position: absolute;
+  text-align: center;
+  color: black;
+  font-size: 32px;
+  font-family: 'Roboto';
+  font-weight: 600;
+  line-height: 20px;
+  word-wrap: break-word;
+  display: flex;
+  flex-direction: column; /* Stack image and text vertically */
+  align-items: center; /* Center horizontally within the div */
+  justify-content: center; /* Center vertically within the div */
+  top: 2%; /* Adjust the vertical position as a percentage */
+}
+.dashboard-image {
+  max-width: 100%; /* Ensure the image doesn't exceed the width of the parent div */
+  max-height: 100%; /* Ensure the image doesn't exceed the height of the parent div */
+  display: block; /* Remove any extra space reserved for inline elements */
+  margin: 0 auto; /* Center the image horizontally within the parent div */
 }
 
-.navbar-logo {
-  max-width: 400px;
-}
-.navbar-left {
+/* BODY CSS */
+/* Form and Edit Business Profile CSS */ 
+.Background {
+  background: rgba(0, 108, 228, 0.10);
   display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
   align-items: center;
-}
-.navbar-right {
-  display: flex;
-  gap: 10px; /* Adjust the gap between buttons */
+  width: 100%;
+  padding-bottom: 200px;
 }
 
-/* Additional styling for the buttons */
-.navbar button {
-  background-color: white;
-  color: #ff5733;
-  border: none;
-  padding: 5px 10px;
-  cursor: pointer;
+/* Rectangle covering the form */ 
+.Rectangle {
+  width: 708px;
+  background: white;
+  border-radius: 30px;
+  margin-top: 100px;
 }
 
 .form-group {
-  margin-bottom: 10px;
-  margin: 20px;
-  width: 500px;
-  font-family: "Montserrat", sans-serif; /* Use the correct font name */
-  font-weight: bold; /* Make the font bold */
-  justify-content: center;
-}
-.actualForm {
-  text-align: center;
-  margin: 20px;
-  padding: 20px;
-  border: 2px solid #000;
-  border-radius: 100px;
-  width: 700px;
-  margin: 0 auto; /* Center horizontally */
   display: flex;
-  align-items: center; /* Center vertically */
+  flex-direction: column;
+  width: 70%;
+  margin: 10px auto; /* Center horizontally and adjust the top and bottom margin as needed */
+  max-width: 500px; /* Adjust the maximum width as needed */
 }
 
-.product-form {
-  text-align: center;
-}
-
-/* make text black */
-.product-form h2,
-.product-form label,
-.product-form input,
-.product-form textarea {
-  color: black;
-}
-.custom-category {
-  margin-top: 10px;
+/* Button CSS */
+button {
+  font-family: "Roboto", sans-serif;
+  /* You can specify alternative font families after Roboto */
 }
 </style>

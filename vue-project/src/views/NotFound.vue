@@ -2,19 +2,22 @@
     <div style="text-align: center;">
       <h3>Page Not Found !!</h3>
       <h4>Please click on the above available options</h4>
-      <LogOut />
+      <SignOutButton />
+      <GoLandingPage />
       <br />
     </div>
   </template>
   
   <script>
-  import LogOut from '@/components/LogOut.vue'
+  import SignOutButton from "@/components/SignOutButton.vue";
+  import GoLandingPage from "@/components/GoLandingPage.vue";
   import { getAuth, onAuthStateChanged } from "firebase/auth";
   
   export default {
     name: "NotFound",
     components: {
-      LogOut
+      SignOutButton,
+      GoLandingPage,
     },
     data() {
       return {

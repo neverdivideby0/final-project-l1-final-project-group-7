@@ -1,6 +1,26 @@
 <template>
+
+  <!-- Overall Background-->
+  <div class="Background">
+  <!-- Header -->
+    <div class="Banner"></div>
+    <div class="buttonDiv">
+      <SignOutButton />
+    </div>
+
+    <div class="Dashboard">
+      <img  class="dashboard-image" src="../../../assets/products.png" alt="Products Logo"/>
+      Products
+    </div>
+  <!-- Body -->
+
   <div class="product-list">
+
+    <!-- Sorting buttons division-->
+
     <div class="sorting-options">
+
+      <div class = "sort-by">
       <label for="sortBy">Sort By:</label>
       <select v-model="sortBy" @change="fetchProducts">
         <option value="productModifiedDateTime">Modified Date</option>
@@ -8,6 +28,7 @@
         <option value="productName">Product Name</option>
         <!-- Add other sorting options as needed -->
       </select>
+      </div>
 
       <label for="sortDirection">Sort Direction:</label>
       <select v-model="sortDirection" @change="fetchProducts">
@@ -28,17 +49,33 @@
       </select>
     </div>
 
-    <h2>Product Listings</h2>
-
-    <!-- Update the product listings -->
+    <!-- Product List Itself -->
     <ul>
       <li
         v-for="(product, index) in filteredProducts"
         :key="index"
         class="product-listing"
       >
+      <div class = "product-content">
+
         <!-- Add a product number to each listing -->
         <span class="product-number">{{ index + 1 }}</span>
+
+        <!-- Product Image -->
+        <ul class="product-images">
+            <li
+              v-for="(uploadedImageUrl, i) in product.uploadedImageUrls"
+              :key="i"
+            >
+              <img
+                :src="uploadedImageUrl"
+                alt="Uploaded Product Image"
+                class="product-image"
+              />
+            </li>
+          </ul>
+
+        <!-- Add product details-->
         <div class="product-details">
           <h3>{{ product.productName }}</h3>
           <p><strong>Description:</strong> {{ product.description }}</p>
@@ -57,23 +94,20 @@
               <img :src="imageUrl" alt="Product Image" class="product-image" />
             </li>
           </ul>
-          <ul class="product-images">
-            <li
-              v-for="(uploadedImageUrl, i) in product.uploadedImageUrls"
-              :key="i"
-            >
-              <img
-                :src="uploadedImageUrl"
-                alt="Uploaded Product Image"
-                class="product-image"
-              />
-            </li>
-          </ul>
+
         </div>
+
         <div class="product-actions">
-          <button @click="confirmDelete(product)">Delete</button>
-          <button @click="openEditModal(product)">Edit</button>
+            <div class = "deleteButton">
+            <button @click="confirmDelete(product)">Delete</button>
+            </div>
+
+          <div class = "editButton">
+            <button @click="openEditModal(product)">Edit</button>
+          </div>
+
         </div>
+      </div>
       </li>
     </ul>
 
@@ -84,6 +118,9 @@
       @close="closeEditModal"
     />
   </div>
+</div>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap" rel="stylesheet">
+
 </template>
   
   
@@ -99,11 +136,13 @@ import {
 } from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { getStorage, ref, deleteObject } from "firebase/storage";
+import SignOutButton from "@/components/SignOutButton.vue";
 
 export default {
   name: "ProductList",
   components: {
     EditProductModal,
+    SignOutButton,
   },
   data() {
     return {
@@ -257,21 +296,113 @@ export default {
 </script>
   
 <style scoped>
+/* Header Styling */
+
+/* Div Below Banner To Push The Words below banner" */ 
+.MenuBar {
+  width: 1440px;
+  height: 90px;
+  position: relative;
+  background: rgba(0, 108, 228, 0.10);
+}
+/* This is the orange banner */ 
+.Banner {
+  height: 90px;
+  left: 0;
+  right: 0;
+  top: 0;
+  position: absolute;
+  background: #FF5733;
+}
+/* Sign Out Button Div */ 
+.buttonDiv {
+  width: 92.14px;
+  height: 44px;
+  left: 90%;
+  top: 23px;
+  position: absolute;
+  justify-content: flex-end;
+  align-items: center;
+  display: inline-flex;
+  z-index: 1;
+}
+
+/* This is the center of the dashboard with logo and dashboard name */
+.Dashboard {
+  width: 100%; /* Use 100% width to span the entire container */
+  height: 40px; /* Allow the height to adjust based on content */
+  position: absolute;
+  text-align: center;
+  color: black;
+  font-size: 32px;
+  font-family: 'Roboto';
+  font-weight: 600;
+  line-height: 20px;
+  word-wrap: break-word;
+  display: flex;
+  flex-direction: column; /* Stack image and text vertically */
+  align-items: center; /* Center horizontally within the div */
+  justify-content: center; /* Center vertically within the div */
+  top: 2%; /* Adjust the vertical position as a percentage */
+}
+.dashboard-image {
+  max-width: 100%; /* Ensure the image doesn't exceed the width of the parent div */
+  max-height: 100%; /* Ensure the image doesn't exceed the height of the parent div */
+  display: block; /* Remove any extra space reserved for inline elements */
+  margin: 0 auto; /* Center the image horizontally within the parent div */
+}
+.Background {
+  position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 108, 228, 0.10); /* Add your background styles */
+    z-index: -1;
+  /* Remove height property */
+}
+
+/* Body CSS */
+.sorting-options {
+  display: flex; /* Use flexbox to align items horizontally */
+  flex-direction: row;
+  align-items: center;
+}
+
+.sortDirection {
+  margin-left: 100px;
+}
+
+
+
+
 .product-list {
   text-align: center;
-  margin: 20px;
+  margin-top: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
 }
 
 /* Style for each product listing */
 .product-listing {
-  border: 1px solid #ddd;
-  margin: 20px;
-  padding: 20px;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
+  justify-content: space-between;
+  padding: 20px; /* Adjust padding as needed */
+  border: #FF5733 1px solid; /* Add a border to each gym listing */
+  margin: 20px;
+  border-radius: 8px
 }
-
+.product-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
 /* Style for product number */
 .product-number {
   font-size: 24px;
@@ -280,6 +411,7 @@ export default {
 
 .product-details {
   flex: 1; /* Expand to fill available space */
+  text-align: left; 
 }
 
 .product-actions {
@@ -296,4 +428,17 @@ export default {
   max-width: 150px;
   max-height: 150px;
 }
+
+/* BUTTON CSS */
+
+.deleteButton {
+  margin-bottom: 10px; 
+  margin-left: 10px;
+}
+
+.editButton {
+  margin-left: 10px; 
+}
+
+
 </style>

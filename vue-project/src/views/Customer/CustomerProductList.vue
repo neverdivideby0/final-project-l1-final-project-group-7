@@ -1,6 +1,8 @@
 <template>
   <div class="customer-product-list">
-    <h2>Products</h2>
+      <div class="banner"></div>
+
+    <h2 class="products-heading">Products</h2>
 
     <div class="search-bar">
       <label for="search">Search:</label>
@@ -10,6 +12,7 @@
         v-model="searchTerm"
       />
     </div>
+
 
     <!-- Filter section -->
     <div class="filter-section">
@@ -77,7 +80,7 @@
   </div>
 </template>
   
-  <script>
+<script>
 import { getFirestore, collection, getDocs } from "firebase/firestore";
 
 export default {
@@ -180,7 +183,8 @@ export default {
 };
 </script>
   
-  <style scoped>
+<style scoped>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap" rel="stylesheet">
 .customer-product-list {
   text-align: center;
   margin: 20px;
@@ -208,6 +212,28 @@ li {
 img {
   max-width: 200px;
   max-height: 200px;
+}
+.banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+      z-index: -999; 
+  width: 100%;
+  background-color: orange; /* Replace with your desired color */
+  padding: 169px; /* Adjust the padding as needed */
+  box-sizing: border-box;
+  color: orange; /* Set text color to contrast with the background */
+  text-align: center;
+  font-size: 24px; /* Adjust the font size as needed */
+  font-weight: bold;   
+}
+
+.products-heading {
+  font-size: 69px;
+  color: white;
+  font-family: 'Roboto';
 }
 </style>
   

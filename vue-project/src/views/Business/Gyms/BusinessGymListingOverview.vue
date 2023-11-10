@@ -9,7 +9,6 @@
         <option value="gymName">Gym Name</option>
         <!-- Add other sorting options as needed -->
       </select>
-
       <label for="sortDirection">Sort Direction:</label>
       <select v-model="sortDirection" @change="fetchGyms">
         <option value="earliest" v-if="sortBy === 'gymModifiedDateTime'">
@@ -27,66 +26,113 @@
         <option value="atoz" v-if="sortBy === 'gymName'">A to Z</option>
         <option value="ztoa" v-if="sortBy === 'gymName'">Z to A</option>
       </select>
+  <!-- Overall Background-->
+  <div class="Background">
+  <!-- Header -->
+    <div class="Banner"></div>
+    <div class="buttonDiv">
+      <SignOutButton />
     </div>
-    <ul>
-      <li v-for="(gym, index) in filteredGyms" :key="index" class="gym-listing">
-        <!-- Add a gym number to each listing -->
-        <span class="gym-number">{{ index + 1 }}</span>
-        <div class="gym-details">
-          <h3>{{ gym.gymName }}</h3>
-          <p><strong>Description:</strong> {{ gym.description }}</p>
-          <p><strong>Address:</strong> {{ gym.address }}</p>
-          <p><strong>Postal Code:</strong> {{ gym.postalCode }}</p>
-          <p><strong>Contact Number:</strong> {{ gym.contactNumber }}</p>
-          <p><strong>Operational Hours:</strong> {{ gym.operationalHours }}</p>
-          <p><strong>Price:</strong> ${{ gym.price.toFixed(2) }}</p>
-          <p><strong>Email:</strong> {{ gym.email }}</p>
-          <p><strong>Amenities:</strong> {{ gym.amenities }}</p>
-          <p>
-            <strong>Social Media Links:</strong><br />
-            <a
-              v-if="gym.socialMediaLinks"
-              :href="gym.socialMediaLinks"
-              target="_blank"
-              >{{ gym.socialMediaLinks }}</a
-            >
-            <span v-else>No social media links available</span>
-          </p>
-          <p><strong>Gym Image:</strong></p>
-          <ul class="gym-images">
-            <li v-for="(imageUrl, i) in gym.imageUrls" :key="i">
-              <img :src="imageUrl" alt="Gym Image" class="gym-image" />
-            </li>
-          </ul>
-          <ul class="gym-images">
-            <li v-for="(uploadedImageUrl, i) in gym.uploadedImageUrls" :key="i">
-              <img
-                :src="uploadedImageUrl"
-                alt="Uploaded Gym Image"
-                class="gym-image"
-              />
-            </li>
-          </ul>
+
+    <div class="Dashboard">
+      <img  class="dashboard-image" src="../../../assets/dumbell.png" alt="Dumbell Logo"/>
+      Gyms
+    </div>
+  <!-- Body -->
+  <!-- Gymlist to encompass the entire body -->
+
+    <div class="gym-list">  
+
+      <!-- Sorting buttons division-->
+      <div class="sorting-options">
+        <div class="sort-by"> 
+          <label for="sortBy">Sort By:</label>
+          <select v-model="sortBy" @change="fetchGyms">
+            <option value="gymModifiedDateTime">Modified Date</option>
+            <!-- Add other sorting options as needed -->
+          </select>
         </div>
-        <div class="product-actions">
-          <button @click="confirmDelete(gym)">Delete</button>
-          <button @click="openEditModal(gym)">Edit</button>
+        
+        <div class="sortDirection">
+          <label for="sortDirection">Sort Direction:</label>
+          <select v-model="sortDirection" @change="fetchGyms">
+            <option value="earliest">Earliest</option>
+            <option value="latest">Latest</option>
+          </select>
         </div>
-      </li>
-    </ul>
-    <EditGymModal
-      :isEditModalOpen="isEditModalOpen"
-      :editingGym="editingGym"
-      :gyms="gyms"
-      @close="closeEditModal"
-    />
+      </div>
+
+      <!-- Gym List Itself -->
+      <ul>
+        <li v-for="(gym, index) in filteredGyms" :key="index" class="gym-listing">
+          <div class="gym-content">
+              <!-- Add a gym number to each listing -->
+              <span class="gym-number">{{ index + 1 }}</span>
+
+              <!-- Gym Image-->
+              <ul class="gym-images">
+                <li v-for="(uploadedImageUrl, i) in gym.uploadedImageUrls" :key="i">
+                  <img
+                    :src="uploadedImageUrl"
+                    alt="Uploaded Gym Image"
+                    class="gym-image"
+                  />
+                </li>
+              </ul>
+
+              <!-- Add gym details -->
+            <div class="gym-details">
+              <h3>{{ gym.gymName }}</h3>
+              <p><strong>Description:</strong> {{ gym.description }}</p>
+              <p><strong>Address:</strong> {{ gym.address }}</p>
+              <p><strong>Postal Code:</strong> {{ gym.postalCode }}</p>
+              <p><strong>Contact Number:</strong> {{ gym.contactNumber }}</p>
+              <p><strong>Operational Hours:</strong> {{ gym.operationalHours }}</p>
+              <p><strong>Price:</strong> ${{ gym.price.toFixed(2) }}</p>
+              <p><strong>Email:</strong> {{ gym.email }}</p>
+              <p><strong>Amenities:</strong> {{ gym.amenities }}</p>
+              <p>
+                <strong>Social Media Links:</strong><br />
+                <a
+                  v-if="gym.socialMediaLinks"
+                  :href="gym.socialMediaLinks"
+                  target="_blank"
+                  >{{ gym.socialMediaLinks }}</a
+                >
+                <span v-else>No social media links available</span>
+              </p>
+            </div>
+
+            <div classs ="product-actions">
+              <div class="deleteButton">
+                <button @click="confirmDelete(gym)">Delete</button>
+              </div>
+                <div class="editButton">
+                  <button @click="openEditModal(gym)">Edit</button>
+                </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+      <EditGymModal
+        :isEditModalOpen="isEditModalOpen"
+        :editingGym="editingGym"
+        :gyms="gyms"
+        @close="closeEditModal"
+      />
+
+
+    </div>
   </div>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap" rel="stylesheet">
 </template>
   
   
   
-  <script>
+<script>
 import EditGymModal from "@/views/Business/Gyms/EditGymModal.vue";
+import SignOutButton from "@/components/SignOutButton.vue";
+import GoLandingPage from "@/components/GoLandingPage.vue";
 import {
   getFirestore,
   collection,
@@ -101,6 +147,8 @@ export default {
   name: "GymList",
   components: {
     EditGymModal,
+    SignOutButton,
+    GoLandingPage,
   },
   data() {
     return {
@@ -236,19 +284,125 @@ export default {
 </script>
   
 <style scoped>
+
+/* Header Styling */
+
+/* Div Below Banner To Push The Words below banner" */ 
+.MenuBar {
+  width: 1440px;
+  height: 90px;
+  position: relative;
+  background: rgba(0, 108, 228, 0.10);
+}
+/* This is the orange banner */ 
+.Banner {
+  height: 90px;
+  left: 0;
+  right: 0;
+  top: 0;
+  position: absolute;
+  background: #FF5733;
+}
+/* Sign Out Button Div */ 
+.buttonDiv {
+  width: 92.14px;
+  height: 44px;
+  left: 90%;
+  top: 23px;
+  position: absolute;
+  justify-content: flex-end;
+  align-items: center;
+  display: inline-flex;
+  z-index: 1;
+}
+
+/* Logo on the left */ 
+.logo {
+  background: black; 
+}
+
+
+/* This is the center of the dashboard with logo and dashboard name */
+.Dashboard {
+  width: 100%; /* Use 100% width to span the entire container */
+  height: 40px; /* Allow the height to adjust based on content */
+  position: absolute;
+  text-align: center;
+  color: black;
+  font-size: 32px;
+  font-family: 'Roboto';
+  font-weight: 600;
+  line-height: 20px;
+  word-wrap: break-word;
+  display: flex;
+  flex-direction: column; /* Stack image and text vertically */
+  align-items: center; /* Center horizontally within the div */
+  justify-content: center; /* Center vertically within the div */
+  top: 2%; /* Adjust the vertical position as a percentage */
+}
+.dashboard-image {
+  max-width: 100%; /* Ensure the image doesn't exceed the width of the parent div */
+  max-height: 100%; /* Ensure the image doesn't exceed the height of the parent div */
+  display: block; /* Remove any extra space reserved for inline elements */
+  margin: 0 auto; /* Center the image horizontally within the parent div */
+}
+.Background {
+  position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 108, 228, 0.10); /* Add your background styles */
+    z-index: -1;
+  /* Remove height property */
+}
+/* Body CSS */
+
+/* First the sorting buttons to make them side by side */
+.sorting-options {
+  display: flex; /* Use flexbox to align items horizontally */
+  flex-direction: row;
+  align-items: center;
+}
+.sortBy {
+
+}
+.sortDirection {
+  margin-left: 100px;
+}
+
+/* DON'T TOUCH THIS */ 
+
 .gym-list {
   text-align: center;
+  margin-top: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+/* Then, the gym listing CSS */ 
+.gym-listing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px; /* Adjust padding as needed */
+  border: #FF5733 1px solid; /* Add a border to each gym listing */
   margin: 20px;
+  border-radius: 8px
 }
 
 /* Style for each gym listing */
-.gym-listing {
-  border: 1px solid #ddd;
-  margin: 20px;
-  padding: 20px;
+
+/* THIS IS THE CSS TO MAKE IT INTO A ROW */ 
+.gym-content {
   display: flex;
-  justify-content: space-between;
+  flex-direction: row;
   align-items: center;
+  justify-content: space-between;
+  width: 100%;
 }
 
 /* Style for gym number */
@@ -259,6 +413,7 @@ export default {
 
 .gym-details {
   flex: 1; /* Expand to fill available space */
+  text-align: left; 
 }
 
 .gym-actions {
@@ -274,5 +429,16 @@ export default {
 .gym-image {
   max-width: 150px;
   max-height: 150px;
+  z-index: 1;
 }
+
+.deleteButton {
+  margin-bottom: 10px; 
+  margin-left: 10px;
+}
+
+.editButton {
+  margin-left: 10px; 
+}
+
 </style>
