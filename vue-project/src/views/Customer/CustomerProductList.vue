@@ -2,16 +2,12 @@
   <div class="customer-product-list">
     <div class="Banner"></div>
     <div class="Background">
-      <div class="Rectangle">
             <h2 class="products-heading">Products</h2>
     <div class="search-bar">
       <label for="search">Product Name:</label>
-      <input
-        type="text"
-        id="search"
-        v-model="searchTerm"
-      />
+      <input type="text" id="search" v-model="searchTerm"/>
     </div>
+
     <!-- Filter section -->
 <div class="filter-section">
   <div class="filter-input">
@@ -51,7 +47,6 @@
         <option value="atoz" v-if="sortBy === 'productName'">A to Z</option>
         <option value="ztoa" v-if="sortBy === 'productName'">Z to A</option>
       </select>
-    </div>
       </div>
     </div>
 
@@ -188,7 +183,6 @@ export default {
   padding: 20px; /* Adjust padding as needed */
   border: #FF5733 1px solid;
   margin: 20px;
-
   border-radius: 8px;
 }
 
@@ -236,10 +230,7 @@ img {
   max-width: 200px;
   max-height: 200px;
 }
-.product-images {
-  list-style-type: none;
-  padding: 0;
-}
+
 .products-heading {
   font-size: 130px;
   color: white;

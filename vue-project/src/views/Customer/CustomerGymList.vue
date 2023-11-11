@@ -1,20 +1,14 @@
 <template>
-
   <div class="customer-gym-list">
-    <div class="Banner">
-      <h2 class="products-heading">Gyms</h2>
-    </div>
+    <div class="Banner"></div>
     <div class="Background">
-      
-    </div>
-
-    <!-- Search Bar -->
+      <h2 class="gyms-heading">Gyms</h2>
     <div class="search-bar">
       <label for="search">Search:</label>
       <input type="text" id="search" v-model="searchTerm" @input="searchGyms" />
     </div>
 
-    <!-- Filter Section -->
+        <!-- Filter Section -->
     <div class="filter-section">
       <div class="filter-input">
         <label for="minPrice">Min Price:</label>
@@ -24,23 +18,24 @@
         <label for="maxPrice">Max Price:</label>
         <input type="number" id="maxPrice" v-model="maxPrice" />
       </div>
-      <button @click="applyFilters">Search</button>
+      <button class="search-button" @click="applyFilters">Search</button>
     </div>
 
-    <!-- Sorting Options -->
+        <!-- Sorting Options -->
     <div class="sorting-options">
       <label for="sortBy">Sort By:</label>
       <select v-model="sortBy" @change="fetchGyms">
         <option value="gymModifiedDateTime">Modified Date</option>
         <!-- Add other sorting options as needed -->
       </select>
-
-      <label for="sortDirection">Sort Direction:</label>
+            <label for="sortDirection">Sort Direction:</label>
       <select v-model="sortDirection" @change="fetchGyms">
         <option value="latest">Latest</option>
         <option value="earliest">Earliest</option>
       </select>
     </div>
+    </div>
+
 
     <!-- Gym Listings -->
     <ul>
@@ -180,37 +175,59 @@ export default {
 </script>
 
 <style scoped>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap" rel="stylesheet">
+.customer-gym-list {
+  text-align: center;
+  margin: 20px;
+}
+
 .gym-listing {
   display: flex;
+  justify-content: center;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
   padding: 20px; /* Adjust padding as needed */
-  border: #FF5733 1px solid; /* Add a border to each gym listing */
+  border: #FF5733 1px solid;
   margin: 20px;
-  border-radius: 8px
+  border-radius: 8px;
+}
+.search-bar {
+  margin-top: 20px; /* Add margin above the search bar */
+  width: 570px;
 }
 
 .Background {
-  position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 108, 228, 0.10); /* Add your background styles */
-    z-index: -1;
-  /* Remove height property */
-}
-.buttonDiv {
-  width: 92.14px;
-  height: 44px;
-  left: 90%;
-  top: 23px;
-  position: absolute;
-  justify-content: flex-end;
+  background-color: orange;
+  display: flex;
+  flex-direction: column;
+  top: 0;
+  position: relative;
+  justify-content: flex-start;
   align-items: center;
-  display: inline-flex;
-  z-index: 1;
+  width: 100%;
+  flex: 1;
+  margin: 0;
+  padding-bottom: 5px; /* Adjust the padding to fill the space below the form */
+}
+.gyms-heading {
+  font-size: 130px;
+  color: white;
+  font-family: 'Roboto';
+  margin-top: 20px;
+}
+  .filter-input {
+    margin-bottom: 10px; /* Add margin below each filter input */
+  }
+  .filter-section {
+    margin: 20px 0;
+    display: flex;
+    flex-wrap: wrap; /* Allow items to wrap to the next line */
+    justify-content: space-between;
+    width: 570px;
+  }
+  .search-button {
+  background-color: black;
+  align-items: center;
 }
 .Banner {
   height: 90px;
@@ -219,34 +236,6 @@ export default {
   top: 0;
   position: absolute;
   background: orange;
-}
-.dashboard-image {
-  max-width: 100%; /* Ensure the image doesn't exceed the width of the parent div */
-  max-height: 100%; /* Ensure the image doesn't exceed the height of the parent div */
-  display: block; /* Remove any extra space reserved for inline elements */
-  margin: 0 auto; /* Center the image horizontally within the parent div */
-}
-.Dashboard {
-  width: 100%; /* Use 100% width to span the entire container */
-  height: 40px; /* Allow the height to adjust based on content */
-  position: absolute;
-  text-align: center;
-  color: black;
-  font-size: 32px;
-  font-family: 'Roboto';
-  font-weight: 600;
-  line-height: 20px;
-  word-wrap: break-word;
-  display: flex;
-  flex-direction: column; /* Stack image and text vertically */
-  align-items: center; /* Center horizontally within the div */
-  justify-content: center; /* Center vertically within the div */
-  top: 2%; /* Adjust the vertical position as a percentage */
-}
-
-.customer-gym-list {
-  text-align: center;
-  margin: 20px;
 }
 
 ul {
@@ -268,6 +257,8 @@ img {
 .gym-images {
   list-style-type: none;
   padding: 0;
+  margin-right: 20px; /* Maintain existing margin for spacing */
+  margin-left: 690px; /* Add margin to shift images to the right */
 }
 
 .gym-image {
@@ -279,25 +270,14 @@ img {
 .gym-details {
   flex: 1; /* Expand to fill available space */
   text-align: left; 
+  margin-left: 20px;
 }
 
 .gym-content {
   display: flex;
-  flex-direction: row;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center; /* Center vertically */
   width: 100%;
 }
-.Background {
-  background-color: orange;
-  display: flex;
-  flex-direction: column;
-  top: 0;
-  position: relative;
-  justify-content: flex-start;
-  align-items: center;
-  width: 100%;
-  flex: 1;
-  padding-bottom: 5px; /* Adjust the padding to fill the space below the form */
-}
+
 </style>
