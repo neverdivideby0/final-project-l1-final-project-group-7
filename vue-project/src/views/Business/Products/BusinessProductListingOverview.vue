@@ -352,29 +352,33 @@ export default {
   margin: 0 auto; /* Center the image horizontally within the parent div */
 }
 .Background {
-  position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 108, 228, 0.10); /* Add your background styles */
-    z-index: -1;
+  /* position: fixed; */ 
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(0, 108, 228, 0.10); /* Add your background styles */
+  z-index: -1;
+  overflow: auto;
   /* Remove height property */
 }
 
 /* Body CSS */
 .sorting-options {
-  display: flex; /* Use flexbox to align items horizontally */
-  flex-direction: row;
-  align-items: center;
+  display: flex; /* Enables flexbox layout */
+  align-items: center; /* Aligns items vertically in the center */
+  justify-content: flex-start; /* Aligns items to the start of the container */
+  gap: 20px; /* Optional: Adds some space between the sorting controls */
+}
+.sort-by, .sortDirection {
+  display: flex; /* This makes the label and dropdown align in a row */
+  align-items: center; /* Vertical alignment */
+  gap: 10px; /* Optional: Adds space between the label and the dropdown */
 }
 
-.sortDirection {
-  margin-left: 100px;
+/* sorting label css */
+label {
+  margin-bottom: 0px; 
 }
-
-
-
 
 .product-list {
   text-align: center;
