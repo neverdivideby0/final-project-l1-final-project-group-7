@@ -190,10 +190,11 @@ export default {
     display: flex; /* Add flexbox display */
     align-items: center; /* Vertically center the content */
     justify-content: center; /* Horizontally center the content */
-    position: absolute;
+    position: fixed;
     background-color: #ff8a00;
     width: 100%;
     height: 100vh;
+    top: 0px;
     overflow: hidden;
     text-align: center;
     font-size: var(--font-size-base);

@@ -27,8 +27,6 @@
         <img :class="$style.productsIcon" alt="" src="@/assets/products.png" />
       </div>
     </div>
-
-
   </div>
 </template>
 
@@ -38,6 +36,7 @@ import { defineComponent } from "vue";
 import LogOut from '@/components/LogOut.vue';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { getFirestore, collection, getDocs, doc, getDoc } from 'firebase/firestore';
+import SignOutButton from "@/components/SignOutButton.vue";
 
 export default defineComponent({
   name: "CustomerHomePage",
@@ -327,6 +326,19 @@ export default defineComponent({
   text-align: center;
   font-size: 24px; /* Adjust the font size as needed */
   font-weight: bold;   
+}
+.buttonDiv {
+  width: 92.14px;
+  height: 44px;
+  left: 90%;
+  top: 60px;
+  position: absolute;
+  justify-content: flex-end;
+  align-items: center;
+  display: inline-flex;
+}
+.edit-profile-button {
+  margin-right: 10px; /* Add margin to separate the buttons */
 }
 
 </style>
