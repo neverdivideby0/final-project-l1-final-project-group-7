@@ -2,15 +2,14 @@
 
   <div class="customer-gym-list">
     <div class="Banner">
-      <h2 class="products-heading">Gyms</h2>
+      <h1 class="products-heading">Gyms</h1>
     </div>
     <div class="Background">
-      
-    </div>
+  </div>
 
     <!-- Search Bar -->
     <div class="search-bar">
-      <label for="search">Search:</label>
+      <label for="search">Gym Name:</label>
       <input type="text" id="search" v-model="searchTerm" @input="searchGyms" />
     </div>
 
@@ -24,7 +23,7 @@
         <label for="maxPrice">Max Price:</label>
         <input type="number" id="maxPrice" v-model="maxPrice" />
       </div>
-      <button @click="applyFilters">Search</button>
+      <button @click="applyFilters" id="search-button">Search Gyms</button>
     </div>
 
     <!-- Sorting Options -->
@@ -33,14 +32,14 @@
       <select v-model="sortBy" @change="fetchGyms">
         <option value="gymModifiedDateTime">Modified Date</option>
         <!-- Add other sorting options as needed -->
-      </select>
+    </select> 
 
       <label for="sortDirection">Sort Direction:</label>
       <select v-model="sortDirection" @change="fetchGyms">
         <option value="latest">Latest</option>
         <option value="earliest">Earliest</option>
       </select>
-    </div>
+    </div> 
 
     <!-- Gym Listings -->
     <ul>
@@ -299,5 +298,42 @@ img {
   width: 100%;
   flex: 1;
   padding-bottom: 5px; /* Adjust the padding to fill the space below the form */
+}
+
+.search-bar {
+  margin-top: 80px; 
+}
+
+.filter-section {
+    margin-top: 20px;
+}
+
+.filter-input {
+    margin-bottom: 20px;
+}
+
+.products-heading {
+    color: white;
+}
+
+.sorting-options {
+    margin-top: 20px;
+}
+
+#search {
+    width: 50%;
+}
+
+#minPrice {
+    width: 50%;
+}
+
+#maxPrice {
+    width: 50%;
+}
+
+#search-button {
+    width: 51%;
+    align: center;
 }
 </style>
