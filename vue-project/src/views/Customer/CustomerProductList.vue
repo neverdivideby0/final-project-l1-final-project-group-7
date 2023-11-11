@@ -186,28 +186,26 @@ export default {
   border-radius: 8px;
 }
 
-.filter-section {
-  margin: 20px 0;
-  margin-right: 40px;
-  display: flex;
-  flex-wrap: wrap; /* Allow items to wrap to the next line */
-  justify-content: space-between;
-  width: 595px;
-}
+  .filter-section {
+    margin: 20px 0;
+    display: flex;
+    flex-wrap: wrap; /* Allow items to wrap to the next line */
+    justify-content: space-between;
+    width: 570px;
+  }
 
-.filter-input {
-  margin-right: 25px;
-  margin-bottom: 10px; /* Add margin below each filter input */
-}
+  .filter-input {
+    margin-bottom: 10px; /* Add margin below each filter input */
+  }
 
-.search-bar {
-  margin-top: 20px; /* Add margin above the search bar */
-  width: 570px;
-}
+  .search-bar {
+    margin-top: 20px; /* Add margin above the search bar */
+    width: 570px;
+  }
 
 .search-button {
-  margin-top: 20px;
   background-color: black;
+  align-items: center;
 }
 
 ul {
@@ -250,11 +248,6 @@ img {
   flex: 1; /* Expand to fill available space */
   text-align: left;
   margin-left: 20px; /* Maintain existing margin for spacing */
-}
-
-.sorting-options {
-  width: 595px;
-  align: center;
 }
 
 

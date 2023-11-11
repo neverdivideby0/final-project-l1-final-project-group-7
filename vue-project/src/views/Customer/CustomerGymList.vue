@@ -1,19 +1,8 @@
 <template>
   <div class="customer-gym-list">
-<<<<<<< HEAD
     <div class="Banner"></div>
     <div class="Background">
       <h2 class="gyms-heading">Gyms</h2>
-=======
-    <div class="Banner">
-      <h2 class="products-heading">Gyms</h2>
-    </div>
-    <div class="Background">
-      
-    </div>
-
-    <!-- Search Bar -->
->>>>>>> 0db093f97028da11de776752da69ae77b2031b01
     <div class="search-bar">
       <label for="search">Search:</label>
       <input type="text" id="search" v-model="searchTerm" @input="searchGyms" />
@@ -291,9 +280,6 @@ img {
   justify-content: center; /* Center vertically */
   width: 100%;
 }
-<<<<<<< HEAD
-
-=======
 .Background {
   background-color: orange;
   display: flex;
