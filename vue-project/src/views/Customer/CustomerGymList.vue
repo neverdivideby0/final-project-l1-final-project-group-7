@@ -53,6 +53,8 @@
           <option value="ztoa" v-if="sortBy === 'gymName'">Z to A</option>
         </select>
       </div>
+    </div>
+
 
       <!-- Gym Listings -->
       <ul>
@@ -84,7 +86,6 @@
           </div>
         </li>
       </ul>
-    </div>
   </div>
 </template>
 
