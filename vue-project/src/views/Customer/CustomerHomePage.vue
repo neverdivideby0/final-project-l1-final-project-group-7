@@ -34,7 +34,7 @@
 <script>
 import { defineComponent } from "vue";
 import LogOut from '@/components/LogOut.vue';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 import { getFirestore, collection, getDocs, doc, getDoc } from 'firebase/firestore';
 import SignOutButton from "@/components/SignOutButton.vue";
 
@@ -100,15 +100,16 @@ export default defineComponent({
       }
     },
     signOut() {
-      const auth = getAuth();
-      firebaseSignOut(auth)
-        .then(() => {
-          // Successful sign-out, you can redirect the user to the login page or perform any other actions.
-          this.$router.push({ name: 'LandingPage' });
-        })
-        .catch((error) => {
-          console.error("Sign-out error:", error);
-        });
+        const auth = getAuth();
+        const user = auth.currentUser;
+        if (user) {
+          // Check if the user is authenticated before signing out
+          signOut(auth, user);
+          console.log("User signed out");
+        } else {
+          console.log("User is not authenticated. No need to sign out.");
+        }
+        this.$router.push({ name: "LandingPage" });
     },
   },
 });

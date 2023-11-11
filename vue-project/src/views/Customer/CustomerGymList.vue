@@ -1,10 +1,20 @@
 <template>
   <div class="customer-gym-list">
+<<<<<<< HEAD
     <div class="Banner"></div>
     <div class="Background">
       <h2 class="gyms-heading">Gyms</h2>
+=======
+    <div class="Banner">
+      <h1 class="products-heading">Gyms</h1>
+    </div>
+    <div class="Background">
+  </div>
+
+    <!-- Search Bar -->
+>>>>>>> 0db093f97028da11de776752da69ae77b2031b01
     <div class="search-bar">
-      <label for="search">Search:</label>
+      <label for="search">Gym Name:</label>
       <input type="text" id="search" v-model="searchTerm" @input="searchGyms" />
     </div>
 
@@ -18,20 +28,49 @@
         <label for="maxPrice">Max Price:</label>
         <input type="number" id="maxPrice" v-model="maxPrice" />
       </div>
+<<<<<<< HEAD
       <button class="search-button" @click="applyFilters">Search</button>
     </div>
 
         <!-- Sorting Options -->
+=======
+      <button @click="applyFilters" id="search-button">Search Gyms</button>
+    </div>
+
+
+>>>>>>> 0db093f97028da11de776752da69ae77b2031b01
     <div class="sorting-options">
       <label for="sortBy">Sort By:</label>
-      <select v-model="sortBy" @change="fetchGyms">
+      <select v-model="sortBy" @change="applyFilters">
         <option value="gymModifiedDateTime">Modified Date</option>
+        <option value="price">Gym Price</option>
+        <option value="gymName">Gym Name</option>
         <!-- Add other sorting options as needed -->
       </select>
+<<<<<<< HEAD
             <label for="sortDirection">Sort Direction:</label>
       <select v-model="sortDirection" @change="fetchGyms">
         <option value="latest">Latest</option>
         <option value="earliest">Earliest</option>
+=======
+
+      <label for="sortDirection">Sort Direction:</label>
+      <select v-model="sortDirection" @change="applyFilters">
+        <option value="earliest" v-if="sortBy === 'gymModifiedDateTime'">
+          Earliest
+        </option>
+        <option value="latest" v-if="sortBy === 'gymModifiedDateTime'">
+          Latest
+        </option>
+        <option value="highest" v-if="sortBy === 'price'">
+          Highest to Lowest
+        </option>
+        <option value="lowest" v-if="sortBy === 'price'">
+          Lowest to Highest
+        </option>
+        <option value="atoz" v-if="sortBy === 'gymName'">A to Z</option>
+        <option value="ztoa" v-if="sortBy === 'gymName'">Z to A</option>
+>>>>>>> 0db093f97028da11de776752da69ae77b2031b01
       </select>
     </div>
     </div>
@@ -39,21 +78,18 @@
 
     <!-- Gym Listings -->
     <ul>
-      <li v-for="(gym, index) in filteredGyms" :key="index" class="gym-listing">
+      <li v-for="(gym, index) in (filteredGyms.length > 0 ? filteredGyms : gyms)" :key="index">
         <div class="gym-content">
           <span class="gym-number">{{ index + 1 }}</span>
           
           <ul class="gym-images">
-          <li v-for="(imageUrl, i) in gym.uploadedImageUrls" :key="i">
-            <img :src="imageUrl" alt="Gym Image" />
-          </li>
-          <li v-for="(imageUrl, i) in gym.imageUrls" :key="i">
-            <img :src="imageUrl" alt="Gym Image" />
+          <li v-for="(uploadedImageUrl, i) in gym.uploadedImageUrls" :key="i">
+            <img :src="uploadedImageUrl" alt="Gym Image" />
           </li>
         </ul>
 
         <div class="gym-details">
-  ]     <h3>{{ gym.gymName }}</h3>
+       <h3>{{ gym.gymName }}</h3>
         <p><strong>Address:</strong> {{ gym.address }}</p>
         <p><strong>Postal Code:</strong> {{ gym.postalCode }}</p>
         <p><strong>Contact Number:</strong> {{ gym.contactNumber }}</p>
@@ -63,10 +99,7 @@
         <p><strong>Amenities:</strong> {{ gym.amenities }}</p>
         <p><strong>Social Media Links:</strong> {{ gym.socialMediaLinks }}</p>
         </div>
-
-
         </div>
-        
       </li>
     </ul>
   </div>
@@ -93,45 +126,44 @@ export default {
     this.fetchGyms();
   },
   methods: {
-    searchGyms() {
-      console.log("Search term: ", this.searchTerm);
-
-      // Apply search based on the searchTerm
-      this.filteredGyms = this.gyms.filter((gym) => {
-        const searchTerm = this.searchTerm.toLowerCase();
-        const gymName = gym.gymName.toLowerCase();
-        const address = gym.address.toLowerCase();
-        const description = gym.description.toLowerCase();
-        const amenities = gym.amenities.toLowerCase();
-
-        return (
-          gymName.includes(searchTerm) ||
-          address.includes(searchTerm) ||
-          amenities.includes(searchTerm) ||
-          description.includes(searchTerm)
-        );
-      });
-
-      // Sort the filtered gyms after applying filters and search
-      this.sortGyms();
-    },
-
     sortGyms() {
-      // Sort the filteredGyms array based on sortBy and sortDirection
+      // Use JavaScript's sort method to sort filteredGyms array
       this.filteredGyms.sort((a, b) => {
-        const dateA = a[this.sortBy];
-        const dateB = b[this.sortBy];
+        const propA = a[this.sortBy];
+        const propB = b[this.sortBy];
 
-        if (this.sortDirection === "earliest") {
-          return dateA - dateB;
-        } else {
-          return dateB - dateA;
+        if (this.sortBy === "price") {
+          // Convert prices to numbers for proper comparison
+          const priceA = parseFloat(propA);
+          const priceB = parseFloat(propB);
+
+          if (this.sortDirection === "highest") {
+            return priceB - priceA;
+          } else if (this.sortDirection === "lowest") {
+            return priceA - priceB;
+          }
         }
+
+        if (this.sortBy === "gymName") {
+          // Case-insensitive comparison for gymName
+          const nameA = propA.toLowerCase();
+          const nameB = propB.toLowerCase();
+
+          if (this.sortDirection === "atoz") {
+            return nameA.localeCompare(nameB);
+          } else if (this.sortDirection === "ztoa") {
+            return nameB.localeCompare(nameA);
+          }
+        }
+
+        // For other cases (Modified Date), compare normally
+        return this.sortDirection === "earliest"
+          ? propA - propB
+          : propB - propA;
       });
     },
 
     async fetchGyms() {
-
       const db = getFirestore();
       const gymsCollection = collection(db, "gyms");
 
@@ -147,27 +179,35 @@ export default {
     },
 
     applyFilters() {
-      console.log("minPrice:", this.minPrice);
-      console.log("maxPrice:", this.maxPrice);
-      // Apply filters based on minPrice and maxPrice
       this.filteredGyms = this.gyms.filter((gym) => {
+        const searchTerm = this.searchTerm.toLowerCase();
+        const gymName = gym.gymName.toLowerCase();
+        const address = gym.address.toLowerCase();
+        const description = gym.description.toLowerCase();
+        const amenities = gym.amenities.toLowerCase();
         const price = gym.price;
 
-        if (!this.minPrice && !this.maxPrice) return true;
-        if (this.minPrice && this.maxPrice) {
-          return price >= this.minPrice && price <= this.maxPrice;
-        } else if (this.minPrice) {
-          return price >= this.minPrice;
-        } else if (this.maxPrice) {
-          return price <= this.maxPrice;
-        }
+        // Check if the gym matches the search term
+        const matchesSearchTerm =
+          gymName.includes(searchTerm) ||
+          address.includes(searchTerm) ||
+          amenities.includes(searchTerm) ||
+          description.includes(searchTerm);
+
+        // Check if the gym falls within the price range (if minPrice and/or maxPrice is specified)
+        const priceInRange =
+          (!this.minPrice || price >= this.minPrice) &&
+          (!this.maxPrice || price <= this.maxPrice);
+
+        // Return true if both conditions are met (search term and price range)
+        return matchesSearchTerm && priceInRange;
       });
       this.sortGyms();
     },
     watch: {
     sortDirection() {
-      // When sortDirection changes, re-sort the filteredGyms
-      this.sortGyms();
+      // When sortDirection changes, re-sort the filteredProducts
+      this.sortProducts();
     },
   },
   },
@@ -279,5 +319,57 @@ img {
   justify-content: center; /* Center vertically */
   width: 100%;
 }
+<<<<<<< HEAD
 
+=======
+.Background {
+  background-color: orange;
+  display: flex;
+  flex-direction: column;
+  top: 0;
+  position: relative;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  flex: 1;
+  padding-bottom: 5px; /* Adjust the padding to fill the space below the form */
+}
+
+.search-bar {
+  margin-top: 80px; 
+}
+
+.filter-section {
+    margin-top: 20px;
+}
+
+.filter-input {
+    margin-bottom: 20px;
+}
+
+.products-heading {
+    color: white;
+}
+
+.sorting-options {
+    margin-top: 20px;
+}
+
+#search {
+    width: 50%;
+}
+
+#minPrice {
+    width: 50%;
+}
+
+#maxPrice {
+    width: 50%;
+}
+
+#search-button {
+    width: 51%;
+    align: center;
+}
+>>>>>>> 0db093f97028da11de776752da69ae77b2031b01
 </style>
