@@ -88,12 +88,7 @@
           </p>
           <p><strong>Business Number:</strong> {{ product.businessNumber }}</p>
           <p><strong>Email:</strong> {{ product.email }}</p>
-          <p><strong>Images</strong></p>
-          <ul class="product-images">
-            <li v-for="(imageUrl, i) in product.imageUrls" :key="i">
-              <img :src="imageUrl" alt="Product Image" class="product-image" />
-            </li>
-          </ul>
+
 
         </div>
 

@@ -19,21 +19,15 @@
     <!-- Gymlist to encompass the entire body -->
 
     <div class="gym-list">
-
-      <!-- Sorting Options -->
-
+      <h2>Gym Listings</h2>
       <div class="sorting-options">
-
         <label for="sortBy">Sort By:</label>
-
         <select v-model="sortBy" @change="fetchGyms">
-
           <option value="gymModifiedDateTime">Modified Date</option>
           <option value="price">Gym Price</option>
           <option value="gymName">Gym Name</option>
           <!-- Add other sorting options as needed -->
         </select>
-        
         <label for="sortDirection">Sort Direction:</label>
         <select v-model="sortDirection" @change="fetchGyms">
           <option value="earliest" v-if="sortBy === 'gymModifiedDateTime'">
@@ -316,6 +310,11 @@ export default {
   z-index: 1;
 }
 
+/* Logo on the left */
+.logo {
+  background: black;
+}
+
 /* This is the center of the dashboard with logo and dashboard name */
 .Dashboard {
   width: 100%; /* Use 100% width to span the entire container */
@@ -341,33 +340,27 @@ export default {
   margin: 0 auto; /* Center the image horizontally within the parent div */
 }
 .Background {
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   background: rgba(0, 108, 228, 0.1); /* Add your background styles */
   z-index: -1;
-  overflow: auto; 
   /* Remove height property */
 }
 /* Body CSS */
 
 /* First the sorting buttons to make them side by side */
 .sorting-options {
-  display: flex; /* Enables flexbox layout */
-  align-items: center; /* Aligns items vertically in the center */
-  justify-content: flex-start; /* Aligns items to the start of the container */
-  gap: 20px; /* Optional: Adds some space between the sorting controls */
+  display: flex; /* Use flexbox to align items horizontally */
+  flex-direction: row;
+  align-items: center;
 }
-.sort-by, .sortDirection {
-  display: flex; /* This makes the label and dropdown align in a row */
-  align-items: center; /* Vertical alignment */
-  gap: 10px; /* Optional: Adds space between the label and the dropdown */
+.sortBy {
 }
-
-/* sorting label css */
-label {
-  margin-bottom: 0px; 
+.sortDirection {
+  margin-left: 100px;
 }
 
 /* DON'T TOUCH THIS */

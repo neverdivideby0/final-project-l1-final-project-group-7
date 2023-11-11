@@ -58,16 +58,15 @@
         <p><strong>Price:</strong> ${{ product.price.toFixed(2) }}</p>
         <p><strong>Business Name:</strong> {{ product.businessName }}</p>
         <p><strong>Email:</strong> {{ product.email }}</p>
-        <p><strong>Image URLs:</strong></p>
+        <p><strong>Images:</strong></p>
         <ul>
           <li
-            v-for="(imageUrl, i) in [
-              ...product.imageUrls,
+            v-for="(uploadedImageUrl, i) in [
               ...product.uploadedImageUrls,
             ]"
             :key="i"
           >
-            <img :src="imageUrl" alt="Product Image" />
+            <img :src="uploadedImageUrl" alt="Product Image" />
           </li>
         </ul>
       </li>
@@ -95,11 +94,9 @@ export default {
     this.fetchProducts();
   },
   methods: {
-
     async fetchProducts() {
       const db = getFirestore();
       const productsCollection = collection(db, "products");
-
       try {
         const querySnapshot = await getDocs(productsCollection);
         querySnapshot.forEach((doc) => {
@@ -135,8 +132,6 @@ export default {
       this.filteredProducts.sort((a, b) => {
         const propA = a[this.sortBy];
         const propB = b[this.sortBy];
-        console.log("sorting")
-
         if (this.sortBy === "price") {
           // Convert prices to numbers for proper comparison
           const priceA = parseFloat(propA);
@@ -159,8 +154,6 @@ export default {
             return nameB.localeCompare(nameA);
           }
         }
-
-        // For other cases (Modified Date), compare normally
         return this.sortDirection === "earliest"
           ? propA - propB
           : propB - propA;
