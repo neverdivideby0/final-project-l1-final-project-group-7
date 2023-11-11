@@ -20,7 +20,7 @@
       </div>
       <div class="form-group">
         <label for="category">Category (Comma-separated):</label>
-        <input type="text" id="category" v-model="categories" />
+        <input type="text" id="category" v-model="editingProduct.category" />
       </div>
       <div class="form-group">
         <label for="price">Price:</label>
@@ -30,12 +30,6 @@
       <div class="form-group">
         <label for="existingImages">Existing Images:</label>
         <ul>
-          <li v-for="(imageUrl, i) in editingProduct.imageUrls" :key="i">
-            <div class="image-preview">
-              <img :src="imageUrl" alt="Image Preview" />
-              <button @click="removeImage(i)">Remove</button>
-            </div>
-          </li>
           <li
             v-for="(uploadedImageUrl, i) in editingProduct.uploadedImageUrls"
             :key="i"
@@ -114,7 +108,6 @@ export default {
           description: this.editingProduct.description,
           category: categoryArray,
           price: this.editingProduct.price,
-          imageUrls: this.editingProduct.imageUrls,
           uploadedImageUrls: this.editingProduct.uploadedImageUrls,
           productModifiedDateTime: new Date(),
         });
@@ -137,15 +130,16 @@ export default {
         // Handle the error, e.g., show an error message to the user
       }
     },
-    removeImage(index) {
-      this.editingProduct.imageUrls.splice(index, 1);
-    },
     addImage() {
-      if (this.newImageUrl) {
-        this.editingProduct.imageUrls.push(this.newImageUrl);
-        this.newImageUrl = "";
-      }
-    },
+    // Ensure there's a URL to add
+    if (this.newImageUrl) {
+      // Add the new image URL to the uploadedImageUrls array
+      this.editingProduct.uploadedImageUrls.push(this.newImageUrl);
+
+      // Optionally, clear the input field after adding
+      this.newImageUrl = '';
+    }
+  },
     async uploadImageFiles(event) {
       const auth = getAuth();
       const user = auth.currentUser;
@@ -177,35 +171,46 @@ export default {
       }
     },
     async removeUploadedImage(index) {
-      if (this.editingProduct && this.editingProduct.uploadedImageUrls) {
-        const imageRef = this.editingProduct.uploadedImageUrls[index];
+  if (this.editingProduct && this.editingProduct.uploadedImageUrls) {
+    const imageUrl = this.editingProduct.uploadedImageUrls[index];
 
-        if (imageRef) {
-          const confirmDeletion = window.confirm(
-            "Are you sure you want to delete this image?"
-          );
+    if (imageUrl) {
+      const confirmDeletion = window.confirm(
+        "Are you sure you want to delete this image?"
+      );
 
-          if (confirmDeletion) {
-            const storage = getStorage();
-            const imageStorageRef = ref(storage, imageRef);
+      if (confirmDeletion) {
+        // Check if the URL is from Firebase Storage
+        if (this.isFirebaseUrl(imageUrl)) {
+          const storage = getStorage();
+          const imageStorageRef = ref(storage, imageUrl);
 
-            try {
-              // Delete the object from Firebase Storage
-              await deleteObject(imageStorageRef);
-              console.log("Image deleted from Firebase Storage");
-            } catch (error) {
-              console.error(
-                "Error deleting image from Firebase Storage:",
-                error
-              );
-            }
-
-            // Remove the URL from the array
-            this.editingProduct.uploadedImageUrls.splice(index, 1);
+          try {
+            // Delete the object from Firebase Storage
+            await deleteObject(imageStorageRef);
+            console.log("Image deleted from Firebase Storage");
+          } catch (error) {
+            console.error(
+              "Error deleting image from Firebase Storage:",
+              error
+            );
           }
         }
+
+        // Remove the URL from the array
+        this.editingProduct.uploadedImageUrls.splice(index, 1);
       }
-    },
+    }
+  }
+},
+
+isFirebaseUrl(url) {
+  // Define the pattern for a Firebase Storage URL
+  // Adjust this pattern according to your Firebase Storage URL structure
+  const firebaseUrlPattern = /^https:\/\/firebasestorage\.googleapis\.com\//;
+  return firebaseUrlPattern.test(url);
+},
+
 
     closeModal() {
       this.$emit("close");

@@ -141,6 +141,13 @@ export default {
         const businessData = businessDocSnap.data();
         this.user.businessName = businessData.businessName;
 
+        if (this.imageUrl1) {
+          uploadedImageUrls.push(this.imageUrl1);
+        }
+        if (this.imageUrl2) {
+          uploadedImageUrls.push(this.imageUrl2);
+        }
+
         // Define productData
         const productData = {
           businessId: this.user.uid,
@@ -151,7 +158,6 @@ export default {
             .split(",")
             .map((category) => category.trim()), // Split and trim categories into an array
           price: parseFloat(this.price),
-          imageUrls: [this.imageUrl1, this.imageUrl2].filter((url) => url), // Filter out empty URLs
           uploadedImageUrls: uploadedImageUrls, // Include the uploaded image URLs
           email: this.email, // Include the email in the profile data
           productCreatedDateTime: new Date(),

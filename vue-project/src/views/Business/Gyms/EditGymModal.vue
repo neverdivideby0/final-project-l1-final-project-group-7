@@ -56,12 +56,6 @@
       <div class="form-group">
         <label for="existingImages">Existing Images:</label>
         <ul>
-          <li v-for="(imageUrl, i) in editingGym.imageUrls" :key="i">
-            <div class="image-preview">
-              <img :src="imageUrl" alt="Image Preview" />
-              <button @click="removeImage(i)">Remove</button>
-            </div>
-          </li>
           <li
             v-for="(uploadedImageUrl, i) in editingGym.uploadedImageUrls"
             :key="i"
@@ -117,20 +111,20 @@ export default {
     isEditModalOpen: Boolean,
     editingGym: Object,
     gyms: Array,
-    },
-    data() {
-      return {
-        newImageUrl: "",
-        newImageFiles: [],
-      };
-    },
-    methods: {
-      async saveChanges() {
-        const db = getFirestore();
-        const gymDocRef = doc(db, "gyms", this.editingGym.id);
-        // Update the Gym details
-        try {
-          await updateDoc(gymDocRef, {
+  },
+  data() {
+    return {
+      newImageUrl: "",
+      newImageFiles: [],
+    };
+  },
+  methods: {
+    async saveChanges() {
+      const db = getFirestore();
+      const gymDocRef = doc(db, "gyms", this.editingGym.id);
+      // Update the Gym details
+      try {
+        await updateDoc(gymDocRef, {
           gymName: this.editingGym.gymName,
           description: this.editingGym.description,
           address: this.editingGym.address,
@@ -140,7 +134,6 @@ export default {
           operationalHours: this.editingGym.operationalHours,
           amenities: this.editingGym.amenities,
           socialMediaLinks: this.editingGym.socialMediaLinks,
-          imageUrls: this.editingGym.imageUrls,
           uploadedImageUrls: this.editingGym.uploadedImageUrls,
           gymModifiedDateTime: new Date(),
         });
@@ -151,83 +144,94 @@ export default {
         if (index !== -1) {
           this.gyms[index] = { ...this.editingGym };
         }
-            this.closeModal();
-        } catch (error) {
-          console.error("Error updating gym details:", error);
-        }
-      },
-      removeImage(index) {
-        this.editingGym.imageUrls.splice(index, 1);
-      },
-      addImage() {
-        if (this.newImageUrl) {
-          this.editingGym.imageUrls.push(this.newImageUrl);
-          this.newImageUrl = "";
-        }
-      },
-      async uploadImageFiles(event) {
-        const auth = getAuth();
-        const user = auth.currentUser;
-  
-        if (user) {
-          const storage = getStorage();
-          const imagesFolderRef = ref(storage, "gym_images");
-  
-          for (let i = 0; i < event.target.files.length; i++) {
-            const file = event.target.files[i];
-            const fileName = `${user.uid}_${Date.now()}_${file.name}`;
-            const imageRef = ref(imagesFolderRef, fileName);
-  
-            try {
-              await uploadBytes(imageRef, file);
-              console.log("pushing", fileName);
-  
-              const storageRef = ref(storage, "gym_images/" + fileName);
-              const downloadURL = await getDownloadURL(storageRef);
-              this.editingGym.imageUrls.push(downloadURL);
-              this.editingGym.uploadedImageUrls.push(downloadURL);
-              console.log("thisruns");
-            } catch (error) {
-              console.error("Error uploading image:", error);
-            }
+        this.closeModal();
+      } catch (error) {
+        console.error("Error updating gym details:", error);
+      }
+    },
+    addImage() {
+    // Ensure there's a URL to add
+    if (this.newImageUrl) {
+      // Add the new image URL to the uploadedImageUrls array
+      this.editingGym.uploadedImageUrls.push(this.newImageUrl);
+
+      // Optionally, clear the input field after adding
+      this.newImageUrl = '';
+    }
+  },
+    async uploadImageFiles(event) {
+      const auth = getAuth();
+      const user = auth.currentUser;
+
+      if (user) {
+        const storage = getStorage();
+        const imagesFolderRef = ref(storage, "gym_images");
+
+        for (let i = 0; i < event.target.files.length; i++) {
+          const file = event.target.files[i];
+          const fileName = `${user.uid}_${Date.now()}_${file.name}`;
+          const imageRef = ref(imagesFolderRef, fileName);
+
+          try {
+            await uploadBytes(imageRef, file);
+            console.log("pushing", fileName);
+
+            const storageRef = ref(storage, "gym_images/" + fileName);
+            const downloadURL = await getDownloadURL(storageRef);
+            this.editingGym.uploadedImageUrls.push(downloadURL);
+          } catch (error) {
+            console.error("Error uploading image:", error);
           }
-        } else {
-          // Handle the case when the user is not authenticated (e.g., show an error or redirect to a login page)
         }
-      },
-      closeModal() {
-        this.$emit("close");
-      },
+      } else {
+        // Handle the case when the user is not authenticated (e.g., show an error or redirect to a login page)
+      }
+    },
+    closeModal() {
+      this.$emit("close");
     },
     async removeUploadedImage(index) {
       if (this.editingGym && this.editingGym.uploadedImageUrls) {
-        const imageRef = this.editingGym.uploadedImageUrls[index];
+        const imageUrl = this.editingGym.uploadedImageUrls[index];
 
-        if (imageRef) {
+        if (imageUrl) {
           const confirmDeletion = window.confirm(
             "Are you sure you want to delete this image?"
           );
 
           if (confirmDeletion) {
-            const storage = getStorage();
-            const imageStorageRef = ref(storage, imageRef);
+            // Check if the URL is from Firebase Storage
+            if (this.isFirebaseUrl(imageUrl)) {
+              const storage = getStorage();
+              const imageStorageRef = ref(storage, imageUrl);
 
-            try {
-              // Delete the object from Firebase Storage
-              await deleteObject(imageStorageRef);
-              console.log("Image deleted from Firebase Storage");
-            } catch (error) {
-              console.error(
-                "Error deleting image from Firebase Storage:",
-                error
-              );
+              try {
+                // Delete the object from Firebase Storage
+                await deleteObject(imageStorageRef);
+                console.log("Image deleted from Firebase Storage");
+              } catch (error) {
+                console.error(
+                  "Error deleting image from Firebase Storage:",
+                  error
+                );
+              }
             }
+
             // Remove the URL from the array
             this.editingGym.uploadedImageUrls.splice(index, 1);
           }
         }
       }
     },
+
+    isFirebaseUrl(url) {
+      // Define the pattern for a Firebase Storage URL
+      // Adjust this pattern according to your Firebase Storage URL structure
+      const firebaseUrlPattern =
+        /^https:\/\/firebasestorage\.googleapis\.com\//;
+      return firebaseUrlPattern.test(url);
+    },
+  },
 };
 </script>
     
