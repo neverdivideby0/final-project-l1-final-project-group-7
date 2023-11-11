@@ -1,19 +1,12 @@
 <template>
-  <div class="Background">
-    <!-- Header -->
-    <div class="Banner"></div>
-    <div class="buttonDiv">
-      <SignOutButton />
-    </div>
 
-    <div class="Dashboard">
-      <img class="dashboard-image" src="@/assets/dumbell.png" alt="Dumbell Logo" />
-      Gyms
-    </div>
-  </div>
-
-  <!-- Customer Gym List -->
   <div class="customer-gym-list">
+    <div class="Banner">
+      <h2 class="products-heading">Gyms</h2>
+    </div>
+    <div class="Background">
+      
+    </div>
 
     <!-- Search Bar -->
     <div class="search-bar">
@@ -78,12 +71,6 @@
 
 
         </div>
-
-
-
-
-        <!-- Display Gym Images -->
-        <p><strong>Images:</strong></p>
         
       </li>
     </ul>
@@ -231,7 +218,7 @@ export default {
   right: 0;
   top: 0;
   position: absolute;
-  background: #FF5733;
+  background: orange;
 }
 .dashboard-image {
   max-width: 100%; /* Ensure the image doesn't exceed the width of the parent div */
@@ -300,5 +287,17 @@ img {
   align-items: center;
   justify-content: space-between;
   width: 100%;
+}
+.Background {
+  background-color: orange;
+  display: flex;
+  flex-direction: column;
+  top: 0;
+  position: relative;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  flex: 1;
+  padding-bottom: 5px; /* Adjust the padding to fill the space below the form */
 }
 </style>
