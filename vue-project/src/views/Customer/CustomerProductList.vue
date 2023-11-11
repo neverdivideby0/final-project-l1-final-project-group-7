@@ -67,7 +67,7 @@
         <div class="product-details">
         <h3>{{ product.productName }}</h3>
         <p><strong>Description:</strong> {{ product.description }}</p>
-        <p><strong>Category:</strong> {{ product.category }}</p>
+        <p><strong>Categories:</strong> {{ product.categories }}</p>
         <p><strong>Price:</strong> ${{ product.price.toFixed(2) }}</p>
         <p><strong>Business Name:</strong> {{ product.businessName }}</p>
         <p><strong>Email:</strong> {{ product.email }}</p>

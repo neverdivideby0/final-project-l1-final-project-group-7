@@ -154,7 +154,7 @@ export default {
           businessName: this.user.businessName,
           productName: this.productName,
           description: this.description,
-          category: this.categories
+          categories: this.categories
             .split(",")
             .map((category) => category.trim()), // Split and trim categories into an array
           price: parseFloat(this.price),

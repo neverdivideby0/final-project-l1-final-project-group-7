@@ -19,8 +19,8 @@
         ></textarea>
       </div>
       <div class="form-group">
-        <label for="category">Category (Comma-separated):</label>
-        <input type="text" id="category" v-model="editingProduct.category" />
+        <label for="categories">Categories (Comma-separated):</label>
+        <input type="text" id="categories" v-model="editingProduct.categories" />
       </div>
       <div class="form-group">
         <label for="price">Price:</label>
@@ -91,7 +91,6 @@ export default {
     return {
       newImageUrl: "",
       newImageFiles: [],
-      categories: "", // Add a data field for categories
     };
   },
   methods: {
@@ -99,14 +98,14 @@ export default {
       const db = getFirestore();
       const productDocRef = doc(db, "products", this.editingProduct.id);
       // Split and trim categories
-      const categoryArray = this.categories.split(",").map((category) => category.trim());
+      const categoryArray = this.editingProduct.categories.split(",").map((category) => category.trim());
 
       // Update the product details
       try {
         await updateDoc(productDocRef, {
           productName: this.editingProduct.productName,
           description: this.editingProduct.description,
-          category: categoryArray,
+          categories: categoryArray,
           price: this.editingProduct.price,
           uploadedImageUrls: this.editingProduct.uploadedImageUrls,
           productModifiedDateTime: new Date(),
