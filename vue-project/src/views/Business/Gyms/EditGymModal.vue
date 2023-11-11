@@ -56,12 +56,6 @@
       <div class="form-group">
         <label for="existingImages">Existing Images:</label>
         <ul>
-          <li v-for="(imageUrl, i) in editingGym.imageUrls" :key="i">
-            <div class="image-preview">
-              <img :src="imageUrl" alt="Image Preview" />
-              <button @click="removeImage(i)">Remove</button>
-            </div>
-          </li>
           <li
             v-for="(uploadedImageUrl, i) in editingGym.uploadedImageUrls"
             :key="i"
@@ -140,7 +134,6 @@ export default {
           operationalHours: this.editingGym.operationalHours,
           amenities: this.editingGym.amenities,
           socialMediaLinks: this.editingGym.socialMediaLinks,
-          imageUrls: this.editingGym.imageUrls,
           uploadedImageUrls: this.editingGym.uploadedImageUrls,
           gymModifiedDateTime: new Date(),
         });
@@ -155,9 +148,6 @@ export default {
         } catch (error) {
           console.error("Error updating gym details:", error);
         }
-      },
-      removeImage(index) {
-        this.editingGym.imageUrls.splice(index, 1);
       },
       addImage() {
         if (this.newImageUrl) {

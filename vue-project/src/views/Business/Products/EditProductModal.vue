@@ -30,12 +30,6 @@
       <div class="form-group">
         <label for="existingImages">Existing Images:</label>
         <ul>
-          <li v-for="(imageUrl, i) in editingProduct.imageUrls" :key="i">
-            <div class="image-preview">
-              <img :src="imageUrl" alt="Image Preview" />
-              <button @click="removeImage(i)">Remove</button>
-            </div>
-          </li>
           <li
             v-for="(uploadedImageUrl, i) in editingProduct.uploadedImageUrls"
             :key="i"
@@ -136,9 +130,6 @@ export default {
         console.error("Error updating product details:", error);
         // Handle the error, e.g., show an error message to the user
       }
-    },
-    removeImage(index) {
-      this.editingProduct.imageUrls.splice(index, 1);
     },
     addImage() {
       if (this.newImageUrl) {

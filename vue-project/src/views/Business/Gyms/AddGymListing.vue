@@ -5,14 +5,17 @@
     <SignOutButton />
   </div>
   <div class="Dashboard">
-    <img  class="dashboard-image" src="../../../assets/GetFittSmall.png" alt="GetFitt Logo"/>
+    <img
+      class="dashboard-image"
+      src="../../../assets/GetFittSmall.png"
+      alt="GetFitt Logo"
+    />
   </div>
 
   <!-- Everything below is the add gym listing -->
   <div class="Background">
     <div class="Rectangle">
       <h1>Add A Gym</h1>
-
 
       <form @submit.prevent="addGym">
         <div class="form-group">
@@ -33,15 +36,16 @@
         </div>
         <div class="form-group">
           <label for="contactNumber">Contact Number:</label>
-          <input type="tel" id="contactNumber" v-model="contactNumber" required />
+          <input
+            type="tel"
+            id="contactNumber"
+            v-model="contactNumber"
+            required
+          />
         </div>
         <div class="form-group">
           <label for="operationalHours">Operational Hours:</label>
-          <input
-            type="text"
-            id="operationalHours"
-            v-model="operationalHours"
-          />
+          <input type="text" id="operationalHours" v-model="operationalHours" />
         </div>
         <div class="form-group">
           <label for="price">Price:</label>
@@ -78,8 +82,10 @@
     </div>
   </div>
 
-
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap"
+    rel="stylesheet"
+  />
 </template>
   
   <script>
@@ -125,118 +131,121 @@ export default {
   },
   methods: {
     async addGym() {
-  const storage = getStorage();
-  if (!this.user) {
-    console.log("User is not authenticated");
-    return; // Exit the function early
-  }
-
-  const db = getFirestore();
-  const gymsCollection = collection(db, "gyms");
-  const uploadedImageUrls = [];
-
-  try {
-    // Check if any files were uploaded
-    if (this.uploadedImages && this.uploadedImages.length > 0) {
-      // Iterate over uploadedImages and add them to the gymData
-      for (let i = 0; i < this.uploadedImages.length; i++) {
-        const file = this.uploadedImages[i];
-        const fileName = `${this.user.uid}_${Date.now()}_${file.name}`; // Create a unique filename
-
-        // Reference to the location where you want to store the file in Firebase Storage
-        const storageRef = ref(storage, "gym_images/" + fileName);
-
-        // Upload the file to Firebase Storage
-        await uploadBytes(storageRef, file);
-        console.log("File uploaded");
-
-        // Get the download URL for the uploaded file
-        const downloadURL = await getDownloadURL(storageRef);
-
-        // Store the download URL in the array
-        uploadedImageUrls.push(downloadURL);
+      const storage = getStorage();
+      if (!this.user) {
+        console.log("User is not authenticated");
+        return; // Exit the function early
       }
-    }
 
-    // Define gymData
-    const gymData = {
-      businessId: this.user.uid,
-      gymName: this.gymName,
-      description: this.description,
-      address: this.address,
-      contactNumber: this.contactNumber,
-      operationalHours: this.operationalHours,
-      price: parseFloat(this.price),
-      imageUrls: [this.imageUrl1, this.imageUrl2].filter((url) => url), // Filter out empty URLs
-      uploadedImageUrls: uploadedImageUrls, // Include the uploaded image URLs
-      email: this.email, // Include the email in the profile data
-      gymCreatedDateTime: new Date(),
-      gymModifiedDateTime: new Date(),
+      const db = getFirestore();
+      const gymsCollection = collection(db, "gyms");
+      const uploadedImageUrls = [];
 
-      postalCode: this.postalCode,
-      amenities: this.amenities,
-      socialMediaLinks: this.socialMediaLinks,
-    };
+      try {
+        // Check if any files were uploaded
+        if (this.uploadedImages && this.uploadedImages.length > 0) {
+          // Iterate over uploadedImages and add them to the gymData
+          for (let i = 0; i < this.uploadedImages.length; i++) {
+            const file = this.uploadedImages[i];
+            const fileName = `${this.user.uid}_${Date.now()}_${file.name}`; // Create a unique filename
 
-    // Add gymData to Firestore
-    await addDoc(gymsCollection, gymData);
-    alert("Gym added successfully.");
+            // Reference to the location where you want to store the file in Firebase Storage
+            const storageRef = ref(storage, "gym_images/" + fileName);
 
-    // Clear the form fields
-    this.gymName = "";
-    this.description = "";
-    this.address = "";
-    this.contactNumber = "";
-    this.operationalHours = "";
-    this.price = "";
-    this.imageUrl1 = "";
-    this.imageUrl2 = "";
-    this.city = "";
-    this.state = "";
-    this.postalCode = "";
-    this.amenities = "";
-    this.socialMediaLinks = "";
-  } catch (error) {
-    console.error("Error adding gym:", error);
-  }
-},
+            // Upload the file to Firebase Storage
+            await uploadBytes(storageRef, file);
+            console.log("File uploaded");
 
+            // Get the download URL for the uploaded file
+            const downloadURL = await getDownloadURL(storageRef);
+
+            // Store the download URL in the array
+            uploadedImageUrls.push(downloadURL);
+          }
+        }
+
+        if (this.imageUrl1) {
+          uploadedImageUrls.push(this.imageUrl1);
+        }
+        if (this.imageUrl2) {
+          uploadedImageUrls.push(this.imageUrl2);
+        }
+
+        // Define gymData
+        const gymData = {
+          businessId: this.user.uid,
+          gymName: this.gymName,
+          description: this.description,
+          address: this.address,
+          contactNumber: this.contactNumber,
+          operationalHours: this.operationalHours,
+          price: parseFloat(this.price),
+          uploadedImageUrls: uploadedImageUrls, // Include the uploaded image URLs
+          email: this.email, // Include the email in the profile data
+          gymCreatedDateTime: new Date(),
+          gymModifiedDateTime: new Date(),
+
+          postalCode: this.postalCode,
+          amenities: this.amenities,
+          socialMediaLinks: this.socialMediaLinks,
+        };
+
+        // Add gymData to Firestore
+        await addDoc(gymsCollection, gymData);
+        alert("Gym added successfully.");
+
+        // Clear the form fields
+        this.gymName = "";
+        this.description = "";
+        this.address = "";
+        this.contactNumber = "";
+        this.operationalHours = "";
+        this.price = "";
+        this.imageUrl1 = "";
+        this.imageUrl2 = "";
+        this.city = "";
+        this.state = "";
+        this.postalCode = "";
+        this.amenities = "";
+        this.socialMediaLinks = "";
+      } catch (error) {
+        console.error("Error adding gym:", error);
+      }
+    },
 
     async handleImageUpload() {
       const files = this.$refs.uploadImages.files;
       this.uploadedImages = files;
     },
     async fetchUpdatedGyms() {
-  // Fetch updated gym data from Firebase Firestore and update the `gyms` data property
-  // This assumes that you have a method to fetch gyms similar to what you have in your existing code
-  await this.fetchGyms(); // You can replace this with your actual fetch method
-}
-
+      // Fetch updated gym data from Firebase Firestore and update the `gyms` data property
+      // This assumes that you have a method to fetch gyms similar to what you have in your existing code
+      await this.fetchGyms(); // You can replace this with your actual fetch method
+    },
   },
 };
 </script>
   
   <style scoped>
-
 /* Top Nav Bar CSS */
 
-/* Div Below Banner To Push The Words below banner" */ 
+/* Div Below Banner To Push The Words below banner" */
 .MenuBar {
   width: 1440px;
   height: 90px;
   position: relative;
-  background: rgba(0, 108, 228, 0.10);
+  background: rgba(0, 108, 228, 0.1);
 }
-/* This is the orange banner */ 
+/* This is the orange banner */
 .Banner {
   height: 90px;
   left: 0;
   right: 0;
   top: 0;
   position: absolute;
-  background: #FF5733;
+  background: #ff5733;
 }
-/* Sign Out Button Div */ 
+/* Sign Out Button Div */
 .buttonDiv {
   width: 92.14px;
   height: 44px;
@@ -256,7 +265,7 @@ export default {
   text-align: center;
   color: black;
   font-size: 32px;
-  font-family: 'Roboto';
+  font-family: "Roboto";
   font-weight: 600;
   line-height: 20px;
   word-wrap: break-word;
@@ -274,9 +283,9 @@ export default {
 }
 
 /* BODY CSS */
-/* Form and Edit Business Profile CSS */ 
+/* Form and Edit Business Profile CSS */
 .Background {
-  background: rgba(0, 108, 228, 0.10);
+  background: rgba(0, 108, 228, 0.1);
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -285,7 +294,7 @@ export default {
   /* Remove height property */
 }
 
-/* Rectangle covering the form */ 
+/* Rectangle covering the form */
 .Rectangle {
   width: 708px;
   background: white;
